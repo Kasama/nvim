@@ -14,6 +14,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'SirVer/ultisnips'
 Plugin 'ervandew/supertab'
 Plugin 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+Plugin 'vim-scripts/a.vim'
 "" End Plugins
 
 call vundle#end()
