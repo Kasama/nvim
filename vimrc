@@ -11,14 +11,16 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
-
+Plugin 'SirVer/ultisnips'
+Plugin 'ervandew/supertab'
+"" End Plugins
 
 call vundle#end()
 filetype plugin indent on
 " Vundle Done
 
 let mapleader = ","
-let myVimRC = "/home/roberto/.vim/vimrc"
+let myVimRC = "~/.vim/vimrc"
 
 " Case insensitive :wq
 command! W w
