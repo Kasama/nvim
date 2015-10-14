@@ -15,6 +15,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'ervandew/supertab'
 Plugin 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 Plugin 'vim-scripts/a.vim'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/OmniCppComplete'
 "" End Plugins
 
 call vundle#end()
@@ -66,6 +69,9 @@ nnoremap <C-S><C-O> :tabnew<CR>
 
 "" Save current file
 nnoremap <C-S> :w
+
+"" Save as root
+cmap w!! w !sudo tee % > /dev/null
 
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
