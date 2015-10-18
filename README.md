@@ -2,7 +2,7 @@ Code syntax highlighting and color settings for vim.
 =====================
 
 What is this?
----------
+----------
 
 This will enable your code to look beautiful within vim for the following code types:
 
