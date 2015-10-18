@@ -18,6 +18,7 @@ Plugin 'vim-scripts/a.vim'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/OmniCppComplete'
+Plugin 'bling/vim-airline'
 "" End Plugins
 
 call vundle#end()
