@@ -19,13 +19,16 @@ Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-rails'
 "" End Plugins
 
 call vundle#end()
 filetype plugin indent on
 " Vundle Done
 
+"" Leader key
 let mapleader = ","
+"" This file's path (for use in <leader>ev and <leader>sv)
 let myVimRC = "~/.vim/vimrc"
 
 " Case insensitive :wq
@@ -35,7 +38,7 @@ command! Wq wq
 command! WQ wq
 
 " Mappings
-"" edit vimrc file
+"" edit and source vimrc file
 nnoremap <silent> <leader>ev :execute 'vsplit '.fnameescape(myVimRC)<CR>
 nnoremap <silent> <leader>sv :execute 'source '.fnameescape(myVimRC)<CR>
 
@@ -46,7 +49,6 @@ nnoremap <silent> <leader>l :set spell!<CR>
 nnoremap <silent> <leader>f :set foldmethod=marker<CR> 
 
 inoremap jk <Esc>
-inoremap kj <Esc>
 
 "" NerdTree
 nnoremap \ :NERDTreeToggle<CR>
@@ -77,8 +79,11 @@ cmap w!! w !sudo tee % > /dev/null
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
-"" Toggle comment
+"" Toggle C/Java comment
 nnoremap <silent><leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+
+"" CTags
+set tags=./tags;
 
 "" Bubble single lines"{
 "" nmap <A-J> @=']e'<CR>
