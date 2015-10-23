@@ -1,9 +1,22 @@
 syntax on
 
-" Vundle and plugins
+" Vundle and plugins "{
+
+"" Autoinstall Vundle
+let isVundleUpdated=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+	echo "Installing Vundle.."
+	echo ""
+	silent !mkdir -p ~/.vim/bundle
+	silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+	let isVundleUpdated=0
+endif
+
+"" Init Vundle
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 
 "" Plugins
@@ -26,6 +39,13 @@ call vundle#end()
 filetype plugin indent on
 " Vundle Done
 
+"" If Vundle was just installed, install all plugins
+if isVundleUpdated == 0
+	echo "Installing Plugins, please ignore key map error messages"
+	echo ""
+	:BundleInstall!
+endif "}
+
 "" Leader key
 let mapleader = ","
 "" This file's path (for use in <leader>ev and <leader>sv)
@@ -37,10 +57,13 @@ command! Q q
 command! Wq wq
 command! WQ wq
 
-" Mappings
+" Mappings "{
 "" edit and source vimrc file
 nnoremap <silent> <leader>ev :execute 'vsplit '.fnameescape(myVimRC)<CR>
 nnoremap <silent> <leader>sv :execute 'source '.fnameescape(myVimRC)<CR>
+
+" Press Space to turn off highlighting and clear any message already displayed.
+:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
 
 "" Spelling
 nnoremap <silent> <leader>l :set spell!<CR>
@@ -52,12 +75,6 @@ inoremap jk <Esc>
 
 "" NerdTree
 nnoremap \ :NERDTreeToggle<CR>
-
-"" Call Devhelpe
-augroup devHelp
-	autocmd!
-	au Filetype c nnoremap <silent> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
-augroup end
 
 "" Better Scrolling
 nnoremap <C-J> <C-E>
@@ -81,6 +98,7 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
 "" Toggle C/Java comment
 nnoremap <silent><leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+"}
 
 "" CTags
 set tags=./tags;
@@ -93,11 +111,7 @@ set tags=./tags;
 "" vmap <A-K> [egv
 "" vmap <A-J> ]egv"}
 
-
-" Press Space to turn off highlighting and clear any message already displayed.
-:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
-
-" Settings
+" Settings "{
 set showmode
 set whichwrap=b,s,<,>,[,]
 set background=dark
@@ -116,10 +130,18 @@ set exrc
 set secure
 set relativenumber
 set completeopt=menuone
+"}
 
 "filetype on
 "filetype plugin on
 "filetype indent on
+
+" AuGroups "{
+"" Call Devhelpe
+augroup devHelp
+	autocmd!
+	au Filetype c nnoremap <silent> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+augroup end
 
 augroup syntaxes
 	autocmd!
@@ -135,17 +157,6 @@ augroup customTabs
 	au BufNewFile, BufRead *.erb :set shiftwidth=2
 	au BufNewFile, BufRead *.erb :set softtabstop=2
 augroup end
-
-if has('mouse')
-	set mouse=a
-endif
-
-"Switch between block and I cursor when command/insert mode
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-"Eclim on supertab
-let g:SuperTabDefaultCompletionType = 'context'
 
 "Eclim keybinds
 augroup JavaEclim
@@ -163,6 +174,22 @@ augroup PlantUML
 	au BufNewFile,BufRead *.puml set syntax=plantuml
 augroup end
 
+"Reload vimrc whenever saved
+augroup VimRC
+	autocmd! bufwritepost vimrc source %
+augroup end
+"}
+
+if has('mouse')
+	set mouse=a
+endif
+
+"Switch between block and I cursor when command/insert mode
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+"Eclim on supertab
+let g:SuperTabDefaultCompletionType = 'context'
 
 "CtrlP configs
 let g:ctrlp_map = '<leader>p'
