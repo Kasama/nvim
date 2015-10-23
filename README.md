@@ -18,4 +18,4 @@ then edit your ~/.vimrc to contain
 :so ~/.vim/vimrc
 ```
 
-the first time you open vim, will proceed to install [Vundle](https://github.com/VundleVim/Vundle.vim) and then all the plugins specified in the **vimrc**
+the first time you open vim, it will proceed to install [Vundle](https://github.com/VundleVim/Vundle.vim) and then all the plugins specified in the **vimrc**
