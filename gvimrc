@@ -2,4 +2,5 @@
 so ~/.vim/vimrc
 
 "GUI STUFF
+colorscheme monokai
 
