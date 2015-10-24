@@ -7,7 +7,7 @@ Introduction
 This repository contains the vim configuration, including vimrc and plugins, that I use on every linux box.
 
 Instalation
-------------
+-----------
 
 easiest way to install this is to
 ```bash
