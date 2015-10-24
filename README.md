@@ -14,7 +14,7 @@ easiest way to install this is to
 git clone http://github.com/Kasama/vim ~/.vim
 ```
 then edit your ~/.vimrc to contain
-```
+```vimscript
 :so ~/.vim/vimrc
 ```
 
