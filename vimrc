@@ -46,31 +46,38 @@ if isVundleUpdated == 0
 	:BundleInstall!
 endif "}
 
-"" Leader key
+" Leader key "{
 let mapleader = ","
-"" This file's path (for use in <leader>ev and <leader>sv)
-let myVimRC = "~/.vim/vimrc"
+let localleader = ";"
+"}
 
-" Case insensitive :wq
+" Case insensitive :wq "{
 command! W w
 command! Q q
 command! Wq wq
-command! WQ wq
+command! WQ wq "}
 
 " Mappings "{
 "" edit and source vimrc file
-nnoremap <silent> <leader>ev :execute 'vsplit '.fnameescape(myVimRC)<CR>
-nnoremap <silent> <leader>sv :execute 'source '.fnameescape(myVimRC)<CR>
+nnoremap <silent> <leader>ev vsplit $MYVIMRC<CR>
+nnoremap <silent> <leader>sv source $MYVIMRC<CR>
 
 " Press Space to turn off highlighting and clear any message already displayed.
-:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
+
+"" Using H and L as 0 and $
+nnoremap H 0
+nnoremap L $
+vnoremap H 0
+vnoremap L $
 
 "" Spelling
 nnoremap <silent> <leader>l :set spell!<CR>
 
 "" Create Fold
-nnoremap <silent> <leader>f :set foldmethod=marker<CR> 
+nnoremap <silent> <leader>f :set foldmethod=marker<CR>
 
+"" jk in insert mode exits it
 inoremap jk <Esc>
 
 "" NerdTree
@@ -96,30 +103,26 @@ cmap w!! w !sudo tee % > /dev/null
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
-"" Toggle C/Java comment
-nnoremap <silent><leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
 "}
 
-"" CTags
-set tags=./tags;
+" Bubble single lines "{
+" nmap <A-J> @=']e'<CR>
+" nmap <A-K> @='[e'<CR>
 
-"" Bubble single lines"{
-"" nmap <A-J> @=']e'<CR>
-"" nmap <A-K> @='[e'<CR>
-
-"" Bubble multiple lines
-"" vmap <A-K> [egv
-"" vmap <A-J> ]egv"}
+" Bubble multiple lines
+" vmap <A-K> [egv
+" vmap <A-J> ]egv "}
 
 " Settings "{
-set showmode
+set tags=./tags;
+set laststatus=2
+set noshowmode
 set whichwrap=b,s,<,>,[,]
 set background=dark
 set hlsearch
 set foldmarker={,}
 set foldmethod=marker
 set foldlevelstart=99
-set nu
 set smartindent
 set ignorecase smartcase
 set tabstop=4
@@ -128,78 +131,91 @@ set softtabstop=4
 set noexpandtab
 set exrc
 set secure
+set nu
 set relativenumber
 set completeopt=menuone
 "}
 
-"filetype on
-"filetype plugin on
-"filetype indent on
-
 " AuGroups "{
-"" Call Devhelpe
-augroup devHelp
+augroup devHelp "{
 	autocmd!
-	au Filetype c nnoremap <silent> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
-augroup end
+	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+augroup END "}
 
-augroup syntaxes
+augroup htmlAbrrevs "{
 	autocmd!
-	au BufNewFile,BufRead *.asm set syntax=icmc
-augroup end
+	autocmd BufNewFile,BufRead *.html iabbrev << &lt;
+	autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
+augroup END "}
 
-augroup customTabs
+augroup syntaxes "{
 	autocmd!
-	au BufNewFile, BufRead *.rb :set tabstop=2
-	au BufNewFile, BufRead *.rb :set shiftwidth=2
-	au BufNewFile, BufRead *.rb :set softtabstop=2
-	au BufNewFile, BufRead *.erb :set tabstop=2
-	au BufNewFile, BufRead *.erb :set shiftwidth=2
-	au BufNewFile, BufRead *.erb :set softtabstop=2
-augroup end
+	au BufNewFile,BufRead *.asm setlocal syntax=icmc
+augroup END "}
 
-"Eclim keybinds
-augroup JavaEclim
+augroup customTabs "{
 	autocmd!
-	au BufNewFile,BufRead *.java :nnoremap <silent> <leader>o :JavaImportOrganize<CR>
-	au BufNewFile,BufRead *.java :nnoremap <silent> <leader>gi :JavaSearch<CR>
-	au BufNewFile,BufRead *.java :nnoremap <silent> <leader>c :JavaCorrect<CR>
-	au BufNewFile,BufRead *.java :nnoremap <silent> <leader>i :JavaImpl<CR>
-augroup end
+	au BufNewFile,BufRead *.rb setlocal tabstop=2
+	au BufNewFile,BufRead *.rb setlocal shiftwidth=2
+	au BufNewFile,BufRead *.rb setlocal softtabstop=2
+	au BufNewFile,BufRead *.erb setlocal tabstop=2
+	au BufNewFile,BufRead *.erb setlocal shiftwidth=2
+	au BufNewFile,BufRead *.erb setlocal softtabstop=2
+augroup END "}
 
-"Plantuml
-augroup PlantUML
+augroup comments "{
 	autocmd!
-	au BufNewFile,BufRead *.uml set syntax=plantuml
-	au BufNewFile,BufRead *.puml set syntax=plantuml
-augroup end
+	au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+	au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+	au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+	au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+	au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
+augroup END "}
 
-"Reload vimrc whenever saved
-augroup VimRC
-	autocmd! bufwritepost vimrc source %
-augroup end
+augroup JavaEclim "{
+	autocmd!
+	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>o :JavaImportOrganize<CR>
+	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>gi :JavaSearch<CR>
+	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>c :JavaCorrect<CR>
+	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>i :JavaImpl<CR>
+augroup END "}
+
+augroup PlantUML "{
+	autocmd!
+	au BufNewFile,BufRead *.uml setlocal syntax=plantuml
+	au BufNewFile,BufRead *.puml setlocal syntax=plantuml
+augroup END "}
+
+augroup VimRC "{
+	autocmd!
+	autocmd! BufWritePost *vimrc source %
+augroup END "}
 "}
 
+" Enable mouse "{
 if has('mouse')
 	set mouse=a
-endif
+endif "}
 
-"Switch between block and I cursor when command/insert mode
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-"Eclim on supertab
+" Plugin related configs "{
+"Eclim on supertab "{
 let g:SuperTabDefaultCompletionType = 'context'
+"}
 
-"CtrlP configs
+"CtrlP configs "{
 let g:ctrlp_map = '<leader>p'
 " disable caching
 let g:ctrlp_use_caching=0
+"}
 
-"Ultisnips using tab to expand
+"Ultisnips using tab to expand "{
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
+"}
 
-"Disable default assembly checker
+"Disable default assembly checker "{
 let g:syntastic_disabled_filetypes=['asm']
+"}
+"}
