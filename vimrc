@@ -33,6 +33,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-rails'
+Plugin 'othree/xml.vim'
 "" End Plugins
 
 call vundle#end()
