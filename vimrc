@@ -33,6 +33,9 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-rails'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'terryma/vim-multiple-cursors'
 "" End Plugins
 
 call vundle#end()
