@@ -62,6 +62,10 @@ command! Wq wq
 command! WQ wq "}
 
 " Mappings "{
+"" Consider long lines separate lines
+nnoremap j gj
+nnoremap k gk
+
 "" edit and source vimrc file
 nnoremap <silent> <leader>ev vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv source $MYVIMRC<CR>
