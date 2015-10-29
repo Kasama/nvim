@@ -36,6 +36,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'othree/xml.vim'
 "" End Plugins
 
 call vundle#end()
