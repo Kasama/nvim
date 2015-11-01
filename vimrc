@@ -37,6 +37,7 @@ Plugin 'chrisbra/NrrwRgn'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'othree/xml.vim'
+Plugin 'kien/ctrlp.vim'
 "" End Plugins
 
 call vundle#end()
@@ -67,7 +68,7 @@ nnoremap j gj
 nnoremap k gk
 
 "" edit and source vimrc file
-nnoremap <silent> <leader>ev vsplit $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv source $MYVIMRC<CR>
 
 " Press Space to turn off highlighting and clear any message already displayed.
@@ -114,12 +115,12 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 "}
 
 " Bubble single lines "{
-" nmap <A-J> @=']e'<CR>
-" nmap <A-K> @='[e'<CR>
+nmap <M-J> @=']e'<CR>
+nmap <M-K> @='[e'<CR>
 
 " Bubble multiple lines
-" vmap <A-K> [egv
-" vmap <A-J> ]egv "}
+vmap <M-K> [egv
+vmap <M-J> ]egv "}
 
 " Settings "{
 set tags=./tags;
@@ -227,3 +228,43 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 let g:syntastic_disabled_filetypes=['asm']
 "}
 "}
+
+"" Functions {
+function! s:Move(cmd, count, map) abort
+	normal! m`
+	silent! exe 'move'.a:cmd.a:count
+	norm! ``
+	silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
+endfunction
+
+function! s:MoveSelectionUp(count) abort
+	normal! m`
+	silent! exe "'<,'>move'<--".a:count
+	norm! ``
+	silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+endfunction
+function! s:MoveSelectionDown(count) abort
+
+	normal! m`
+	norm! ``
+	exe "'<,'>move'>+".a:count
+	silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+endfunction
+
+nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
+
+nmap [e <Plug>unimpairedMoveUp
+nmap ]e <Plug>unimpairedMoveDown
+xmap [e <Plug>unimpairedMoveSelectionUp
+xmap ]e <Plug>unimpairedMoveSelectionDown
+"}
+
+"asdg
+"aisjdiasjdsĸĸ̉̉̉̉̉̉̉ĸĸ̉ĸĸ̉ĸ̉ĸĸ
+"j
+"k
+"fasdfasdg
+"sadgasdg
