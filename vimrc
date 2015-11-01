@@ -200,6 +200,12 @@ augroup VimRC "{
 	autocmd!
 	autocmd! BufWritePost *vimrc source %
 augroup END "}
+
+augroup commitSpell "{
+	" Git commits.
+	autocmd FileType gitcommit setlocal spell
+augroup END "}
+
 "}
 
 " Enable mouse "{
