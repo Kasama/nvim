@@ -81,7 +81,7 @@ vnoremap H 0
 vnoremap L $
 
 "" Spelling
-nnoremap <silent> <leader>l :set spell!<CR>
+nnoremap <silent> <leader>l :setlocal spell!<CR>
 
 "" Create Fold
 nnoremap <silent> <leader>f :set foldmethod=marker<CR>
@@ -268,8 +268,13 @@ xmap [e <Plug>unimpairedMoveSelectionUp
 xmap ]e <Plug>unimpairedMoveSelectionDown
 "}
 
+"" Highlights "{
+" trailing whitespaces
+match ErrorMsg '\s\+$'
+"}
+
 "asdg
-"aisjdiasjdsĸĸ̉̉̉̉̉̉̉ĸĸ̉ĸĸ̉ĸ̉ĸĸ
+"aisjdiasjdsĸĸ̉̉̉̉̉̉̉ĸĸ̉ĸĸ̉ĸ̉ĸĸ eu nao acho que isso seja muito legal
 "j
 "k
 "fasdfasdg
