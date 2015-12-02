@@ -38,6 +38,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'othree/xml.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'suan/vim-instant-markdown'
 "" End Plugins
 
 call vundle#end()
@@ -66,6 +67,8 @@ command! WQ wq "}
 "" Consider long lines separate lines
 nnoremap j gj
 nnoremap k gk
+nnoremap <UP> g<UP>
+nnoremap <DOWN> g<DOWN>
 
 "" edit and source vimrc file
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
@@ -194,6 +197,7 @@ augroup PlantUML "{
 	autocmd!
 	au BufNewFile,BufRead *.uml setlocal syntax=plantuml
 	au BufNewFile,BufRead *.puml setlocal syntax=plantuml
+	au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
 augroup END "}
 
 augroup VimRC "{
@@ -270,7 +274,7 @@ xmap ]e <Plug>unimpairedMoveSelectionDown
 
 "" Highlights "{
 " trailing whitespaces
-match ErrorMsg '\s\+$'
+" match ErrorMsg '\s\+$'
 "}
 
 "asdg
