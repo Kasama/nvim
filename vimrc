@@ -107,7 +107,7 @@ nnoremap <C-S><C-W> :tabclose<CR>
 nnoremap <C-S><C-O> :tabnew<CR>
 
 "" Save current file
-nnoremap <C-S> :w
+nnoremap <C-S> :w<CR>
 
 "" Save as root
 cmap w!! w !sudo tee % > /dev/null
@@ -116,7 +116,6 @@ cmap w!! w !sudo tee % > /dev/null
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
 "}
-
 " Bubble single lines "{
 nmap <M-J> @=']e'<CR>
 nmap <M-K> @='[e'<CR>
