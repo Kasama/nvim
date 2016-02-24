@@ -1,56 +1,56 @@
 syntax on
 
-" Vundle and plugins "{
+" Plug and plugins "{
 
 "" Autoinstall Vundle
-let isVundleUpdated=1
-let vundle_readme=expand('~/.config/nvim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-	echo "Installing Vundle.."
+let isPlugUpdated=1
+let plugged_path=expand('~/.config/.nvim/plugged/')
+let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
+if !filereadable(plug_readme)
+	echo "Installing Plug.."
 	echo ""
-	silent !mkdir -p ~/.config/nvim/bundle
+	silent !mkdir -p plugged_path
 	silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
+	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	let isVundleUpdated=0
 endif
 
 "" Init Vundle
-filetype off
-set rtp+=~/.config/nvim/bundle/vundle
-call vundle#begin()
+call plug#begin(plugged_path)
 
 "" Plugins
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'SirVer/ultisnips'
-Plugin 'ervandew/supertab'
-Plugin 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-Plugin 'vim-scripts/a.vim'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/OmniCppComplete'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-rails'
-Plugin 'chrisbra/NrrwRgn'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'othree/xml.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'tclem/vim-arduino'
+Plug 'junegunn/vim-plug'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
+Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+Plug 'vim-scripts/a.vim'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/OmniCppComplete'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-rails'
+Plug 'chrisbra/NrrwRgn'
+Plug 'airblade/vim-gitgutter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'othree/xml.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'suan/vim-instant-markdown'
+Plug 'tclem/vim-arduino'
 "" End Plugins
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
-" Vundle Done
+" Plug Done
 
 "" If Vundle was just installed, install all plugins
-if isVundleUpdated == 0
-	echo "Installing Plugins, please ignore key map error messages"
-	echo ""
-	:BundleInstall!
-endif "}
+"if isVundleUpdated == 0
+"	echo "Installing Plugins, please ignore key map error messages"
+"	echo ""
+"	:BundleInstall!
+"endif "}
 
 " Leader key "{
 let mapleader = ","
