@@ -2,9 +2,10 @@ syntax on
 
 " Plug and plugins "{
 
-"" Autoinstall Vundle
+"" Autoinstall Plug
 let isPlugUpdated=1
-let plugged_path=expand('~/.config/.nvim/plugged/')
+let vimrc=expand('~/.config/nvim/init.vim')
+let plugged_path=expand('~/.config/nvim/plugged/')
 let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
 if !filereadable(plug_readme)
 	echo "Installing Plug.."
@@ -12,10 +13,10 @@ if !filereadable(plug_readme)
 	silent !mkdir -p plugged_path
 	silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
 	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	let isVundleUpdated=0
+	let isPlugUpdated=0
 endif
 
-"" Init Vundle
+"" Init Plug
 call plug#begin(plugged_path)
 
 "" Plugins
@@ -30,7 +31,8 @@ Plug 'vim-scripts/a.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/OmniCppComplete'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-rails'
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
@@ -45,8 +47,8 @@ call plug#end()
 filetype plugin indent on
 " Plug Done
 
-"" If Vundle was just installed, install all plugins
-"if isVundleUpdated == 0
+"" If Plug was just installed, install all plugins
+"if isPlugUpdated == 0
 "	echo "Installing Plugins, please ignore key map error messages"
 "	echo ""
 "	:BundleInstall!
@@ -223,6 +225,11 @@ if has('mouse')
 endif "}
 
 " Plugin related configs "{
+" vim-airline config {
+let g:airline_powerline_fonts = 1
+let g:airline_theme='base16_summerfruit'
+" }
+
 "Eclim on supertab "{
 let g:SuperTabDefaultCompletionType = 'context'
 "}
@@ -245,6 +252,7 @@ let g:syntastic_disabled_filetypes=['asm']
 "}
 
 "" Functions {
+" Bubble lines {
 function! s:Move(cmd, count, map) abort
 	normal! m`
 	silent! exe 'move'.a:cmd.a:count
@@ -276,15 +284,4 @@ nmap ]e <Plug>unimpairedMoveDown
 xmap [e <Plug>unimpairedMoveSelectionUp
 xmap ]e <Plug>unimpairedMoveSelectionDown
 "}
-
-"" Highlights "{
-" trailing whitespaces
-" match ErrorMsg '\s\+$'
 "}
-
-"asdg
-"aisjdiasjdsĸĸ̉̉̉̉̉̉̉ĸĸ̉ĸĸ̉ĸ̉ĸĸ eu nao acho que isso seja muito legal
-"j
-"k
-"fasdfasdg
-"sadgasdg
