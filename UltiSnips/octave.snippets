@@ -1,0 +1,197 @@
+snippet ife "if, else"
+if ${1:condition}
+	${2}
+else
+	${3}
+end
+endsnippet
+
+snippet ifeif "if, elseif, else" b
+if ${1:condition}
+	${2:body}
+elseif ${3:condition}
+	${4:body}
+else
+	${5:body}
+end
+endsnippet
+
+snippet set "set" b
+set(${1:get(${2:gca},'${3:PropertyName}')},'${4:PropertyName}',${5:PropertyValue});
+endsnippet
+
+snippet tit "title" b
+title('${1}');
+endsnippet
+
+snippet whi "while" b
+while ${1:condition}
+	${2:body}
+end
+endsnippet
+
+snippet xla "xlabel" b
+xlabel('${1}');
+endsnippet
+
+snippet xti "xtick" b
+set(gca,'XTick',[${2}]);
+endsnippet
+
+snippet yla "ylabel" b
+ylabel('${1}');
+endsnippet
+
+snippet yti "ytick" b
+set(gca,'YTick',[${2}]);
+endsnippet
+
+snippet zla "zlabel" b
+zlabel('${1}');
+endsnippet
+
+snippet ^ "^"
+^(${1}) ${2}
+endsnippet
+
+snippet case "case" b
+case ${2:'${3:string}'}
+	${0}
+endsnippet
+
+snippet cle "clear"
+clear('${1:all}'${2});
+endsnippet
+
+snippet dsp "disp sprintf" b
+disp(sprintf('${1:%s}\\n'${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}${2}${1/([^%]|%%)*(%.)?.*/(?2:\))/});
+endsnippet
+
+snippet disp "disp" b
+disp('${1:Text}');
+endsnippet
+
+snippet dlmwrite "dlmwrite" b
+dlmwrite('${1:filename}.dat', [${2:variables}], ${3:'${4:delimiter}', '${5:\t}'});
+${0}
+endsnippet
+
+snippet el "else" b
+else
+	${1:body}
+endsnippet
+
+snippet elif "elseif" b
+elseif ${1:condition}
+	${0}
+endsnippet
+
+snippet error "error" b
+error('${1:Description}');
+
+snippet e "exp"
+exp(${1}) ${2}
+endsnippet
+
+snippet fpr "fprint" b
+fprintf(${1:fid}, '${2:%s}\\n'${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}${3}${2/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+snippet get "get" b
+get(${1:gca},'${2:PropertyName}');
+endsnippet
+
+snippet griddata "griddata" b
+griddata(${1:xx}, ${2:yy}, ${3:zz}, ${4:xi}, ${5:yi});
+endsnippet
+
+snippet line "line" b
+line(${1:xvector},${2:yvector}${3:,'Color','${4:b}','LineWidth',${5:1},'LineStyle','${6:-}'})
+endsnippet
+
+snippet spr "sprintf" b
+sprintf('${1:%s}\\n'${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}${2}${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+snippet switch "switch, case otherwise" b
+switch ${1:switch_expression}
+	case ${2:case_expression}
+
+	otherwise
+
+end
+endsnippet
+
+# warning
+snippet war "warning" b
+	warning('${1:Description}');
+endsnippet
+
+snippet switch "swicht, case" b
+switch ${1:var}
+	case ${2:'${3:string}'}
+	${0}
+end
+endsnippet
+
+snippet try "try, catch" b
+try
+	${1}
+catch
+	${0}
+endsnippet
+
+snippet for "for" b
+for ${1:j} = ${2:from}:${3:to}
+	${0}
+end
+endsnippet
+
+snippet if "if" b
+if ${1:condition}
+	${0}
+end
+endsnippet
+
+snippet func "function" b
+function [${1:output_args}] = ${2:`!p snip.rv = snip.basename`}(${3:input_args})
+${0}
+end
+endsnippet
+
+snippet fontsi "fontsize" b
+set(gca, 'fontsize', ${1:14});
+endsnippet
+
+snippet fontwei "fontweight" b
+set(gca, 'fontweight', '${1:bold}');
+endsnippet
+
+snippet pc "pcolor" b
+pcolor(${1:x}, ${2:y}, ${3:matrix}), shading interp, colormap ${4:hot}
+endsnippet
+
+snippet figoff "figure off" b
+set(0,'DefaultFigureVisible','off');
+endsnippet
+
+snippet figon "figure on" b
+set(0,'DefaultFigureVisible','on');
+endsnippet
+
+snippet cachef "cached file region" b
+cache_file = '${1:path/to/file.mat}';
+if exist(cache_file, 'file') ~= 2
+	$3
+	save(cache_file, '${2:variable_to_cache}');
+else
+	load(cache_file, '$2');
+end
+endsnippet
+
+snippet cached "cached directory region" b
+cache_dir = '${1:path/to/folder/}';
+if dir_empty(cache_dir)
+	$2
+end
+endsnippet

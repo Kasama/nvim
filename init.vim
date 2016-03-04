@@ -41,6 +41,7 @@ Plug 'othree/xml.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
+Plug 'jvirtanen/vim-octave'
 "" End Plugins
 
 call plug#end()
@@ -217,6 +218,12 @@ augroup arduino "{
 	au BufRead,BufNewFile *.ino set filetype=arduino
 augroup END "}
 
+augroup octave "{
+au BufRead,BufNewFile *.m, set filetype=octave
+au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
+au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave -qf %<cr>
+augroup END "}
+
 "}
 
 " Enable mouse "{
@@ -228,6 +235,7 @@ endif "}
 " vim-airline config {
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_summerfruit'
+let g:airline#extensions#tabline#enabled = 1
 " }
 
 "Eclim on supertab "{
