@@ -35,7 +35,7 @@ endsnippet
 
 snippet #if "#if #endif" b
 #if ${1:0}
-	${0:${VISUAL:\/*Code Block*\/}}
+	${0:${VISUAL:*Code Block*}}
 #endif
 endsnippet
 
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 
 	${0:${VISUAL:\/*Code Block*\/}}
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 endsnippet
 

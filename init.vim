@@ -42,6 +42,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
+Plug 'Kasama/vim-syntax-extra'
 "" End Plugins
 
 call plug#end()
@@ -128,6 +129,10 @@ nmap <M-K> @='[e'<CR>
 vmap <M-K> [egv
 vmap <M-J> ]egv "}
 
+" Colorscheme "{
+	colorscheme molokaiyo
+" }
+
 " Settings "{
 set tags=./tags;
 set laststatus=2
@@ -166,6 +171,7 @@ augroup END "}
 augroup syntaxes "{
 	autocmd!
 	au BufNewFile,BufRead *.asm setlocal syntax=icmc
+	au BufNewFile,BufRead *.ws set filetype=ws
 augroup END "}
 
 augroup customTabs "{
@@ -235,7 +241,7 @@ endif "}
 " vim-airline config {
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_summerfruit'
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 " }
 
 "Eclim on supertab "{
