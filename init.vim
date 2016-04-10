@@ -133,6 +133,13 @@ vmap <M-J> ]egv "}
 	colorscheme molokaiyo
 " }
 
+" Highlight 81st column {
+
+	hi OverStepColumn ctermbg=4
+	call matchadd('OverStepColumn', '\%81v', 100)
+
+" }
+
 " Settings "{
 set tags=./tags;
 set laststatus=2
@@ -211,7 +218,7 @@ augroup END "}
 
 augroup VimRC "{
 	autocmd!
-	autocmd! BufWritePost *vimrc source %
+	"autocmd! BufWritePost *vimrc source %
 augroup END "}
 
 augroup commitSpell "{
@@ -226,8 +233,8 @@ augroup END "}
 
 augroup octave "{
 au BufRead,BufNewFile *.m, set filetype=octave
-au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
-au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave -qf %<cr>
+"au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
+au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
 augroup END "}
 
 "}
