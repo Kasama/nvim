@@ -42,6 +42,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
+Plug 'Chiel92/vim-autoformat'
 Plug 'Kasama/vim-syntax-extra'
 "" End Plugins
 
