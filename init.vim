@@ -30,7 +30,8 @@ Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 Plug 'vim-scripts/a.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-scripts/OmniCppComplete'
+""Conflict with clang_complete
+"Plug 'vim-scripts/OmniCppComplete'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-rails'
@@ -44,6 +45,10 @@ Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Kasama/vim-syntax-extra'
+Plug 'craigemery/vim-autotag'
+Plug 'vim-scripts/AutoComplPop'
+Plug 'Rip-Rip/clang_complete'
+Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
 
 call plug#end()
@@ -93,6 +98,9 @@ nnoremap <silent> <leader>l :setlocal spell!<CR>
 
 "" Create Fold
 nnoremap <silent> <leader>f :set foldmethod=marker<CR>
+
+"" Toggle listchars
+nnoremap <silent> <leader>c :set list!<CR>
 
 "" jk in insert mode exits it
 inoremap jk <Esc>
@@ -146,6 +154,7 @@ set tags=./tags;
 set laststatus=2
 set noshowmode
 set whichwrap=b,s,<,>,[,]
+exec "set listchars=tab:\uBB\uA0,trail:¶,space:\uB7"
 set background=dark
 set hlsearch
 set foldmarker={,}
@@ -219,7 +228,7 @@ augroup END "}
 
 augroup VimRC "{
 	autocmd!
-	"autocmd! BufWritePost *vimrc source %
+	autocmd! BufWritePost *vimrc source %
 augroup END "}
 
 augroup commitSpell "{
@@ -230,6 +239,12 @@ augroup END "}
 augroup arduino "{
 	au BufRead,BufNewFile *.pde set filetype=arduino
 	au BufRead,BufNewFile *.ino set filetype=arduino
+augroup END "}
+
+augroup whiteSpaceCheck "{
+	autocmd!
+	"autocmd Filetype lex AirlineToggleWhitespace
+	autocmd Filetype yacc AirlineToggleWhitespace
 augroup END "}
 
 augroup octave "{
@@ -271,6 +286,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 "Disable default assembly checker "{
 let g:syntastic_disabled_filetypes=['asm']
 "}
+
+" Syntastic "{
+	let g:syntastic_c_compiler_options = '-std=c90'
+"}
+
 "}
 
 "" Functions {
