@@ -80,6 +80,9 @@ nnoremap k gk
 nnoremap <UP> g<UP>
 nnoremap <DOWN> g<DOWN>
 
+"" Generate tags file
+nnoremap <silent> <leader>gt :!ctags -R .<CR>
+
 "" edit and source vimrc file
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv source $MYVIMRC<CR>
@@ -226,6 +229,12 @@ augroup PlantUML "{
 	au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
 augroup END "}
 
+augroup SpecialCTAGS "{
+	autocmd!
+	autocmd! BufRead,BufNewFile *.rb unmap <leader>gt
+	autocmd! BufRead,BufNewFile *.rb nnoremap <leader>gt :!ctags -R . $(bundle list --paths)<CR>
+augroup END"}
+
 augroup VimRC "{
 	autocmd!
 	autocmd! BufWritePost *vimrc source %
@@ -239,12 +248,6 @@ augroup END "}
 augroup arduino "{
 	au BufRead,BufNewFile *.pde set filetype=arduino
 	au BufRead,BufNewFile *.ino set filetype=arduino
-augroup END "}
-
-augroup whiteSpaceCheck "{
-	autocmd!
-	"autocmd Filetype lex AirlineToggleWhitespace
-	autocmd Filetype yacc AirlineToggleWhitespace
 augroup END "}
 
 augroup octave "{
