@@ -39,16 +39,16 @@ Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
-Plug 'kien/ctrlp.vim'
-Plug 'suan/vim-instant-markdown'
+"Plug 'kien/ctrlp.vim'
+"Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Kasama/vim-syntax-extra'
-Plug 'craigemery/vim-autotag'
-Plug 'vim-scripts/AutoComplPop'
+"Plug 'craigemery/vim-autotag'
+"Plug 'vim-scripts/AutoComplPop'
 Plug 'Rip-Rip/clang_complete'
-Plug 'vhakulinen/neovim-intellij-complete-deoplete'
+"Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
 
 call plug#end()
@@ -271,7 +271,7 @@ let g:airline_theme='base16_summerfruit'
 " }
 
 "Eclim on supertab "{
-let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
 "}
 
 "CtrlP configs "{
@@ -292,6 +292,14 @@ let g:syntastic_disabled_filetypes=['asm']
 
 " Syntastic "{
 	let g:syntastic_c_compiler_options = '-std=c90'
+"}
+
+" Clang_Complete "{
+	let g:clang_snippets = 1
+	let g:clang_snippets_engine = 'clang_complete'
+	let g:clang_close_preview = 1
+	let g:clang_complete_macros = 1
+	set completeopt=menu,longest
 "}
 
 "}
