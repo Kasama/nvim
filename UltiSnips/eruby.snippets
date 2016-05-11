@@ -35,6 +35,22 @@ snippet rbyy "<%= ${0} %>"
 `!p textmate_var('TM_RAILS_TEMPLATE_START_RUBY_EXPR', snip)`${0}`!p textmate_var('TM_RAILS_TEMPLATE_END_RUBY_EXPR', snip)`
 endsnippet
 
+snippet end "<% end %>"
+`!p textmate_var('TM_RAILS_TEMPLATE_END_RUBY_BLOCK', snip)`${0}
+endsnippet
+
+snippet if "<% if %>"
+`!p textmate_var('TM_RAILS_TEMPLATE_START_RUBY_INLINE', snip)`if ${1}`!p textmate_var('TM_RAILS_TEMPLATE_END_RUBY_INLINE', snip)`
+${0}
+`!p textmate_var('TM_RAILS_TEMPLATE_END_RUBY_BLOCK', snip)`${0}
+endsnippet
+
+snippet do "do || end"
+do |${1}|`!p textmate_var('TM_RAILS_TEMPLATE_END_RUBY_INLINE', snip)`
+${0}
+`!p textmate_var('TM_RAILS_TEMPLATE_START_RUBY_INLINE', snip)`end
+endsnippet
+
 ###########################################################################
 #            GENERATED FROM get_tm_snippets.py + REGEX REPLACE            #
 ###########################################################################
