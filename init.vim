@@ -31,10 +31,12 @@ Plug 'vim-scripts/a.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 ""Conflict with clang_complete
-"Plug 'vim-scripts/OmniCppComplete'
+Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'js' ] }
+Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby', { 'for':['ruby', 'erb'] }
+Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
@@ -47,7 +49,7 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'Kasama/vim-syntax-extra'
 "Plug 'craigemery/vim-autotag'
 "Plug 'vim-scripts/AutoComplPop'
-Plug 'Rip-Rip/clang_complete'
+Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
 
@@ -131,6 +133,12 @@ cmap w!! w !sudo tee % > /dev/null
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
+"" Copy and Paste from X env
+nnoremap <silent> <leader>y "+y
+nnoremap <silent> <leader>Y "+Y
+nnoremap <silent> <leader>p "+p
+nnoremap <silent> <leader>P "+P
+
 "}
 
 " Bubble single lines "{
@@ -173,7 +181,9 @@ set exrc
 set secure
 set nu
 set relativenumber
-set completeopt=menuone
+"set completeopt=menuone
+set completeopt=longest,menu,preview
+set lazyredraw
 "}
 
 " AuGroups "{
@@ -299,6 +309,9 @@ let g:syntastic_disabled_filetypes=['asm']
 	let g:clang_snippets_engine = 'clang_complete'
 	let g:clang_close_preview = 1
 	let g:clang_complete_macros = 1
+	let g:clang_use_library=1
+	let g:clang_library_path="/usr/lib/"
+	let g:clang_periodic_quickfix=1 " update quickfix periodically
 	set completeopt=menu,longest
 "}
 
