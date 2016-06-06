@@ -41,15 +41,18 @@ Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
-"Plug 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 "Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
-Plug 'Chiel92/vim-autoformat'
+"Plug 'Chiel92/vim-autoformat'
 Plug 'Kasama/vim-syntax-extra'
 "Plug 'craigemery/vim-autotag'
 "Plug 'vim-scripts/AutoComplPop'
 Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
+Plug 'bbchung/Clamp', { 'for': ['cpp', 'c', 'h'] }
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
 
@@ -81,6 +84,9 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <UP> g<UP>
 nnoremap <DOWN> g<DOWN>
+
+"" Reformat code
+nnoremap <silent> <leader>fc :ClangFormat<CR>
 
 "" Generate tags file
 nnoremap <silent> <leader>gt :!ctags -R .<CR>
@@ -134,10 +140,10 @@ cmap w!! w !sudo tee % > /dev/null
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
 "" Copy and Paste from X env
-nnoremap <silent> <leader>y "+y
-nnoremap <silent> <leader>Y "+Y
-nnoremap <silent> <leader>p "+p
-nnoremap <silent> <leader>P "+P
+"nnoremap <silent> <leader>y "+y
+"nnoremap <silent> <leader>Y "+Y
+"nnoremap <silent> <leader>p "+p
+"nnoremap <silent> <leader>P "+P
 
 "}
 
@@ -277,17 +283,20 @@ endif "}
 " vim-airline config {
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_summerfruit'
-"let g:airline#extensions#tabline#enabled = 1
+" Tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
 " }
 
 "Eclim on supertab "{
-let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+let g:SuperTabDefaultCompletionType = 'context'
 "}
 
 "CtrlP configs "{
 let g:ctrlp_map = '<leader>p'
-" disable caching
-let g:ctrlp_use_caching=0
+" enable caching
+let g:ctrlp_use_caching=1
 "}
 
 "Ultisnips using tab to expand "{
@@ -308,10 +317,12 @@ let g:syntastic_disabled_filetypes=['asm']
 	let g:clang_snippets = 1
 	let g:clang_snippets_engine = 'clang_complete'
 	let g:clang_close_preview = 1
+	let g:clang_complete_copen = 1
 	let g:clang_complete_macros = 1
 	let g:clang_use_library=1
 	let g:clang_library_path="/usr/lib/"
 	let g:clang_periodic_quickfix=1 " update quickfix periodically
+	let g:clang_hl_errors = 0
 	set completeopt=menu,longest
 "}
 

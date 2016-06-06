@@ -12,13 +12,13 @@ endsnippet
 
 snippet "\b(de)?f" "def <name>..." r
 def ${1:function_name}${2:(${3:*args})}
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet defi "def initialize ..."
 def initialize${1:(${2:*args})}
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
@@ -26,12 +26,14 @@ snippet defr "def <name> ... rescue ..."
 def ${1:function_name}${2:(${3:*args})}
 	$4
 rescue
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet For "(<from>..<to>).each { |<i>| <block> }"
-(${1:from}..${2:to}).each { |${3:i}| $0 }
+(${1:from}..${2:to}).each do |${3:i}|
+  ${0:${VISUAL}}
+end
 endsnippet
 
 snippet "(\S+)\.Merge!" ".merge!(<other_hash>) { |<key>,<oldval>,<newval>| <block> }" r
@@ -120,13 +122,13 @@ endsnippet
 
 snippet "(\S+)\.ead" "<elements>.each do |<element>| <block> end" r
 `!p snip.rv=match.group(1)`.each do |${1:e}|
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet "each_?s(lice)?" "<array>.each_slice(n) do |slice| <block> end" r
 ${1:elements}.each_slice(${2:2}) do |${3:slice}|
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
@@ -268,37 +270,37 @@ endsnippet
 
 snippet do "do |<key>| ... end" i
 do |${1:args}|
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet Do "do ... end" i
 do
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet until "until <expression> ... end"
 until ${1:expression}
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet Until "begin ... end until <expression>"
 begin
-	$0
+	${0:${VISUAL}}
 end until ${1:expression}
 endsnippet
 
 snippet while "while <expression> ... end"
 while ${1:expression}
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet While "begin ... end while <expression>"
 begin
-	$0
+	${0:${VISUAL}}
 end while ${1:expression}
 endsnippet
 
@@ -318,7 +320,7 @@ snippet begin "begin ... rescue ... end"
 begin
 	$1
 rescue
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
@@ -332,7 +334,7 @@ rescue Exception => e
 else
 	${3:# other exception}
 ensure
-	${0:# always excute}
+	${0:${VISUAL}}
 end
 endsnippet
 
@@ -364,13 +366,13 @@ endsnippet
 
 snippet module "module"
 module ${1:module_name}
-	$0
+	${0:${VISUAL}}
 end
 endsnippet
 
 snippet ###
 =begin
-	$0
+	${0:${VISUAL}}
 =end
 endsnippet
 
