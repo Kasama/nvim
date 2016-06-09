@@ -93,7 +93,7 @@ nnoremap <silent> <leader>gt :!ctags -R .<CR>
 
 "" edit and source vimrc file
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <silent> <leader>sv source $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
@@ -124,11 +124,11 @@ nnoremap <C-J> <C-E>
 nnoremap <C-K> <C-Y>
 
 "" Tabs Commands
-nnoremap <C-S><C-X> gt
-nnoremap <C-S><C-Z> gT
-"map <C-S><C-S> gT
-nnoremap <C-S><C-W> :tabclose<CR>
-nnoremap <C-S><C-O> :tabnew<CR>
+"nnoremap <C-S><C-X> gt
+"nnoremap <C-S><C-Z> gT
+""map <C-S><C-S> gT
+"nnoremap <C-S><C-W> :tabclose<CR>
+"nnoremap <C-S><C-O> :tabnew<CR>
 
 "" Save current file
 nnoremap <C-S> :w<CR>
@@ -138,6 +138,12 @@ cmap w!! w !sudo tee % > /dev/null
 
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
+
+"" Move between buffers
+nnoremap <silent> <Tab> :bnext<CR>
+nnoremap <silent> <S-Tab> :bprev<CR>
+nnoremap <silent> <C-\><C-\> :b#<CR>
+nnoremap <silent> <C-\>q :bdelete<CR>
 
 "" Copy and Paste from X env
 "nnoremap <silent> <leader>y "+y
@@ -160,10 +166,8 @@ vmap <M-J> ]egv "}
 " }
 
 " Highlight 81st column {
-
 	hi OverStepColumn ctermbg=4
 	call matchadd('OverStepColumn', '\%81v', 100)
-
 " }
 
 " Settings "{
@@ -185,6 +189,7 @@ set softtabstop=4
 set noexpandtab
 set exrc
 set secure
+set hidden
 set nu
 set relativenumber
 "set completeopt=menuone
@@ -197,6 +202,19 @@ augroup devHelp "{
 	autocmd!
 	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
+
+augroup Rails "{
+	autocmd!
+	au BufNewFile,BufRead *.erb nnoremap <leader>rc :Rcontroller<CR>
+	au BufNewFile,BufRead *.rb nnoremap <leader>rc :Rcontroller<CR>
+	au BufNewFile,BufRead *.js nnoremap <leader>rc :Rcontroller<CR>
+	au BufNewFile,BufRead *.erb nnoremap <leader>rv :Rview<CR>
+	au BufNewFile,BufRead *.rb nnoremap <leader>rv :Rview<CR>
+	au BufNewFile,BufRead *.js nnoremap <leader>rv :Rview<CR>
+	au BufNewFile,BufRead *.erb nnoremap <leader>rm :Rmodel<CR>
+	au BufNewFile,BufRead *.rb nnoremap <leader>rm :Rmodel<CR>
+	au BufNewFile,BufRead *.js nnoremap <leader>rm :Rmodel<CR>
+augroup END"}
 
 augroup htmlAbrrevs "{
 	autocmd!
@@ -295,6 +313,16 @@ let g:SuperTabDefaultCompletionType = 'context'
 
 "CtrlP configs "{
 let g:ctrlp_map = '<leader>p'
+let g:ctrlp_working_path_mode = 'ra'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+	\ 'file': '\v\.(exe|so|dll)$',
+	\ 'link': 'some_bad_symbolic_links',
+	\ }
+
 " enable caching
 let g:ctrlp_use_caching=1
 "}
