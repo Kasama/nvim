@@ -35,7 +35,7 @@ Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'js' ] }
 Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-ruby/vim-ruby', { 'for':['ruby', 'erb'] }
+Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
@@ -52,7 +52,10 @@ Plug 'Kasama/vim-syntax-extra'
 Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 Plug 'bbchung/Clamp', { 'for': ['cpp', 'c', 'h'] }
 Plug 'kana/vim-operator-user'
-Plug 'rhysd/vim-clang-format'
+Plug 'rhysd/vim-crystal'
+Plug 'elixir-lang/vim-elixir'
+Plug 'adimit/prolog.vim'
+"Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
 
@@ -140,8 +143,8 @@ cmap w!! w !sudo tee % > /dev/null
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
 "" Move between buffers
-nnoremap <silent> <Tab> :bnext<CR>
-nnoremap <silent> <S-Tab> :bprev<CR>
+nnoremap <silent> <Tab><Tab> :bnext<CR>
+nnoremap <silent> <S-Tab><S-Tab> :bprev<CR>
 nnoremap <silent> <C-\><C-\> :b#<CR>
 nnoremap <silent> <C-\>q :bdelete<CR>
 
@@ -214,7 +217,13 @@ augroup Rails "{
 	au BufNewFile,BufRead *.erb nnoremap <leader>rm :Rmodel<CR>
 	au BufNewFile,BufRead *.rb nnoremap <leader>rm :Rmodel<CR>
 	au BufNewFile,BufRead *.js nnoremap <leader>rm :Rmodel<CR>
-augroup END"}
+augroup END "}
+
+augroup Ruby "{
+	autocmd!
+	au BufNewFile,BufRead *.rb set completefunc=rubycomplete#Complete
+	au BufNewFile,BufRead *.rb let g:syntastic_ruby_checkers=['rubocop']
+augroup END "}
 
 augroup htmlAbrrevs "{
 	autocmd!
@@ -307,8 +316,8 @@ let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
 " }
 
 "Eclim on supertab "{
-"let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"let g:SuperTabDefaultCompletionType = 'context'
 "}
 
 "CtrlP configs "{
@@ -345,11 +354,12 @@ let g:syntastic_disabled_filetypes=['asm']
 	let g:clang_snippets = 1
 	let g:clang_snippets_engine = 'clang_complete'
 	let g:clang_close_preview = 1
-	let g:clang_complete_copen = 1
+	let g:clang_complete_auto = 1
+	let g:clang_complete_copen = 0
 	let g:clang_complete_macros = 1
 	let g:clang_use_library=1
 	let g:clang_library_path="/usr/lib/"
-	let g:clang_periodic_quickfix=1 " update quickfix periodically
+	let g:clang_periodic_quickfix=0 " update quickfix periodically
 	let g:clang_hl_errors = 0
 	set completeopt=menu,longest
 "}
