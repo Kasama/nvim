@@ -56,6 +56,7 @@ Plug 'rhysd/vim-crystal'
 Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
