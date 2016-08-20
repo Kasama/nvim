@@ -55,6 +55,7 @@ Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-crystal'
 Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
+Plug 'rust-lang/rust.vim'
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
