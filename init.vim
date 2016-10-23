@@ -318,8 +318,8 @@ let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
 " }
 
 "Eclim on supertab "{
-let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-"let g:SuperTabDefaultCompletionType = 'context'
+"let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+let g:SuperTabDefaultCompletionType = 'context'
 "}
 
 "CtrlP configs "{
@@ -346,6 +346,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 
 "Disable default assembly checker "{
 let g:syntastic_disabled_filetypes=['asm']
+"}
+
+" Rust config "{
+	let g:racer_cmd = "/home/roberto/.cargo/bin/racer"
+	let $RUST_SRC_PATH="/usr/src/rust/src"
 "}
 
 " Syntastic "{
