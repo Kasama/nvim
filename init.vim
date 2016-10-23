@@ -241,12 +241,16 @@ augroup END "}
 
 augroup customTabs "{
 	autocmd!
-	au BufNewFile,BufRead *.rb setlocal tabstop=2
-	au BufNewFile,BufRead *.rb setlocal shiftwidth=2
-	au BufNewFile,BufRead *.rb setlocal softtabstop=2
-	au BufNewFile,BufRead *.erb setlocal tabstop=2
-	au BufNewFile,BufRead *.erb setlocal shiftwidth=2
-	au BufNewFile,BufRead *.erb setlocal softtabstop=2
+	au BufNewFile,BufRead *.rb setlocal tabstop=4
+	au BufNewFile,BufRead *.rb setlocal shiftwidth=4
+	au BufNewFile,BufRead *.rb setlocal softtabstop=4
+	au BufNewFile,BufRead *.erb setlocal tabstop=4
+	au BufNewFile,BufRead *.erb setlocal shiftwidth=4
+	au BufNewFile,BufRead *.erb setlocal softtabstop=4
+	au FileType haskell setlocal tabstop=8
+	au FileType haskell setlocal shiftwidth=8
+	au FileType haskell setlocal softtabstop=8
+	au FileType haskell setlocal expandtab
 augroup END "}
 
 augroup comments "{
@@ -280,6 +284,13 @@ augroup SpecialCTAGS "{
 	autocmd! BufRead,BufNewFile *.rb nnoremap <leader>gt :!ctags -R . $(bundle list --paths)<CR>
 augroup END"}
 
+augroup tabBehaviour "{
+	autocmd!
+	au BufRead,BufNewFile *.c let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+	au BufRead,BufNewFile *.cpp let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+	au BufRead,BufNewFile *.h let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+augroup END "}
+
 augroup VimRC "{
 	autocmd!
 	autocmd! BufWritePost *vimrc source %
@@ -306,7 +317,8 @@ augroup END "}
 " Enable mouse "{
 if has('mouse')
 	set mouse=a
-endif "}
+endif
+"}
 
 " Plugin related configs "{
 " vim-airline config {
