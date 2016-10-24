@@ -58,6 +58,7 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
+Plug 'vim-scripts/CycleColor'
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
@@ -168,7 +169,8 @@ vmap <M-K> [egv
 vmap <M-J> ]egv "}
 
 " Colorscheme "{
-	colorscheme molokaiyo
+	"colorscheme molokaiyo
+	colorscheme slate
 " }
 
 " Highlight 81st column {
@@ -329,7 +331,7 @@ let g:deoplete#enable_at_startup = 1
 
 " vim-airline config {
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16_summerfruit'
+let g:airline_theme='base16_grayscale'
 " Tabline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
