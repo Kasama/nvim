@@ -1,5 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/usr/share/vim/vim73'
-let g:netrw_dirhist_2='/home/roberto/testDir'
-let g:netrw_dirhist_3='/home/roberto/documents/USP/Programação/C/Mello/Trabalho 2'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/roberto/floobits/Kasama/bc-compiler/parser'
+let g:netrw_dirhist_2='/home/roberto/floobits/Kasama/bc-compiler'
+let g:netrw_dirhist_3='/home/roberto/floobits/Kasama/bc-compiler/parser'
+let g:netrw_dirhist_4='/home/roberto/floobits/Kasama/bc-compiler'
+let g:netrw_dirhist_5='/home/roberto/floobits/Kasama/bc-compiler/parser'
+let g:netrw_dirhist_6='/home/roberto/floobits/Kasama/bc-compiler'
+let g:netrw_dirhist_7='/home/roberto/floobits/Kasama/bc-compiler/parser'
+let g:netrw_dirhist_8='/home/roberto/floobits/Kasama/bc-compiler'
+let g:netrw_dirhist_9='/home/roberto/floobits/Kasama/bc-compiler/parser'

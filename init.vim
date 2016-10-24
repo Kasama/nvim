@@ -21,6 +21,7 @@ call plug#begin(plugged_path)
 
 "" Plugins
 Plug 'junegunn/vim-plug'
+Plug 'floobits/floobits-neovim'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
@@ -50,12 +51,13 @@ Plug 'Kasama/vim-syntax-extra'
 "Plug 'craigemery/vim-autotag'
 "Plug 'vim-scripts/AutoComplPop'
 Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
-Plug 'bbchung/Clamp', { 'for': ['cpp', 'c', 'h'] }
+"Plug 'bbchung/Clamp', { 'for': ['cpp', 'c', 'h'] }
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-crystal'
 Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
 Plug 'rust-lang/rust.vim'
+"Plug 'Shougo/deoplete.nvim'
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
@@ -320,6 +322,11 @@ endif
 "}
 
 " Plugin related configs "{
+
+" deoplete config {
+let g:deoplete#enable_at_startup = 1
+" }
+
 " vim-airline config {
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_summerfruit'
