@@ -170,7 +170,7 @@ vmap <M-J> ]egv "}
 
 " Colorscheme "{
 	"colorscheme molokaiyo
-	colorscheme slate
+	colorscheme kasama
 " }
 
 " Highlight 81st column {
