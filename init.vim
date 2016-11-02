@@ -7,14 +7,14 @@ let isPlugUpdated=1
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
-if !filereadable(plug_readme)
-	echo "Installing Plug.."
-	echo ""
-	silent !mkdir -p plugged_path
-	silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
-	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	let isPlugUpdated=0
-endif
+"if !filereadable(plug_readme)
+"	echo "Installing Plug.."
+"	echo ""
+"	silent !mkdir -p plugged_path
+"	silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
+"	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"	let isPlugUpdated=0
+"endif
 
 "" Init Plug
 call plug#begin(plugged_path)
@@ -152,6 +152,9 @@ nnoremap <silent> <S-Tab><S-Tab> :bprev<CR>
 nnoremap <silent> <C-\><C-\> :b#<CR>
 nnoremap <silent> <C-\>q :bdelete<CR>
 
+"" switch to C90 comment style
+nnoremap <silent> <leader>fcs 02f/r*A */<ESC>
+
 "" Copy and Paste from X env
 "nnoremap <silent> <leader>y "+y
 "nnoremap <silent> <leader>Y "+Y
@@ -244,16 +247,24 @@ augroup END "}
 
 augroup customTabs "{
 	autocmd!
-	au BufNewFile,BufRead *.rb setlocal tabstop=4
-	au BufNewFile,BufRead *.rb setlocal shiftwidth=4
-	au BufNewFile,BufRead *.rb setlocal softtabstop=4
-	au BufNewFile,BufRead *.erb setlocal tabstop=4
-	au BufNewFile,BufRead *.erb setlocal shiftwidth=4
-	au BufNewFile,BufRead *.erb setlocal softtabstop=4
+	au BufNewFile,BufRead *.rb setlocal tabstop=2
+	au BufNewFile,BufRead *.rb setlocal shiftwidth=2
+	au BufNewFile,BufRead *.rb setlocal softtabstop=2
+	au BufNewFile,BufRead *.rb setlocal expandtab
+	au BufNewFile,BufRead *.erb setlocal tabstop=2
+	au BufNewFile,BufRead *.erb setlocal shiftwidth=2
+	au BufNewFile,BufRead *.erb setlocal softtabstop=2
+	au BufNewFile,BufRead *.erb setlocal expandtab
 	au FileType haskell setlocal tabstop=8
 	au FileType haskell setlocal shiftwidth=8
 	au FileType haskell setlocal softtabstop=8
 	au FileType haskell setlocal expandtab
+augroup END "}
+
+augroup HighlightTrailingWhitespaces "{
+	autocmd!
+	match ExtraWhiteSpaces /\s\+$/
+	match ExtraWhiteSpaces /\s\+$\| \+\ze\t/
 augroup END "}
 
 augroup comments "{
@@ -369,7 +380,7 @@ let g:syntastic_disabled_filetypes=['asm']
 "}
 
 " Rust config "{
-	let g:racer_cmd = "/home/roberto/.cargo/bin/racer"
+	let g:racer_cmd = $HOME . "/.cargo/bin/racer"
 	let $RUST_SRC_PATH="/usr/src/rust/src"
 "}
 
