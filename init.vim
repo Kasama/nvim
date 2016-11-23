@@ -2,19 +2,14 @@ syntax on
 
 " Plug and plugins "{
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
 "" Autoinstall Plug
-let isPlugUpdated=1
-let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
-let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
-"if !filereadable(plug_readme)
-"	echo "Installing Plug.."
-"	echo ""
-"	silent !mkdir -p plugged_path
-"	silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
-"	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"	let isPlugUpdated=0
-"endif
 
 "" Init Plug
 call plug#begin(plugged_path)
