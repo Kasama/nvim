@@ -3,9 +3,9 @@ syntax on
 " Plug and plugins "{
 
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 "" Autoinstall Plug
@@ -144,8 +144,11 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 "" Move between buffers
 nnoremap <silent> <Tab><Tab> :bnext<CR>
 nnoremap <silent> <S-Tab><S-Tab> :bprev<CR>
+nnoremap <silent> <leader>bb :b#<CR>
+nnoremap <silent> <leader>bd :bdelete<CR>
 nnoremap <silent> <C-\><C-\> :b#<CR>
 nnoremap <silent> <C-\>q :bdelete<CR>
+nnoremap <silent> <C-\><C-q> :bdelete<CR>
 
 "" switch to C90 comment style
 nnoremap <silent> <leader>fcs 02f/r*A */<ESC>
@@ -380,7 +383,7 @@ let g:syntastic_disabled_filetypes=['asm']
 "}
 
 " Syntastic "{
-	let g:syntastic_c_compiler_options = '-std=c90'
+	let g:syntastic_c_compiler_options = '-std=c99'
 "}
 
 " Clang_Complete "{
