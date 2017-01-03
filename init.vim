@@ -2,16 +2,19 @@ syntax on
 
 " Plug and plugins "{
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
+" if empty(glob('~/.vim/autoload/plug.vim'))
+"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall | source $MYVIMRC
+" endif
 
 "" Autoinstall Plug
-let plugged_path=expand('~/.config/nvim/plugged/')
+
+
+"" Autoinstall Plug
 
 "" Init Plug
+let plugged_path=expand('~/.config/nvim/plugged/')
 call plug#begin(plugged_path)
 
 "" Plugins
