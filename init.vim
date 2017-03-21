@@ -16,32 +16,33 @@ let plugged_path=expand('~/.config/nvim/plugged/')
 call plug#begin(plugged_path)
 
 "" Plugins
-Plug 'junegunn/vim-plug'
-Plug 'floobits/floobits-neovim'
+"Plug 'junegunn/vim-plug'
+Plug 'floobits/floobits-neovim', { 'on': [] }
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-Plug 'vim-scripts/a.vim'
+Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] }
+Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 ""Conflict with clang_complete
-Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'js' ] }
+Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'javascript' ] }
 Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
-Plug 'moll/vim-node', { 'for': ['js', 'html'] }
-Plug 'wookiehangover/jshint.vim', { 'for': ['js', 'html'] }
+Plug 'moll/vim-node', { 'for': ['javascript', 'html'] }
+"Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
 Plug 'kien/ctrlp.vim'
-"Plug 'suan/vim-instant-markdown'
+Plug 'suan/vim-instant-markdown', { 'on': [] }
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
 "Plug 'Chiel92/vim-autoformat'
@@ -386,7 +387,10 @@ let g:syntastic_disabled_filetypes=['asm']
 "}
 
 " Syntastic "{
+	" C
 	let g:syntastic_c_compiler_options = '-std=c99'
+	" Javascript
+	let g:syntastic_javascript_checkers = ['jshint']
 "}
 
 " Clang_Complete "{
