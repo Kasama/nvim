@@ -13,6 +13,7 @@ endif
 let colors_name = "kasama"
 
 hi Normal		guifg=#c0c0c0 guibg=#000040						ctermfg=gray ctermbg=black
+"hi Normal		guifg=#a2a2a2 guibg=#282828
 "hi Normal		guifg=#31363B guibg=#31363B						ctermfg=gray ctermbg=black
 hi ErrorMsg		guifg=#ffffff guibg=#287eff						ctermfg=lightblue ctermbg=red
 hi Visual		guifg=#8080ff guibg=fg		gui=reverse				ctermfg=darkblue ctermbg=fg cterm=reverse

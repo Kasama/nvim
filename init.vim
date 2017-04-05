@@ -17,7 +17,9 @@ call plug#begin(plugged_path)
 
 "" Plugins
 "Plug 'junegunn/vim-plug'
-Plug 'floobits/floobits-neovim', { 'on': [] }
+if (has('nvim'))
+	Plug 'floobits/floobits-neovim'
+endif
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
@@ -26,23 +28,27 @@ Plug 'ervandew/supertab'
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] }
 Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
+Plug 'beyondmarc/glsl.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 ""Conflict with clang_complete
-Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'javascript' ] }
+"Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'javascript' ] }
 Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
 Plug 'moll/vim-node', { 'for': ['javascript', 'html'] }
+"Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
+"Plug 'Shougo/deoplete.nvim'
+Plug 'HerringtonDarkholme/yats.vim'
 "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'suan/vim-instant-markdown', { 'on': [] }
+Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
 "Plug 'Chiel92/vim-autoformat'
@@ -57,7 +63,7 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
-Plug 'vim-scripts/CycleColor'
+Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 "" End Plugins
@@ -300,12 +306,12 @@ augroup SpecialCTAGS "{
 	autocmd! BufRead,BufNewFile *.rb nnoremap <leader>gt :!ctags -R . $(bundle list --paths)<CR>
 augroup END"}
 
-augroup tabBehaviour "{
-	autocmd!
-	au BufRead,BufNewFile *.c let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-	au BufRead,BufNewFile *.cpp let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-	au BufRead,BufNewFile *.h let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-augroup END "}
+" augroup tabBehaviour "{
+" 	autocmd!
+" 	au BufRead,BufNewFile *.c let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+" 	au BufRead,BufNewFile *.cpp let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+" 	au BufRead,BufNewFile *.h let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+" augroup END "}
 
 augroup VimRC "{
 	autocmd!
@@ -339,7 +345,13 @@ endif
 " Plugin related configs "{
 
 " deoplete config {
-let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_debug = 1
+  let g:deoplete#enable_profile = 1
+  let g:deoplete#complete_method = "omnifunc"
+  let g:deoplete#enable_ignore_case = 1
+  let g:deoplete#disable_auto_complete = 1
+  "call deoplete#enable_logging('DEBUG', '/tmp/deoplete/deoplete.log')
 " }
 
 " vim-airline config {
@@ -351,8 +363,10 @@ let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
 " }
 
 "Eclim on supertab "{
-"let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"let g:SuperTabDefaultCompletionType = '<C-X><C-O>'
 let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabContextDefaultCompletionType = '<c-p>'
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 "}
 
 "CtrlP configs "{
@@ -405,6 +419,10 @@ let g:syntastic_disabled_filetypes=['asm']
 	let g:clang_periodic_quickfix=0 " update quickfix periodically
 	let g:clang_hl_errors = 0
 	set completeopt=menu,longest
+"}
+
+" Instant Markdown "{
+	let g:instant_markdown_autostart = 0
 "}
 
 "}
