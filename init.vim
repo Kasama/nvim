@@ -4,9 +4,9 @@ syntax on
 "" Autoinstall Plug
 
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 "" Autoinstall Plug
@@ -20,11 +20,14 @@ call plug#begin(plugged_path)
 if (has('nvim'))
 	Plug 'floobits/floobits-neovim'
 endif
+Plug 'Valloric/YouCompleteMe'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+"Plug 'oblitum/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
-Plug 'ervandew/supertab'
+"Plug 'ervandew/supertab'
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] }
 Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
@@ -33,7 +36,7 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 ""Conflict with clang_complete
 "Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'javascript' ] }
-Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
+"Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
@@ -62,7 +65,7 @@ Plug 'rhysd/vim-crystal'
 Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'
+"Plug 'racer-rust/vim-racer'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
@@ -180,13 +183,13 @@ vmap <M-K> [egv
 vmap <M-J> ]egv "}
 
 " Colorscheme "{
-	"colorscheme molokaiyo
-	colorscheme kasama
+"colorscheme molokaiyo
+colorscheme kasama
 " }
 
 " Highlight 81st column {
-	hi OverStepColumn ctermbg=4
-	call matchadd('OverStepColumn', '\%81v', 100)
+hi OverStepColumn ctermbg=4
+call matchadd('OverStepColumn', '\%81v', 100)
 " }
 
 " Settings "{
@@ -329,9 +332,14 @@ augroup arduino "{
 augroup END "}
 
 augroup octave "{
-au BufRead,BufNewFile *.m, set filetype=octave
-"au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
-au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
+	au BufRead,BufNewFile *.m, set filetype=octave
+	"au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
+	au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
+augroup END "}
+
+augroup PreviewOnBottom "{
+    autocmd InsertEnter * set splitbelow
+    autocmd InsertLeave * set splitbelow!
 augroup END "}
 
 "}
@@ -345,13 +353,13 @@ endif
 " Plugin related configs "{
 
 " deoplete config {
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_debug = 1
-  let g:deoplete#enable_profile = 1
-  let g:deoplete#complete_method = "omnifunc"
-  let g:deoplete#enable_ignore_case = 1
-  let g:deoplete#disable_auto_complete = 1
-  "call deoplete#enable_logging('DEBUG', '/tmp/deoplete/deoplete.log')
+"  let g:deoplete#enable_at_startup = 1
+"  let g:deoplete#enable_debug = 1
+"  let g:deoplete#enable_profile = 1
+"  let g:deoplete#complete_method = "omnifunc"
+"  let g:deoplete#enable_ignore_case = 1
+"  let g:deoplete#disable_auto_complete = 1
+"  "call deoplete#enable_logging('DEBUG', '/tmp/deoplete/deoplete.log')
 " }
 
 " vim-airline config {
@@ -376,13 +384,26 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
 let g:ctrlp_custom_ignore = {
-	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
-	\ 'file': '\v\.(exe|so|dll)$',
-	\ 'link': 'some_bad_symbolic_links',
-	\ }
+			\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+			\ 'file': '\v\.(exe|so|dll)$',
+			\ 'link': 'some_bad_symbolic_links',
+			\ }
 
 " enable caching
 let g:ctrlp_use_caching=1
+"}
+
+"YouCompleteMe config "{
+let g:ycm_add_preview_to_completeopt=1
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
+"}
+
+" Vim-Ruby/Rails {
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 "}
 
 "Ultisnips using tab to expand "{
@@ -396,38 +417,75 @@ let g:syntastic_disabled_filetypes=['asm']
 "}
 
 " Rust config "{
-	let g:racer_cmd = $HOME . "/.cargo/bin/racer"
-	let $RUST_SRC_PATH="/usr/src/rust/src"
+let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+let $RUST_SRC_PATH="/usr/src/rust/src"
 "}
 
 " Syntastic "{
-	" C
-	let g:syntastic_c_compiler_options = '-std=c99'
-	" Javascript
-	let g:syntastic_javascript_checkers = ['jshint']
+" C
+let g:syntastic_c_compiler_options = '-std=c99'
+" Javascript
+let g:syntastic_javascript_checkers = ['jshint']
 "}
 
 " Clang_Complete "{
-	let g:clang_snippets = 1
-	let g:clang_snippets_engine = 'clang_complete'
-	let g:clang_close_preview = 1
-	let g:clang_complete_auto = 1
-	let g:clang_complete_copen = 0
-	let g:clang_complete_macros = 1
-	let g:clang_use_library=1
-	let g:clang_library_path="/usr/lib/"
-	let g:clang_periodic_quickfix=0 " update quickfix periodically
-	let g:clang_hl_errors = 0
-	set completeopt=menu,longest
+let g:clang_snippets = 1
+let g:clang_snippets_engine = 'clang_complete'
+let g:clang_close_preview = 1
+let g:clang_complete_auto = 1
+let g:clang_complete_copen = 0
+let g:clang_complete_macros = 1
+let g:clang_use_library=1
+let g:clang_library_path="/usr/lib/"
+let g:clang_periodic_quickfix=0 " update quickfix periodically
+let g:clang_hl_errors = 0
+set completeopt=menu,longest
 "}
 
 " Instant Markdown "{
-	let g:instant_markdown_autostart = 0
+let g:instant_markdown_autostart = 0
 "}
 
 "}
 
 "" Functions {
+" Ultisnips vs. YouCompleteMe Tab {
+function! g:UltiSnips_Complete()
+	call UltiSnips#ExpandSnippet()
+	if g:ulti_expand_res == 0
+		if pumvisible()
+			return "\<C-n>"
+		else
+			call UltiSnips#JumpForwards()
+			if g:ulti_jump_forwards_res == 0
+				return "\<TAB>"
+			endif
+		endif
+	endif
+	return ""
+endfunction
+
+function! g:UltiSnips_Reverse()
+	call UltiSnips#JumpBackwards()
+	if g:ulti_jump_backwards_res == 0
+		return "\<C-P>"
+	endif
+
+	return ""
+endfunction
+
+if !exists("g:UltiSnipsJumpForwardTrigger")
+	let g:UltiSnipsJumpForwardTrigger = "<tab>"
+endif
+
+if !exists("g:UltiSnipsJumpBackwardTrigger")
+	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+endif
+
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+"}
+
 " Bubble lines {
 function! s:Move(cmd, count, map) abort
 	normal! m`
