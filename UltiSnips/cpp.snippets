@@ -6,6 +6,31 @@ extends c
 priority -49
 
 ###########################################################################
+#                               My Snippets                               #
+###########################################################################
+snippet google_jam "Template for Competitive Programming Tasks"
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void _solution(int TEST) {
+	$0
+}
+
+int main() {
+    freopen("$1.in", "r", stdin);
+    freopen("$2.out", "w", stdout);
+    int TEST;
+    scanf("%d", &TEST);
+    for(int i=1; i<=TEST; i++) {
+        printf("Case #%d: ", i);
+        _solution(i);
+    }
+    return 0;
+}
+endsnippet
+
+###########################################################################
 #                            TextMate Snippets                            #
 ###########################################################################
 snippet beginend "$1.begin(), $1.end() (beginend)"

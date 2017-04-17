@@ -125,6 +125,19 @@ endsnippet
 #############
 # HTML TAGS #
 #############
+snippet html "Description" w
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	$0
+</body>
+</html>
+endsnippet
+
 snippet input "Input with Label" w
 <label for="${2:${1/[[:alpha:]]+|( )/(?1:_:\L$0)/g}}">$1</label><input type="${3:text/submit/hidden/button}" name="${4:$2}" value="$5"${6: id="${7:$2}"}`!p x(snip)`>
 

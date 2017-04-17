@@ -35,7 +35,8 @@ Plug 'beyondmarc/glsl.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 ""Conflict with clang_complete
-"Plug 'ap/vim-css-color', { 'for': [ 'html', 'css', 'sass', 'less', 'javascript' ] }
+Plug 'ap/vim-css-color', { 'for': [ 'css', 'sass', 'less', 'javascript' ] }
+Plug 'mattn/emmet-vim'
 "Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -146,7 +147,7 @@ nnoremap <C-K> <C-Y>
 "nnoremap <C-S><C-O> :tabnew<CR>
 
 "" Save current file
-nnoremap <C-S> :w<CR>
+"nnoremap <C-S> :w<CR>
 
 "" Save as root
 cmap w!! w !sudo tee % > /dev/null
@@ -270,6 +271,7 @@ augroup customTabs "{
 	au FileType haskell setlocal shiftwidth=8
 	au FileType haskell setlocal softtabstop=8
 	au FileType haskell setlocal expandtab
+	au FileType html setlocal tabstop=2
 augroup END "}
 
 augroup HighlightTrailingWhitespaces "{
@@ -280,11 +282,12 @@ augroup END "}
 
 augroup comments "{
 	autocmd!
-	au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-	au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+	au FileType c,h,cpp,hpp nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+	au FileType java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+	au FileType javascript nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+	au FileType ruby,eruby nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+	au FileType python nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+	au FileType html nnoremap <silent> <buffer> <leader>q :call emmet#toggleComment()<CR>
 	au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
 augroup END "}
 
@@ -351,6 +354,12 @@ endif
 "}
 
 " Plugin related configs "{
+
+" HTML EMMET {
+let g:user_emmet_install_global = 0
+let g:user_emmet_leader_key='<C-s>'
+autocmd FileType html,css EmmetInstall
+" }
 
 " deoplete config {
 "  let g:deoplete#enable_at_startup = 1
