@@ -376,7 +376,8 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_grayscale'
 " Tabline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
+" let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 " }
 
 "Eclim on supertab "{
@@ -436,6 +437,8 @@ let $RUST_SRC_PATH="/usr/src/rust/src"
 let g:syntastic_c_compiler_options = '-std=c99'
 " Javascript
 let g:syntastic_javascript_checkers = ['jshint']
+" Typescript
+let g:syntastic_typescript_checkers = ['tslint', 'tsc']
 "}
 
 " Clang_Complete "{
