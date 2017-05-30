@@ -273,6 +273,7 @@ augroup customTabs "{
 	au FileType haskell setlocal softtabstop=8
 	au FileType haskell setlocal expandtab
 	au FileType html setlocal tabstop=2
+	au FileType yacc setlocal expandtab
 augroup END "}
 
 augroup HighlightTrailingWhitespaces "{
