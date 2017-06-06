@@ -12,15 +12,16 @@ endif
 
 let colors_name = "kasama"
 
-hi Normal		guifg=#c0c0c0 guibg=#000040						ctermfg=gray ctermbg=black
-"hi Normal		guifg=#a2a2a2 guibg=#282828
+"hi Normal		guifg=#c0c0c0 guibg=#000040						ctermfg=gray ctermbg=black
+hi Normal		guifg=#a2a2a2 guibg=#282828						ctermfg=gray ctermbg=black
+"hi Normal		guifg=gray guibg=black						ctermfg=gray ctermbg=black
 "hi Normal		guifg=#31363B guibg=#31363B						ctermfg=gray ctermbg=black
-hi ErrorMsg		guifg=#ffffff guibg=#287eff						ctermfg=lightblue ctermbg=red
+hi ErrorMsg		guifg=#287eff guibg=#d02523						ctermfg=lightblue ctermbg=red
 hi Visual		guifg=#8080ff guibg=fg		gui=reverse				ctermfg=darkblue ctermbg=fg cterm=reverse
-hi Todo			guifg=#d14a14 guibg=#1248d1						ctermfg=white	ctermbg=brown
+hi Todo			guifg=#b0ffff guibg=#d14a14						ctermfg=white	ctermbg=brown
 hi Search		guifg=#90fff0 guibg=#2050d0						ctermfg=white ctermbg=darkblue cterm=underline term=underline
 hi IncSearch	guifg=#b0ffff guibg=#2050d0							ctermfg=darkblue ctermbg=gray
-hi ExtraWhiteSpaces	guifg=#b0ffff guibg=#2050d0							ctermfg=darkblue ctermbg=gray
+hi ExtraWhiteSpaces	guifg=#2050d0 guibg=#b0ffff					 ctermfg=darkblue ctermbg=gray
 
 hi SpecialKey		guifg=cyan			ctermfg=darkcyan
 hi Directory		guifg=cyan			ctermfg=cyan

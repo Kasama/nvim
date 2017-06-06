@@ -24,6 +24,7 @@ Plug 'Valloric/YouCompleteMe'
 	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 "Plug 'oblitum/YouCompleteMe' " Using Valloric (original) YCM
 Plug 'tpope/vim-surround'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
@@ -34,7 +35,8 @@ Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
 Plug 'beyondmarc/glsl.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
-Plug 'ap/vim-css-color', { 'for': [ 'css', 'sass', 'less', 'javascript' ] }
+Plug 'ap/vim-css-color'
+Plug 'akz92/vim-ionic2'
 Plug 'mattn/emmet-vim'
 "Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
@@ -343,8 +345,8 @@ augroup octave "{
 augroup END "}
 
 augroup PreviewOnBottom "{
-    autocmd InsertEnter * set splitbelow
-    autocmd InsertLeave * set splitbelow!
+	autocmd InsertEnter * set splitbelow
+	autocmd InsertLeave * set splitbelow!
 augroup END "}
 
 "}
