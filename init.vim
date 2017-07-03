@@ -38,6 +38,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'ap/vim-css-color'
 Plug 'akz92/vim-ionic2'
 Plug 'mattn/emmet-vim'
+Plug 'othree/html5.vim'
 "Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
@@ -275,6 +276,9 @@ augroup customTabs "{
 	au FileType haskell setlocal softtabstop=8
 	au FileType haskell setlocal expandtab
 	au FileType html setlocal tabstop=2
+	au FileType html setlocal shiftwidth=2
+	au FileType html setlocal softtabstop=2
+	au FileType html setlocal expandtab
 	au FileType yacc setlocal expandtab
 augroup END "}
 
@@ -402,6 +406,7 @@ let g:ctrlp_custom_ignore = {
 			\ 'file': '\v\.(exe|so|dll)$',
 			\ 'link': 'some_bad_symbolic_links',
 			\ }
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " enable caching
 let g:ctrlp_use_caching=1
