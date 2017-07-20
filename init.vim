@@ -62,7 +62,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
 Plug 'jvirtanen/vim-octave'
 "Plug 'Chiel92/vim-autoformat'
@@ -80,6 +79,14 @@ Plug 'rust-lang/rust.vim'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
+Plug 'mxw/vim-jsx'
+"Plug 'm2mdas/phpcomplete-extended'
+	"Plug 'm2mdas/phpcomplete-extended-laravel'
+Plug 'noahfrederick/vim-laravel'
+	Plug 'tpope/vim-dispatch'
+	Plug 'tpope/vim-projectionist'
+	Plug 'noahfrederick/vim-composer'
+Plug 'jtratner/vim-flavored-markdown'
 "" End Plugins
 
 call plug#end()
@@ -354,6 +361,11 @@ augroup octave "{
 	au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
 augroup END "}
 
+augroup Markdown "{
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END "}
+
 augroup PreviewOnBottom "{
 	autocmd InsertEnter * set splitbelow
 	autocmd InsertLeave * set splitbelow!
@@ -451,7 +463,8 @@ let $RUST_SRC_PATH="/usr/src/rust/src"
 " C
 let g:syntastic_c_compiler_options = '-std=c99'
 " Javascript
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
 " Typescript
 let g:syntastic_typescript_checkers = ['tslint', 'tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
@@ -472,8 +485,17 @@ let g:clang_hl_errors = 0
 set completeopt=menu,longest
 "}
 
-" Instant Markdown "{
-let g:instant_markdown_autostart = 0
+" JavascriptX "{
+	let g:jsx_ext_required = 0
+"}
+
+" PHP Complete Extended "{
+	"augroup phpcomplete_extended "{
+	"	autocmd!
+	"	autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+	"augroup END "}
+
+	let g:phpcomplete_index_composer_command='composer'
 "}
 
 "}
