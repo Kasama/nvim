@@ -84,6 +84,9 @@ Plug 'mxw/vim-jsx'
 	"Plug 'm2mdas/phpcomplete-extended-laravel'
 Plug 'noahfrederick/vim-laravel'
 	Plug 'tpope/vim-dispatch'
+	if (has('nvim'))
+		Plug 'radenling/vim-dispatch-neovim'
+	endif
 	Plug 'tpope/vim-projectionist'
 	Plug 'noahfrederick/vim-composer'
 Plug 'jtratner/vim-flavored-markdown'
