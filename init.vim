@@ -1,7 +1,7 @@
 syntax on
 
 " Plug and plugins "{
-"" Autoinstall Plug
+"" Autoinstall Plug "{
 
 if (has('nvim'))
 	let vimPlugPath = '~/.config/nvim/autoload/plug.vim'
@@ -20,6 +20,7 @@ endif
 "" Init Plug
 let plugged_path=expand('~/.config/nvim/plugged/')
 call plug#begin(plugged_path)
+"}
 
 "" Plugins
 "Plug 'junegunn/vim-plug'
@@ -96,12 +97,7 @@ call plug#end()
 filetype plugin indent on
 " Plug Done
 
-"" If Plug was just installed, install all plugins
-"if isPlugUpdated == 0
-"	echo "Installing Plugins, please ignore key map error messages"
-"	echo ""
-"	:BundleInstall!
-"endif "}
+"}
 
 " Leader key "{
 let mapleader = ","
@@ -244,6 +240,13 @@ set lazyredraw
 augroup devHelp "{
 	autocmd!
 	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+augroup END "}
+
+augroup Rust "{
+	autocmd!
+	au BufNewFile,BufRead *.rs nnoremap <leader>rr :RustRun<CR>
+	au BufNewFile,BufRead *.rs nnoremap <leader>cr :!cargo run<CR>
+	au BufNewFile,BufRead *.rs nnoremap <leader>ct :!cargo test<CR>
 augroup END "}
 
 augroup Rails "{
@@ -459,6 +462,7 @@ let g:syntastic_disabled_filetypes=['asm']
 
 " Rust config "{
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+let g:ycm_rust_src_path = "/usr/src/rust/src"
 let $RUST_SRC_PATH="/usr/src/rust/src"
 "}
 
@@ -472,6 +476,8 @@ let g:syntastic_javascript_eslint_exec = 'eslint_d'
 let g:syntastic_typescript_checkers = ['tslint', 'tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_aggregate_errors = 1
+" Rust
+let g:syntastic_rust_checkers = ['rustc']
 "}
 
 " Clang_Complete "{
