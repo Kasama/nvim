@@ -80,7 +80,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
+Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'posva/vim-vue'
+Plug 'sekel/vim-vue-syntastic'
 "Plug 'm2mdas/phpcomplete-extended'
 	"Plug 'm2mdas/phpcomplete-extended-laravel'
 Plug 'noahfrederick/vim-laravel'
@@ -91,6 +94,7 @@ Plug 'noahfrederick/vim-laravel'
 	Plug 'tpope/vim-projectionist'
 	Plug 'noahfrederick/vim-composer'
 Plug 'jtratner/vim-flavored-markdown'
+Plug 'chr4/nginx.vim'
 "" End Plugins
 
 call plug#end()
@@ -237,6 +241,12 @@ set lazyredraw
 "}
 
 " AuGroups "{
+augroup Vue "{
+	autocmd!
+	au Filetype vue set syntax=html
+	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+augroup END "}
+
 augroup devHelp "{
 	autocmd!
 	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
@@ -472,6 +482,9 @@ let g:syntastic_c_compiler_options = '-std=c99'
 " Javascript
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'eslint_d'
+" VueJS
+let g:syntastic_vue_checkers = g:syntastic_javascript_checkers
+let g:syntastic_vue_eslint_exec = g:syntastic_javascript_eslint_exec
 " Typescript
 let g:syntastic_typescript_checkers = ['tslint', 'tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
