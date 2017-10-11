@@ -95,6 +95,7 @@ Plug 'noahfrederick/vim-laravel'
 	Plug 'noahfrederick/vim-composer'
 Plug 'jtratner/vim-flavored-markdown'
 Plug 'chr4/nginx.vim'
+Plug 'martinda/Jenkinsfile-vim-syntax'
 "" End Plugins
 
 call plug#end()
