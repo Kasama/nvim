@@ -32,54 +32,58 @@ Plug 'Valloric/YouCompleteMe'
 "Plug 'oblitum/YouCompleteMe' " Using Valloric (original) YCM
 Plug 'tpope/vim-surround'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
-Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] }
-Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
-Plug 'beyondmarc/glsl.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
-Plug 'ap/vim-css-color'
-Plug 'akz92/vim-ionic2'
-Plug 'mattn/emmet-vim'
-Plug 'othree/html5.vim'
 "Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
-Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
-Plug 'moll/vim-node', { 'for': ['javascript', 'html'] }
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-	Plug 'Quramy/tsuquyomi'
-"Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
 "Plug 'Shougo/deoplete.nvim'
-Plug 'HerringtonDarkholme/yats.vim'
-"Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'othree/xml.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'tclem/vim-arduino'
-Plug 'jvirtanen/vim-octave'
 "Plug 'Chiel92/vim-autoformat'
-Plug 'Kasama/vim-syntax-extra'
 "Plug 'craigemery/vim-autotag'
 "Plug 'vim-scripts/AutoComplPop'
 Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'bbchung/Clamp', { 'for': ['cpp', 'c', 'h'] }
 Plug 'kana/vim-operator-user'
+Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
+"Plug 'rhysd/vim-clang-format'
+"Plug 'vhakulinen/neovim-intellij-complete-deoplete'
+
+"" Language/Framework support {
+
+Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] }
+Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
+Plug 'beyondmarc/glsl.vim'
+Plug 'ap/vim-css-color'
+Plug 'akz92/vim-ionic2'
+Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
+Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
+Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
+Plug 'moll/vim-node', { 'for': ['javascript', 'html'] }
+Plug 'Quramy/tsuquyomi'
+	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+"Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
+"Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'othree/xml.vim'
+Plug 'tclem/vim-arduino'
+Plug 'jvirtanen/vim-octave'
+Plug 'Kasama/vim-syntax-extra'
 Plug 'rhysd/vim-crystal'
 Plug 'elixir-lang/vim-elixir'
 Plug 'adimit/prolog.vim'
 Plug 'rust-lang/rust.vim'
 "Plug 'racer-rust/vim-racer'
-Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
-"Plug 'rhysd/vim-clang-format'
-"Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'posva/vim-vue'
@@ -96,7 +100,7 @@ Plug 'noahfrederick/vim-laravel'
 Plug 'jtratner/vim-flavored-markdown'
 Plug 'chr4/nginx.vim'
 Plug 'martinda/Jenkinsfile-vim-syntax'
-"" End Plugins
+"" End Plugins }
 
 call plug#end()
 filetype plugin indent on
