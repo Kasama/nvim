@@ -34,6 +34,7 @@ Plug 'tpope/vim-surround'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
@@ -59,47 +60,50 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 
 "" Language/Framework support {
 
-Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] }
-Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] }
-Plug 'beyondmarc/glsl.vim'
-Plug 'ap/vim-css-color'
-Plug 'akz92/vim-ionic2'
-Plug 'othree/html5.vim'
-Plug 'mattn/emmet-vim'
-Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] }
-Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
-Plug 'moll/vim-node', { 'for': ['javascript', 'html'] }
-Plug 'Quramy/tsuquyomi'
+Plug 'slashmili/alchemist.vim' "Elixir
+Plug 'lervag/vimtex' "LaTeX
+Plug 'KabbAmine/zeavim.vim' "Zeal
+Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting' "Multiple syntax
+Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] } "C/Cpp
+Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] } "C/Cpp
+Plug 'beyondmarc/glsl.vim' "GLSL - OpenGL
+Plug 'ap/vim-css-color' "CSS
+Plug 'akz92/vim-ionic2' "Ionic
+Plug 'othree/html5.vim' "HTML
+Plug 'mattn/emmet-vim' "HTML
+Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] } "Ruby
+Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] } "Rails
+Plug 'moll/vim-node', { 'for': ['javascript', 'html'] } "NodeJS
+Plug 'Quramy/tsuquyomi' "Typescript
 	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 "Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
 "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'othree/xml.vim'
-Plug 'tclem/vim-arduino'
-Plug 'jvirtanen/vim-octave'
-Plug 'Kasama/vim-syntax-extra'
-Plug 'rhysd/vim-crystal'
-Plug 'elixir-lang/vim-elixir'
-Plug 'adimit/prolog.vim'
-Plug 'rust-lang/rust.vim'
-"Plug 'racer-rust/vim-racer'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'posva/vim-vue'
-Plug 'sekel/vim-vue-syntastic'
+Plug 'HerringtonDarkholme/yats.vim' "Typescript
+Plug 'othree/xml.vim' "XML
+Plug 'tclem/vim-arduino' "Arduino
+Plug 'jvirtanen/vim-octave' "Octave/Matlab
+Plug 'Kasama/vim-syntax-extra' "Multiple Syntax
+Plug 'rhysd/vim-crystal' "Crystal
+Plug 'elixir-lang/vim-elixir' "Elixir
+Plug 'adimit/prolog.vim' "Prolog
+Plug 'rust-lang/rust.vim' "Rust
+"Plug 'racer-rust/vim-racer' "Rust
+Plug 'pangloss/vim-javascript' "Javascript
+Plug 'mxw/vim-jsx' "JSX (React)
+Plug 'posva/vim-vue' "Vue.JS
+Plug 'sekel/vim-vue-syntastic' "Vue.JS
 "Plug 'm2mdas/phpcomplete-extended'
 	"Plug 'm2mdas/phpcomplete-extended-laravel'
-Plug 'noahfrederick/vim-laravel'
+Plug 'noahfrederick/vim-laravel' "Laravel PHP
 	Plug 'tpope/vim-dispatch'
 	if (has('nvim'))
 		Plug 'radenling/vim-dispatch-neovim'
 	endif
 	Plug 'tpope/vim-projectionist'
-	Plug 'noahfrederick/vim-composer'
-Plug 'jtratner/vim-flavored-markdown'
-Plug 'chr4/nginx.vim'
-Plug 'martinda/Jenkinsfile-vim-syntax'
+	Plug 'noahfrederick/vim-composer' "PHP
+Plug 'jtratner/vim-flavored-markdown' "Markdown
+Plug 'chr4/nginx.vim' "NGINX
+Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
 "" End Plugins }
 
 call plug#end()
@@ -482,14 +486,27 @@ let $RUST_SRC_PATH="/usr/src/rust/src"
 "}
 
 " Syntastic "{
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = {
+	\ "mode": "passive",
+	\ "active_filetypes": [],
+	\ "passive_filetypes": [] }
 " C
 let g:syntastic_c_compiler_options = '-std=c99'
-" Javascript
+" Javascript and VueJS checkers
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = 'eslint_d'
-" VueJS
 let g:syntastic_vue_checkers = g:syntastic_javascript_checkers
-let g:syntastic_vue_eslint_exec = g:syntastic_javascript_eslint_exec
+
+" Use local eslint when possible
+let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+    let local_eslint = getcwd() . "/" . local_eslint
+endif
+if executable(local_eslint)
+    let g:syntastic_javascript_eslint_exec = local_eslint
+    let g:syntastic_vue_eslint_exec = local_eslint
+endif
+
 " Typescript
 let g:syntastic_typescript_checkers = ['tslint', 'tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
@@ -514,6 +531,10 @@ set completeopt=menu,longest
 
 " JavascriptX "{
 	let g:jsx_ext_required = 0
+"}
+
+" Neomake "{
+	call neomake#configure#automake('rw', 1000)
 "}
 
 " PHP Complete Extended "{
