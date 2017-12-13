@@ -118,4 +118,15 @@ endsnippet
 snippet lp "Long parenthesis"
 \left(${1:${VISUAL:contents}}\right)$0
 endsnippet
+
+snippet ngls "New Glossary entry" b
+\newglossaryentry{${1}}
+{
+  name=${2},
+  plural=${3},
+  description={
+	  ${0}
+  }
+}
+endsnippet
 # vim:ft=snippets:

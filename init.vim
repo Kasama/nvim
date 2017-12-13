@@ -60,6 +60,7 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 
 "" Language/Framework support {
 
+Plug 'junegunn/vader.vim' "Vimscript
 Plug 'slashmili/alchemist.vim' "Elixir
 Plug 'lervag/vimtex' "LaTeX
 Plug 'KabbAmine/zeavim.vim' "Zeal
@@ -247,6 +248,7 @@ set relativenumber
 "set completeopt=menuone
 set completeopt=longest,menu,preview
 set lazyredraw
+set title
 "}
 
 " AuGroups "{
@@ -534,6 +536,7 @@ set completeopt=menu,longest
 "}
 
 " Neomake "{
+	let g:neomake_elixir_enabled_makers = ['mix', 'credo']
 	call neomake#configure#automake('rw', 1000)
 "}
 
