@@ -60,7 +60,7 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 
 "" Language/Framework support {
 
-Plug 'junegunn/vader.vim' "Vimscript
+Plug 'junegunn/vader.vim', { 'for': [ 'vader' ] } "Vimscript
 Plug 'slashmili/alchemist.vim' "Elixir
 Plug 'lervag/vimtex' "LaTeX
 Plug 'KabbAmine/zeavim.vim' "Zeal
