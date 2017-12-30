@@ -57,6 +57,7 @@ Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
+Plug 'idanarye/vim-vebugger'
 
 "" Language/Framework support {
 
