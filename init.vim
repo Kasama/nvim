@@ -35,6 +35,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
+	Plug 'benjie/neomake-local-eslint.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
@@ -58,6 +59,7 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger'
+Plug 'machakann/vim-highlightedyank'
 
 "" Language/Framework support {
 
@@ -250,6 +252,9 @@ set relativenumber
 set completeopt=longest,menu,preview
 set lazyredraw
 set title
+if (has('nvim'))
+	set inccommand=split
+endif
 "}
 
 " AuGroups "{
@@ -537,6 +542,7 @@ set completeopt=menu,longest
 "}
 
 " Neomake "{
+	let g:neomake_javascript_jsx_enabled_makers = ['eslint']
 	let g:neomake_elixir_enabled_makers = ['mix', 'credo']
 	call neomake#configure#automake('rw', 1000)
 "}
