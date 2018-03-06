@@ -15,9 +15,9 @@ if empty(glob(vimPlugPath))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-"" Autoinstall Plug
+"" Autoinstall Plug }
 
-"" Init Plug
+"" Init Plug {
 let plugged_path=expand('~/.config/nvim/plugged/')
 call plug#begin(plugged_path)
 "}
@@ -35,7 +35,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
-	Plug 'benjie/neomake-local-eslint.vim'
+	Plug 'Kasama/neomake-local-eslint.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
@@ -60,11 +60,12 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger'
 Plug 'machakann/vim-highlightedyank'
+Plug 'obreitwi/vim-sort-folds'
 
 "" Language/Framework support {
 
 Plug 'junegunn/vader.vim', { 'for': [ 'vader' ] } "Vimscript
-Plug 'slashmili/alchemist.vim' "Elixir
+Plug 'slashmili/alchemist.vim', { 'for': [ 'elixir' ] } "Elixir
 Plug 'lervag/vimtex' "LaTeX
 Plug 'KabbAmine/zeavim.vim' "Zeal
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting' "Multiple syntax
@@ -78,11 +79,11 @@ Plug 'mattn/emmet-vim' "HTML
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] } "Ruby
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] } "Rails
 Plug 'moll/vim-node', { 'for': ['javascript', 'html'] } "NodeJS
-Plug 'Quramy/tsuquyomi' "Typescript
+Plug 'Quramy/tsuquyomi', { 'for': [ 'typescript' ] } "Typescript
 	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 "Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
 "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
-Plug 'HerringtonDarkholme/yats.vim' "Typescript
+Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript' ] } "Typescript
 Plug 'othree/xml.vim' "XML
 Plug 'tclem/vim-arduino' "Arduino
 Plug 'jvirtanen/vim-octave' "Octave/Matlab
@@ -98,13 +99,13 @@ Plug 'posva/vim-vue' "Vue.JS
 Plug 'sekel/vim-vue-syntastic' "Vue.JS
 "Plug 'm2mdas/phpcomplete-extended'
 	"Plug 'm2mdas/phpcomplete-extended-laravel'
-Plug 'noahfrederick/vim-laravel' "Laravel PHP
+Plug 'noahfrederick/vim-laravel', { 'for': [ 'php' ] } "Laravel PHP
 	Plug 'tpope/vim-dispatch'
 	if (has('nvim'))
 		Plug 'radenling/vim-dispatch-neovim'
 	endif
 	Plug 'tpope/vim-projectionist'
-	Plug 'noahfrederick/vim-composer' "PHP
+	Plug 'noahfrederick/vim-composer', { 'for': [ 'php' ] } "PHP
 Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
@@ -144,7 +145,7 @@ nnoremap <silent> <leader>gt :!ctags -R .<CR>
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 
-" Press Space to turn off highlighting and clear any message already displayed.
+" Press Space to turn off highlighting and clear any message being displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
 
 "" Using H and L as 0 and $
@@ -155,9 +156,6 @@ vnoremap L $
 
 "" Spelling
 nnoremap <silent> <leader>l :setlocal spell!<CR>
-
-"" Create Fold
-nnoremap <silent> <leader>f :set foldmethod=marker<CR>
 
 "" Toggle listchars
 nnoremap <silent> <leader>c :set list!<CR>
@@ -172,18 +170,8 @@ nnoremap \ :NERDTreeToggle<CR>
 nnoremap <C-J> <C-E>
 nnoremap <C-K> <C-Y>
 
-"" Tabs Commands
-"nnoremap <C-S><C-X> gt
-"nnoremap <C-S><C-Z> gT
-""map <C-S><C-S> gT
-"nnoremap <C-S><C-W> :tabclose<CR>
-"nnoremap <C-S><C-O> :tabnew<CR>
-
-"" Save current file
-"nnoremap <C-S> :w<CR>
-
 "" Save as root
-cmap w!! w !sudo tee % > /dev/null
+cnoremap w!! w !sudo tee % > /dev/null
 
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
@@ -197,9 +185,6 @@ nnoremap <silent> <C-\><C-\> :b#<CR>
 nnoremap <silent> <C-\>q :bdelete<CR>
 nnoremap <silent> <C-\><C-q> :bdelete<CR>
 
-"" switch to C90 comment style
-nnoremap <silent> <leader>fcs 02f/r*A */<ESC>
-
 "" Copy and Paste from X env
 "nnoremap <silent> <leader>y "+y
 "nnoremap <silent> <leader>Y "+Y
@@ -209,15 +194,14 @@ nnoremap <silent> <leader>fcs 02f/r*A */<ESC>
 "}
 
 " Bubble single lines "{
-nmap <M-J> @=']e'<CR>
-nmap <M-K> @='[e'<CR>
+nmap <A-J> @=']e'<CR>
+nmap <A-K> @='[e'<CR>
 
 " Bubble multiple lines
-vmap <M-K> [egv
-vmap <M-J> ]egv "}
+vmap <A-K> [egv
+vmap <A-J> ]egv "}
 
 " Colorscheme "{
-"colorscheme molokaiyo
 colorscheme kasama
 " }
 
@@ -227,7 +211,6 @@ call matchadd('OverStepColumn', '\%81v', 100)
 " }
 
 " Settings "{
-set tags=./tags;
 set laststatus=2
 set noshowmode
 set whichwrap=b,s,<,>,[,]
@@ -239,14 +222,11 @@ set foldmethod=marker
 set foldlevelstart=99
 set smartindent
 set ignorecase smartcase
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set noexpandtab
+set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 set exrc
 set secure
 set hidden
-set nu
+set number
 set relativenumber
 "set completeopt=menuone
 set completeopt=longest,menu,preview
@@ -542,7 +522,10 @@ set completeopt=menu,longest
 "}
 
 " Neomake "{
-	let g:neomake_javascript_jsx_enabled_makers = ['eslint']
+	let g:neomake_java_enabled_makers = ['gradle']
+	let g:neomake_javascript_enabled_makers = ['eslint']
+	let g:neomake_javascript_jsx_enabled_makers = g:neomake_javascript_enabled_makers
+	let g:neomake_vue_enabled_makers = g:neomake_javascript_enabled_makers
 	let g:neomake_elixir_enabled_makers = ['mix', 'credo']
 	call neomake#configure#automake('rw', 1000)
 "}
