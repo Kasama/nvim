@@ -4,15 +4,15 @@ syntax on
 "" Autoinstall Plug "{
 
 if (has('nvim'))
-	let vimPlugPath = '~/.config/nvim/autoload/plug.vim'
+  let vimPlugPath = '~/.config/nvim/autoload/plug.vim'
 else
-	let vimPlugPath = '~/.vim/autoload/plug.vim'
+  let vimPlugPath = '~/.vim/autoload/plug.vim'
 endif
 
 if empty(glob(vimPlugPath))
-	silent exe '!curl -fLo' vimPlugPath '--create-dirs'
-				\ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  silent exe '!curl -fLo' vimPlugPath '--create-dirs'
+        \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 "" Autoinstall Plug }
@@ -25,17 +25,17 @@ call plug#begin(plugged_path)
 "" Plugins
 "Plug 'junegunn/vim-plug'
 if (has('nvim'))
-	Plug 'floobits/floobits-neovim'
+  Plug 'floobits/floobits-neovim'
 endif
 Plug 'Valloric/YouCompleteMe'
-	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 "Plug 'oblitum/YouCompleteMe' " Using Valloric (original) YCM
 Plug 'tpope/vim-surround'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
-	Plug 'Kasama/neomake-local-eslint.vim'
+  Plug 'Kasama/neomake-local-eslint.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
@@ -43,7 +43,7 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 "Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+  Plug 'vim-airline/vim-airline-themes'
 "Plug 'Shougo/deoplete.nvim'
 Plug 'chrisbra/NrrwRgn'
 Plug 'airblade/vim-gitgutter'
@@ -61,6 +61,7 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 Plug 'idanarye/vim-vebugger'
 Plug 'machakann/vim-highlightedyank'
 Plug 'obreitwi/vim-sort-folds'
+Plug 'ryanoasis/vim-devicons'
 
 "" Language/Framework support {
 
@@ -80,7 +81,7 @@ Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] } "Ruby
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] } "Rails
 Plug 'moll/vim-node', { 'for': ['javascript', 'html'] } "NodeJS
 Plug 'Quramy/tsuquyomi', { 'for': [ 'typescript' ] } "Typescript
-	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 "Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
 "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript' ] } "Typescript
@@ -98,14 +99,14 @@ Plug 'mxw/vim-jsx' "JSX (React)
 Plug 'posva/vim-vue' "Vue.JS
 Plug 'sekel/vim-vue-syntastic' "Vue.JS
 "Plug 'm2mdas/phpcomplete-extended'
-	"Plug 'm2mdas/phpcomplete-extended-laravel'
+  "Plug 'm2mdas/phpcomplete-extended-laravel'
 Plug 'noahfrederick/vim-laravel', { 'for': [ 'php' ] } "Laravel PHP
-	Plug 'tpope/vim-dispatch'
-	if (has('nvim'))
-		Plug 'radenling/vim-dispatch-neovim'
-	endif
-	Plug 'tpope/vim-projectionist'
-	Plug 'noahfrederick/vim-composer', { 'for': [ 'php' ] } "PHP
+  Plug 'tpope/vim-dispatch'
+  if (has('nvim'))
+    Plug 'radenling/vim-dispatch-neovim'
+  endif
+  Plug 'tpope/vim-projectionist'
+  Plug 'noahfrederick/vim-composer', { 'for': [ 'php' ] } "PHP
 Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
@@ -233,145 +234,145 @@ set completeopt=longest,menu,preview
 set lazyredraw
 set title
 if (has('nvim'))
-	set inccommand=split
+  set inccommand=split
 endif
 "}
 
 " AuGroups "{
 augroup Vue "{
-	autocmd!
-	au Filetype vue set syntax=html
-	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+  autocmd!
+  au Filetype vue set syntax=html
+  au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup devHelp "{
-	autocmd!
-	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+  autocmd!
+  au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup Rust "{
-	autocmd!
-	au BufNewFile,BufRead *.rs nnoremap <leader>rr :RustRun<CR>
-	au BufNewFile,BufRead *.rs nnoremap <leader>cr :!cargo run<CR>
-	au BufNewFile,BufRead *.rs nnoremap <leader>ct :!cargo test<CR>
+  autocmd!
+  au BufNewFile,BufRead *.rs nnoremap <leader>rr :RustRun<CR>
+  au BufNewFile,BufRead *.rs nnoremap <leader>cr :!cargo run<CR>
+  au BufNewFile,BufRead *.rs nnoremap <leader>ct :!cargo test<CR>
 augroup END "}
 
 augroup Rails "{
-	autocmd!
-	au BufNewFile,BufRead *.erb nnoremap <leader>rc :Rcontroller<CR>
-	au BufNewFile,BufRead *.rb nnoremap <leader>rc :Rcontroller<CR>
-	au BufNewFile,BufRead *.js nnoremap <leader>rc :Rcontroller<CR>
-	au BufNewFile,BufRead *.erb nnoremap <leader>rv :Rview<CR>
-	au BufNewFile,BufRead *.rb nnoremap <leader>rv :Rview<CR>
-	au BufNewFile,BufRead *.js nnoremap <leader>rv :Rview<CR>
-	au BufNewFile,BufRead *.erb nnoremap <leader>rm :Rmodel<CR>
-	au BufNewFile,BufRead *.rb nnoremap <leader>rm :Rmodel<CR>
-	au BufNewFile,BufRead *.js nnoremap <leader>rm :Rmodel<CR>
+  autocmd!
+  au BufNewFile,BufRead *.erb nnoremap <leader>rc :Rcontroller<CR>
+  au BufNewFile,BufRead *.rb nnoremap <leader>rc :Rcontroller<CR>
+  au BufNewFile,BufRead *.js nnoremap <leader>rc :Rcontroller<CR>
+  au BufNewFile,BufRead *.erb nnoremap <leader>rv :Rview<CR>
+  au BufNewFile,BufRead *.rb nnoremap <leader>rv :Rview<CR>
+  au BufNewFile,BufRead *.js nnoremap <leader>rv :Rview<CR>
+  au BufNewFile,BufRead *.erb nnoremap <leader>rm :Rmodel<CR>
+  au BufNewFile,BufRead *.rb nnoremap <leader>rm :Rmodel<CR>
+  au BufNewFile,BufRead *.js nnoremap <leader>rm :Rmodel<CR>
 augroup END "}
 
 augroup Ruby "{
-	autocmd!
-	au BufNewFile,BufRead *.rb set completefunc=rubycomplete#Complete
-	au BufNewFile,BufRead *.rb let g:syntastic_ruby_checkers=['rubocop']
+  autocmd!
+  au BufNewFile,BufRead *.rb set completefunc=rubycomplete#Complete
+  au BufNewFile,BufRead *.rb let g:syntastic_ruby_checkers=['rubocop']
 augroup END "}
 
 augroup htmlAbrrevs "{
-	autocmd!
-	autocmd BufNewFile,BufRead *.html iabbrev << &lt;
-	autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
+  autocmd!
+  autocmd BufNewFile,BufRead *.html iabbrev << &lt;
+  autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
 augroup syntaxes "{
-	autocmd!
-	au BufNewFile,BufRead *.asm setlocal syntax=icmc
-	au BufNewFile,BufRead *.ws set filetype=ws
+  autocmd!
+  au BufNewFile,BufRead *.asm setlocal syntax=icmc
+  au BufNewFile,BufRead *.ws set filetype=ws
 augroup END "}
 
 augroup customTabs "{
-	autocmd!
-	au BufNewFile,BufRead *.rb setlocal tabstop=2
-	au BufNewFile,BufRead *.rb setlocal shiftwidth=2
-	au BufNewFile,BufRead *.rb setlocal softtabstop=2
-	au BufNewFile,BufRead *.rb setlocal expandtab
-	au BufNewFile,BufRead *.erb setlocal tabstop=2
-	au BufNewFile,BufRead *.erb setlocal shiftwidth=2
-	au BufNewFile,BufRead *.erb setlocal softtabstop=2
-	au BufNewFile,BufRead *.erb setlocal expandtab
-	au FileType haskell setlocal tabstop=8
-	au FileType haskell setlocal shiftwidth=8
-	au FileType haskell setlocal softtabstop=8
-	au FileType haskell setlocal expandtab
-	au FileType html setlocal tabstop=2
-	au FileType html setlocal shiftwidth=2
-	au FileType html setlocal softtabstop=2
-	au FileType html setlocal expandtab
-	au FileType yacc setlocal expandtab
+  autocmd!
+  au BufNewFile,BufRead *.rb setlocal tabstop=2
+  au BufNewFile,BufRead *.rb setlocal shiftwidth=2
+  au BufNewFile,BufRead *.rb setlocal softtabstop=2
+  au BufNewFile,BufRead *.rb setlocal expandtab
+  au BufNewFile,BufRead *.erb setlocal tabstop=2
+  au BufNewFile,BufRead *.erb setlocal shiftwidth=2
+  au BufNewFile,BufRead *.erb setlocal softtabstop=2
+  au BufNewFile,BufRead *.erb setlocal expandtab
+  au FileType haskell setlocal tabstop=8
+  au FileType haskell setlocal shiftwidth=8
+  au FileType haskell setlocal softtabstop=8
+  au FileType haskell setlocal expandtab
+  au FileType html setlocal tabstop=2
+  au FileType html setlocal shiftwidth=2
+  au FileType html setlocal softtabstop=2
+  au FileType html setlocal expandtab
+  au FileType yacc setlocal expandtab
 augroup END "}
 
 augroup HighlightTrailingWhitespaces "{
-	autocmd!
-	match ExtraWhiteSpaces /\s\+$/
-	match ExtraWhiteSpaces /\s\+$\| \+\ze\t/
+  autocmd!
+  match ExtraWhiteSpaces /\s\+$/
+  match ExtraWhiteSpaces /\s\+$\| \+\ze\t/
 augroup END "}
 
 augroup comments "{
-	autocmd!
-	au FileType c,h,cpp,hpp nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au FileType java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au FileType javascript nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au FileType ruby,eruby nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-	au FileType python nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-	au FileType html nnoremap <silent> <buffer> <leader>q :call emmet#toggleComment()<CR>
-	au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
+  autocmd!
+  au FileType c,h,cpp,hpp nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+  au FileType java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+  au FileType javascript nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+  au FileType ruby,eruby nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+  au FileType python nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+  au FileType html nnoremap <silent> <buffer> <leader>q :call emmet#toggleComment()<CR>
+  au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
 augroup END "}
 
 augroup JavaEclim "{
-	autocmd!
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>o :JavaImportOrganize<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>gi :JavaSearch<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>c :JavaCorrect<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>i :JavaImpl<CR>
+  autocmd!
+  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>o :JavaImportOrganize<CR>
+  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>gi :JavaSearch<CR>
+  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>c :JavaCorrect<CR>
+  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>i :JavaImpl<CR>
 augroup END "}
 
 augroup PlantUML "{
-	autocmd!
-	au BufNewFile,BufRead *.uml setlocal syntax=plantuml
-	au BufNewFile,BufRead *.puml setlocal syntax=plantuml
-	au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
+  autocmd!
+  au BufNewFile,BufRead *.uml setlocal syntax=plantuml
+  au BufNewFile,BufRead *.puml setlocal syntax=plantuml
+  au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
 augroup END "}
 
 augroup SpecialCTAGS "{
-	autocmd!
-	autocmd! BufRead,BufNewFile *.rb unmap <leader>gt
-	autocmd! BufRead,BufNewFile *.rb nnoremap <leader>gt :!ctags -R . $(bundle list --paths)<CR>
+  autocmd!
+  autocmd! BufRead,BufNewFile *.rb unmap <leader>gt
+  autocmd! BufRead,BufNewFile *.rb nnoremap <leader>gt :!ctags -R . $(bundle list --paths)<CR>
 augroup END"}
 
 " augroup tabBehaviour "{
-" 	autocmd!
-" 	au BufRead,BufNewFile *.c let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-" 	au BufRead,BufNewFile *.cpp let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-" 	au BufRead,BufNewFile *.h let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"   autocmd!
+"   au BufRead,BufNewFile *.c let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"   au BufRead,BufNewFile *.cpp let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"   au BufRead,BufNewFile *.h let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
 " augroup END "}
 
 augroup VimRC "{
-	autocmd!
-	autocmd! BufWritePost *vimrc source %
+  autocmd!
+  autocmd! BufWritePost *vimrc source %
 augroup END "}
 
 augroup commitSpell "{
-	" Git commits.
-	autocmd FileType gitcommit setlocal spell
+  " Git commits.
+  autocmd FileType gitcommit setlocal spell
 augroup END "}
 
 augroup arduino "{
-	au BufRead,BufNewFile *.pde set filetype=arduino
-	au BufRead,BufNewFile *.ino set filetype=arduino
+  au BufRead,BufNewFile *.pde set filetype=arduino
+  au BufRead,BufNewFile *.ino set filetype=arduino
 augroup END "}
 
 augroup octave "{
-	au BufRead,BufNewFile *.m, set filetype=octave
-	"au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
-	au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
+  au BufRead,BufNewFile *.m, set filetype=octave
+  "au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
+  au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
 augroup END "}
 
 augroup Markdown "{
@@ -380,15 +381,15 @@ augroup Markdown "{
 augroup END "}
 
 augroup PreviewOnBottom "{
-	autocmd InsertEnter * set splitbelow
-	autocmd InsertLeave * set splitbelow!
+  autocmd InsertEnter * set splitbelow
+  autocmd InsertLeave * set splitbelow!
 augroup END "}
 
 "}
 
 " Enable mouse "{
 if has('mouse')
-	set mouse=a
+  set mouse=a
 endif
 "}
 
@@ -433,10 +434,10 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
 let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\v[\/]\.(git|hg|svn)$',
-			\ 'file': '\v\.(exe|so|dll)$',
-			\ 'link': 'some_bad_symbolic_links',
-			\ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+      \ 'file': '\v\.(exe|so|dll)$',
+      \ 'link': 'some_bad_symbolic_links',
+      \ }
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " enable caching
@@ -476,9 +477,9 @@ let $RUST_SRC_PATH="/usr/src/rust/src"
 " Syntastic "{
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = {
-	\ "mode": "passive",
-	\ "active_filetypes": [],
-	\ "passive_filetypes": [] }
+  \ "mode": "passive",
+  \ "active_filetypes": [],
+  \ "passive_filetypes": [] }
 " C
 let g:syntastic_c_compiler_options = '-std=c99'
 " Javascript and VueJS checkers
@@ -518,25 +519,25 @@ set completeopt=menu,longest
 "}
 
 " JavascriptX "{
-	let g:jsx_ext_required = 0
+  let g:jsx_ext_required = 0
 "}
 
 " Neomake "{
-	let g:neomake_java_enabled_makers = ['gradle']
-	let g:neomake_javascript_enabled_makers = ['eslint']
-	let g:neomake_javascript_jsx_enabled_makers = g:neomake_javascript_enabled_makers
-	let g:neomake_vue_enabled_makers = g:neomake_javascript_enabled_makers
-	let g:neomake_elixir_enabled_makers = ['mix', 'credo']
-	call neomake#configure#automake('rw', 1000)
+  let g:neomake_java_enabled_makers = ['gradle']
+  let g:neomake_javascript_enabled_makers = ['eslint']
+  let g:neomake_javascript_jsx_enabled_makers = g:neomake_javascript_enabled_makers
+  let g:neomake_vue_enabled_makers = g:neomake_javascript_enabled_makers
+  let g:neomake_elixir_enabled_makers = ['mix', 'credo']
+  call neomake#configure#automake('rw', 1000)
 "}
 
 " PHP Complete Extended "{
-	"augroup phpcomplete_extended "{
-	"	autocmd!
-	"	autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-	"augroup END "}
+  "augroup phpcomplete_extended "{
+  " autocmd!
+  " autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+  "augroup END "}
 
-	let g:phpcomplete_index_composer_command='composer'
+  let g:phpcomplete_index_composer_command='composer'
 "}
 
 "}
@@ -544,35 +545,35 @@ set completeopt=menu,longest
 "" Functions {
 " Ultisnips vs. YouCompleteMe Tab {
 function! g:UltiSnips_Complete()
-	call UltiSnips#ExpandSnippet()
-	if g:ulti_expand_res == 0
-		if pumvisible()
-			return "\<C-n>"
-		else
-			call UltiSnips#JumpForwards()
-			if g:ulti_jump_forwards_res == 0
-				return "\<TAB>"
-			endif
-		endif
-	endif
-	return ""
+  call UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips#JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
+    endif
+  endif
+  return ""
 endfunction
 
 function! g:UltiSnips_Reverse()
-	call UltiSnips#JumpBackwards()
-	if g:ulti_jump_backwards_res == 0
-		return "\<C-P>"
-	endif
+  call UltiSnips#JumpBackwards()
+  if g:ulti_jump_backwards_res == 0
+    return "\<C-P>"
+  endif
 
-	return ""
+  return ""
 endfunction
 
 if !exists("g:UltiSnipsJumpForwardTrigger")
-	let g:UltiSnipsJumpForwardTrigger = "<tab>"
+  let g:UltiSnipsJumpForwardTrigger = "<tab>"
 endif
 
 if !exists("g:UltiSnipsJumpBackwardTrigger")
-	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 endif
 
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
@@ -581,24 +582,24 @@ au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " 
 
 " Bubble lines {
 function! s:Move(cmd, count, map) abort
-	normal! m`
-	silent! exe 'move'.a:cmd.a:count
-	norm! ``
-	silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
+  normal! m`
+  silent! exe 'move'.a:cmd.a:count
+  norm! ``
+  silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
 endfunction
 
 function! s:MoveSelectionUp(count) abort
-	normal! m`
-	silent! exe "'<,'>move'<--".a:count
-	norm! ``
-	silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+  normal! m`
+  silent! exe "'<,'>move'<--".a:count
+  norm! ``
+  silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
 endfunction
 function! s:MoveSelectionDown(count) abort
 
-	normal! m`
-	norm! ``
-	exe "'<,'>move'>+".a:count
-	silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+  normal! m`
+  norm! ``
+  exe "'<,'>move'>+".a:count
+  silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
 endfunction
 
 nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
