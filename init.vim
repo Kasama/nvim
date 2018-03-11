@@ -33,7 +33,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
   Plug 'Kasama/neomake-local-eslint.vim'
 Plug 'scrooloose/nerdtree'
@@ -41,12 +41,12 @@ Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 "Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
 Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 "Plug 'Shougo/deoplete.nvim'
 Plug 'chrisbra/NrrwRgn'
-Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'kien/ctrlp.vim'
 "Plug 'Chiel92/vim-autoformat'
@@ -58,7 +58,7 @@ Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
-Plug 'idanarye/vim-vebugger'
+Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
 Plug 'machakann/vim-highlightedyank'
 Plug 'obreitwi/vim-sort-folds'
 Plug 'ryanoasis/vim-devicons'
@@ -71,42 +71,42 @@ Plug 'lervag/vimtex' "LaTeX
 Plug 'KabbAmine/zeavim.vim' "Zeal
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting' "Multiple syntax
 Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] } "C/Cpp
-Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] } "C/Cpp
-Plug 'beyondmarc/glsl.vim' "GLSL - OpenGL
+"Plug 'beyondmarc/opengl.vim', { 'for': ['c', 'cpp'] } "C/Cpp
+"Plug 'beyondmarc/glsl.vim' "GLSL - OpenGL
 Plug 'ap/vim-css-color' "CSS
-Plug 'akz92/vim-ionic2' "Ionic
+" Plug 'akz92/vim-ionic2' "Ionic
 Plug 'othree/html5.vim' "HTML
 Plug 'mattn/emmet-vim' "HTML
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] } "Ruby
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] } "Rails
 Plug 'moll/vim-node', { 'for': ['javascript', 'html'] } "NodeJS
-Plug 'Quramy/tsuquyomi', { 'for': [ 'typescript' ] } "Typescript
-  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'Quramy/tsuquyomi', { 'for': [ 'typescript' ] } "Typescript
+  " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 "Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
 "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
-Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript' ] } "Typescript
+" Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript' ] } "Typescript
 Plug 'othree/xml.vim' "XML
-Plug 'tclem/vim-arduino' "Arduino
-Plug 'jvirtanen/vim-octave' "Octave/Matlab
-Plug 'Kasama/vim-syntax-extra' "Multiple Syntax
-Plug 'rhysd/vim-crystal' "Crystal
+" Plug 'tclem/vim-arduino' "Arduino
+" Plug 'jvirtanen/vim-octave' "Octave/Matlab
+Plug 'Kasama/vim-syntax-extra', { 'for': ['c', 'cpp', 'yacc', 'lex'] }  "BISON, LEX, C, Cpp
+" Plug 'rhysd/vim-crystal' "Crystal
 Plug 'elixir-lang/vim-elixir' "Elixir
-Plug 'adimit/prolog.vim' "Prolog
-Plug 'rust-lang/rust.vim' "Rust
+" Plug 'adimit/prolog.vim' "Prolog
+" Plug 'rust-lang/rust.vim' "Rust
 "Plug 'racer-rust/vim-racer' "Rust
 Plug 'pangloss/vim-javascript' "Javascript
 Plug 'mxw/vim-jsx' "JSX (React)
 Plug 'posva/vim-vue' "Vue.JS
-Plug 'sekel/vim-vue-syntastic' "Vue.JS
+"Plug 'sekel/vim-vue-syntastic' "Vue.JS
 "Plug 'm2mdas/phpcomplete-extended'
   "Plug 'm2mdas/phpcomplete-extended-laravel'
-Plug 'noahfrederick/vim-laravel', { 'for': [ 'php' ] } "Laravel PHP
-  Plug 'tpope/vim-dispatch'
-  if (has('nvim'))
-    Plug 'radenling/vim-dispatch-neovim'
-  endif
-  Plug 'tpope/vim-projectionist'
-  Plug 'noahfrederick/vim-composer', { 'for': [ 'php' ] } "PHP
+" Plug 'noahfrederick/vim-laravel', { 'for': [ 'php' ] } "Laravel PHP
+"   Plug 'tpope/vim-dispatch'
+"   if (has('nvim'))
+"     Plug 'radenling/vim-dispatch-neovim'
+"   endif
+"   Plug 'tpope/vim-projectionist'
+Plug 'noahfrederick/vim-composer', { 'for': [ 'php' ] } "PHP
 Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
@@ -137,7 +137,7 @@ nnoremap <UP> g<UP>
 nnoremap <DOWN> g<DOWN>
 
 "" Reformat code
-nnoremap <silent> <leader>fc :ClangFormat<CR>
+" nnoremap <silent> <leader>fc :ClangFormat<CR>
 
 "" Generate tags file
 nnoremap <silent> <leader>gt :!ctags -R .<CR>
@@ -200,7 +200,9 @@ nmap <A-K> @='[e'<CR>
 
 " Bubble multiple lines
 vmap <A-K> [egv
-vmap <A-J> ]egv "}
+vmap <A-J> ]egv
+
+"}
 
 " Colorscheme "{
 colorscheme kasama
@@ -210,6 +212,12 @@ colorscheme kasama
 hi OverStepColumn ctermbg=4
 call matchadd('OverStepColumn', '\%81v', 100)
 " }
+
+" Enable mouse "{
+if has('mouse')
+  set mouse=a
+endif
+"}
 
 " Settings "{
 set laststatus=2
@@ -242,7 +250,6 @@ endif
 augroup Vue "{
   autocmd!
   au Filetype vue set syntax=html
-  au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup devHelp "{
@@ -326,20 +333,20 @@ augroup comments "{
   au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
 augroup END "}
 
-augroup JavaEclim "{
-  autocmd!
-  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>o :JavaImportOrganize<CR>
-  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>gi :JavaSearch<CR>
-  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>c :JavaCorrect<CR>
-  au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>i :JavaImpl<CR>
-augroup END "}
+" augroup JavaEclim "{
+"   autocmd!
+"   au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>o :JavaImportOrganize<CR>
+"   au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>gi :JavaSearch<CR>
+"   au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>c :JavaCorrect<CR>
+"   au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>i :JavaImpl<CR>
+" augroup END "}
 
-augroup PlantUML "{
-  autocmd!
-  au BufNewFile,BufRead *.uml setlocal syntax=plantuml
-  au BufNewFile,BufRead *.puml setlocal syntax=plantuml
-  au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
-augroup END "}
+" augroup PlantUML "{
+"   autocmd!
+"   au BufNewFile,BufRead *.uml setlocal syntax=plantuml
+"   au BufNewFile,BufRead *.puml setlocal syntax=plantuml
+"   au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
+" augroup END "}
 
 augroup SpecialCTAGS "{
   autocmd!
@@ -359,21 +366,21 @@ augroup VimRC "{
   autocmd! BufWritePost *vimrc source %
 augroup END "}
 
-augroup commitSpell "{
+augroup gitCommitSpell "{
   " Git commits.
   autocmd FileType gitcommit setlocal spell
 augroup END "}
 
-augroup arduino "{
-  au BufRead,BufNewFile *.pde set filetype=arduino
-  au BufRead,BufNewFile *.ino set filetype=arduino
-augroup END "}
+" augroup arduino "{
+"   au BufRead,BufNewFile *.pde set filetype=arduino
+"   au BufRead,BufNewFile *.ino set filetype=arduino
+" augroup END "}
 
-augroup octave "{
-  au BufRead,BufNewFile *.m, set filetype=octave
-  "au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
-  au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
-augroup END "}
+" augroup octave "{
+"   au BufRead,BufNewFile *.m, set filetype=octave
+"   "au FileType octave setlocal keywordprg=info\ octave\ --vi-keys\ --index-search
+"   au FileType octave map <buffer> <f5> <esc>:w<cr>:!octave --no-gui -q --persist %<cr>
+" augroup END "}
 
 augroup Markdown "{
     au!
@@ -385,12 +392,6 @@ augroup PreviewOnBottom "{
   autocmd InsertLeave * set splitbelow!
 augroup END "}
 
-"}
-
-" Enable mouse "{
-if has('mouse')
-  set mouse=a
-endif
 "}
 
 " Plugin related configs "{
@@ -420,12 +421,12 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 " }
 
-"Eclim on supertab "{
-"let g:SuperTabDefaultCompletionType = '<C-X><C-O>'
-let g:SuperTabDefaultCompletionType = 'context'
-let g:SuperTabContextDefaultCompletionType = '<c-p>'
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-"}
+" Eclim on supertab "{
+" "let g:SuperTabDefaultCompletionType = '<C-X><C-O>'
+" let g:SuperTabDefaultCompletionType = 'context'
+" let g:SuperTabContextDefaultCompletionType = '<c-p>'
+" let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+" "}
 
 "CtrlP configs "{
 let g:ctrlp_map = '<leader>p'
@@ -464,10 +465,6 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 "}
 
-"Disable default assembly checker "{
-let g:syntastic_disabled_filetypes=['asm']
-"}
-
 " Rust config "{
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
 let g:ycm_rust_src_path = "/usr/src/rust/src"
@@ -485,6 +482,8 @@ let g:syntastic_c_compiler_options = '-std=c99'
 " Javascript and VueJS checkers
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_vue_checkers = g:syntastic_javascript_checkers
+" ASM
+let g:syntastic_disabled_filetypes=['asm']
 
 " Use local eslint when possible
 let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
