@@ -62,6 +62,7 @@ Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
 Plug 'machakann/vim-highlightedyank'
 Plug 'obreitwi/vim-sort-folds'
 Plug 'ryanoasis/vim-devicons'
+Plug 'rakr/vim-one'
 
 "" Language/Framework support {
 
@@ -95,6 +96,7 @@ Plug 'elixir-lang/vim-elixir' "Elixir
 " Plug 'rust-lang/rust.vim' "Rust
 "Plug 'racer-rust/vim-racer' "Rust
 Plug 'pangloss/vim-javascript' "Javascript
+Plug 'galooshi/vim-import-js' "Javascript
 Plug 'mxw/vim-jsx' "JSX (React)
 Plug 'posva/vim-vue' "Vue.JS
 "Plug 'sekel/vim-vue-syntastic' "Vue.JS
@@ -204,12 +206,32 @@ vmap <A-J> ]egv
 
 "}
 
+" True color support {
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if (has("termguicolors"))
+  set termguicolors
+endif
+" }
+
 " Colorscheme "{
-colorscheme kasama
+set background=dark
+colorscheme one
+"call one#highlight('GroupName', 'foreground', 'background', 'style')
+call one#highlight('Folded', 'dddddd', '444444', 'bold')
+call one#highlight('ExtraWhiteSpaces', '222222', 'dddddd', 'none')
+
+augroup HighlightTrailingWhitespaces
+  autocmd!
+  match ExtraWhiteSpaces /\s\+$/
+  match ExtraWhiteSpaces /\s\+$\| \+\ze\t/
+augroup END
 " }
 
 " Highlight 81st column {
-hi OverStepColumn ctermbg=4
+hi OverStepColumn guibg=#222222 ctermbg=4
 call matchadd('OverStepColumn', '\%81v', 100)
 " }
 
@@ -224,7 +246,6 @@ set laststatus=2
 set noshowmode
 set whichwrap=b,s,<,>,[,]
 exec "set listchars=tab:\uBB\uA0,trail:¶,space:\uB7"
-set background=dark
 set hlsearch
 set foldmarker={,}
 set foldmethod=marker
@@ -316,12 +337,6 @@ augroup customTabs "{
   au FileType yacc setlocal expandtab
 augroup END "}
 
-augroup HighlightTrailingWhitespaces "{
-  autocmd!
-  match ExtraWhiteSpaces /\s\+$/
-  match ExtraWhiteSpaces /\s\+$\| \+\ze\t/
-augroup END "}
-
 augroup comments "{
   autocmd!
   au FileType c,h,cpp,hpp nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
@@ -399,7 +414,12 @@ augroup END "}
 " HTML EMMET {
 let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key='<C-s>'
-autocmd FileType html,css EmmetInstall
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
+autocmd FileType html,css,javascript.jsx EmmetInstall
 " }
 
 " deoplete config {
@@ -412,9 +432,15 @@ autocmd FileType html,css EmmetInstall
 "  "call deoplete#enable_logging('DEBUG', '/tmp/deoplete/deoplete.log')
 " }
 
+" vim-devicons config {
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = 'V'
+" }
+
 " vim-airline config {
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16_grayscale'
+" let g:airline_theme='base16_grayscale'
+let g:airline_theme='one'
 " Tabline
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#fnamemod = ':t' "Show only filename
