@@ -1,7 +1,8 @@
 syntax on
 
 " Plug and plugins "{
-"" Autoinstall Plug "{
+" Setup Plug "{
+"" Autoinstall Plug
 
 if (has('nvim'))
   let vimPlugPath = '~/.config/nvim/autoload/plug.vim'
@@ -15,60 +16,59 @@ if empty(glob(vimPlugPath))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-"" Autoinstall Plug }
-
-"" Init Plug {
+"" Init Plug
 let plugged_path=expand('~/.config/nvim/plugged/')
 call plug#begin(plugged_path)
 "}
 
-"" Plugins
-"Plug 'junegunn/vim-plug'
-if (has('nvim'))
-  Plug 'floobits/floobits-neovim'
-endif
-Plug 'Valloric/YouCompleteMe'
-  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-"Plug 'oblitum/YouCompleteMe' " Using Valloric (original) YCM
-Plug 'tpope/vim-surround'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'editorconfig/editorconfig-vim'
-"Plug 'scrooloose/syntastic'
-Plug 'neomake/neomake'
-  Plug 'Kasama/neomake-local-eslint.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
-"Plug 'ervandew/supertab'
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-"Plug 'vim-scripts/OmniCppComplete', { 'for': ['ruby', 'python', 'yacc', 'lex', 'java'] }
-Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-"Plug 'Shougo/deoplete.nvim'
-Plug 'chrisbra/NrrwRgn'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'kien/ctrlp.vim'
-"Plug 'Chiel92/vim-autoformat'
-"Plug 'craigemery/vim-autotag'
-"Plug 'vim-scripts/AutoComplPop'
-Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
-"Plug 'bbchung/Clamp', { 'for': ['cpp', 'c', 'h'] }
-Plug 'kana/vim-operator-user'
+" Interface ==================================================================
+Plug 'ryanoasis/vim-devicons'
+Plug 'rakr/vim-one'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
+Plug 'machakann/vim-highlightedyank'
+"Plug 'nathanaelkane/vim-indent-guides' "Performance Issues
+
+" Coding ======================================================================
+if (has('nvim'))
+  Plug 'floobits/floobits-neovim', { 'on': 'FloobitsLoadPlugin' }
+endif
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'tpope/vim-surround'
+Plug 'editorconfig/editorconfig-vim'
+if (has('python'))
+  Plug 'neomake/neomake'
+    Plug 'Kasama/neomake-local-eslint.vim'
+  Plug 'SirVer/ultisnips' ", { 'for': [ 'c', 'cpp', 'h' ] }
+else
+  Plug 'scrooloose/syntastic'
+endif
+Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
-Plug 'machakann/vim-highlightedyank'
+
+" Git =========================================================================
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" FileManagement ==============================================================
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+
+" Utilities ===================================================================
+Plug 'chrisbra/NrrwRgn'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'obreitwi/vim-sort-folds'
-Plug 'ryanoasis/vim-devicons'
-Plug 'rakr/vim-one'
+Plug 'kana/vim-operator-user'
 
 "" Language/Framework support {
 
 Plug 'junegunn/vader.vim', { 'for': [ 'vader' ] } "Vimscript
 Plug 'slashmili/alchemist.vim', { 'for': [ 'elixir' ] } "Elixir
-Plug 'lervag/vimtex' "LaTeX
+Plug 'lervag/vimtex', { 'for': [ 'tex', 'simpletex' ] } "LaTeX
 Plug 'KabbAmine/zeavim.vim' "Zeal
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting' "Multiple syntax
 Plug 'vim-scripts/a.vim', { 'for': [ 'c', 'cpp' ] } "C/Cpp
@@ -96,7 +96,7 @@ Plug 'elixir-lang/vim-elixir' "Elixir
 " Plug 'rust-lang/rust.vim' "Rust
 "Plug 'racer-rust/vim-racer' "Rust
 Plug 'pangloss/vim-javascript' "Javascript
-Plug 'galooshi/vim-import-js' "Javascript
+Plug 'galooshi/vim-import-js', { 'on': 'ImportJSLoadPlugin' } "Javascript
 Plug 'mxw/vim-jsx' "JSX (React)
 Plug 'posva/vim-vue' "Vue.JS
 "Plug 'sekel/vim-vue-syntastic' "Vue.JS
@@ -112,13 +112,12 @@ Plug 'noahfrederick/vim-composer', { 'for': [ 'php' ] } "PHP
 Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
+Plug 'hashivim/vim-terraform' "Terraform
 "" End Plugins }
 
 call plug#end()
 filetype plugin indent on
-" Plug Done
-
-"}
+" Plug Done }
 
 " Leader key "{
 let mapleader = ","
@@ -567,7 +566,7 @@ set completeopt=menu,longest
 
 "}
 
-"" Functions {
+" Functions {
 " Ultisnips vs. YouCompleteMe Tab {
 function! g:UltiSnips_Complete()
   call UltiSnips#ExpandSnippet()
