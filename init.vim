@@ -113,6 +113,7 @@ Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
 Plug 'hashivim/vim-terraform' "Terraform
+Plug 'cespare/vim-toml' "Toml (Traefik/Cargo)
 "" End Plugins }
 
 call plug#end()
