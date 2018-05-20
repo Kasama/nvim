@@ -81,11 +81,11 @@ Plug 'mattn/emmet-vim' "HTML
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] } "Ruby
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] } "Rails
 Plug 'moll/vim-node', { 'for': ['javascript', 'html'] } "NodeJS
-" Plug 'Quramy/tsuquyomi', { 'for': [ 'typescript' ] } "Typescript
-  " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-"Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
+Plug 'Quramy/tsuquyomi' "Typescript
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'mhartington/nvim-typescript'
 "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
-" Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript' ] } "Typescript
+ Plug 'HerringtonDarkholme/yats.vim' "Typescript
 Plug 'othree/xml.vim' "XML
 " Plug 'tclem/vim-arduino' "Arduino
 " Plug 'jvirtanen/vim-octave' "Octave/Matlab
@@ -113,6 +113,7 @@ Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
 Plug 'hashivim/vim-terraform' "Terraform
+" Plug 'juliosueiras/vim-terraform-completion' "Terraform
 Plug 'cespare/vim-toml' "Toml (Traefik/Cargo)
 "" End Plugins }
 
