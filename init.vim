@@ -56,6 +56,7 @@ Plug 'airblade/vim-gitgutter'
 
 " FileManagement ==============================================================
 Plug 'kien/ctrlp.vim'
+Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Utilities ===================================================================
@@ -454,6 +455,12 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " let g:SuperTabContextDefaultCompletionType = '<c-p>'
 " let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 " "}
+
+" Ack.vim using The Silver Searcher (Ag) "{
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+"}
 
 "CtrlP configs "{
 let g:ctrlp_map = '<leader>p'
