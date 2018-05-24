@@ -32,9 +32,14 @@ Plug 'machakann/vim-highlightedyank'
 " Coding ======================================================================
 if (has('nvim'))
   Plug 'floobits/floobits-neovim', { 'on': 'FloobitsLoadPlugin' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+else
+  Plug 'Shougo/deoplete.nvim' |  Plug 'roxma/nvim-yarp' | Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'tpope/vim-surround'
 Plug 'editorconfig/editorconfig-vim'
 if (has('python'))
@@ -424,14 +429,45 @@ let g:user_emmet_settings = {
 autocmd FileType html,css,javascript.jsx EmmetInstall
 " }
 
+" Language Server Configs {
+let g:LanguageClient_serverCommands = {
+  \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+  \ 'vue': ['tcp://127.0.0.1:2089'],
+  \ }
+" }
+
 " deoplete config {
-"  let g:deoplete#enable_at_startup = 1
-"  let g:deoplete#enable_debug = 1
-"  let g:deoplete#enable_profile = 1
-"  let g:deoplete#complete_method = "omnifunc"
-"  let g:deoplete#enable_ignore_case = 1
-"  let g:deoplete#disable_auto_complete = 1
-"  "call deoplete#enable_logging('DEBUG', '/tmp/deoplete/deoplete.log')
+" deoplete options
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" disable autocomplete by default
+let b:deoplete_disable_auto_complete=1
+let g:deoplete_disable_auto_complete=1
+call deoplete#custom#buffer_option('auto_complete', v:false)
+
+if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
+endif
+
+" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#source('_',
+            \ 'disabled_syntaxes', ['Comment', 'String'])
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" set sources
+let g:deoplete#sources = {}
+let g:deoplete#sources.cpp = ['LanguageClient']
+let g:deoplete#sources.python = ['LanguageClient']
+let g:deoplete#sources.python3 = ['LanguageClient']
+let g:deoplete#sources.rust = ['LanguageClient']
+let g:deoplete#sources.c = ['LanguageClient']
+let g:deoplete#sources.vim = ['vim']
+
+" deoplete-racer config
+let g:deoplete#sources#rust#racer_binary='/Users/aenayet/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path= '/Users/aenayet/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
 " }
 
 " vim-devicons config {
@@ -479,14 +515,6 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 let g:ctrlp_use_caching=1
 "}
 
-"YouCompleteMe config "{
-let g:ycm_add_preview_to_completeopt=1
-let g:ycm_autoclose_preview_window_after_insertion=1
-let g:ycm_show_diagnostics_ui=0
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-"}
-
 " Vim-Ruby/Rails {
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
@@ -501,7 +529,6 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 
 " Rust config "{
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
-let g:ycm_rust_src_path = "/usr/src/rust/src"
 let $RUST_SRC_PATH="/usr/src/rust/src"
 "}
 
