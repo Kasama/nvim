@@ -48,6 +48,7 @@ Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'rhysd/vim-clang-format'
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
+Plug 'metakirby5/codi.vim'
 
 " Git =========================================================================
 Plug 'tpope/vim-git'
