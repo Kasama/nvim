@@ -49,6 +49,8 @@ Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
 Plug 'metakirby5/codi.vim'
+" TODO test this
+" Plug 'turbio/bracey.vim' "HTML/CSS/Javascript
 
 " Git =========================================================================
 Plug 'tpope/vim-git'
@@ -115,7 +117,7 @@ Plug 'jtratner/vim-flavored-markdown' "Markdown
 Plug 'chr4/nginx.vim' "NGINX
 Plug 'martinda/Jenkinsfile-vim-syntax' "Jenkins
 Plug 'hashivim/vim-terraform' "Terraform
-" Plug 'juliosueiras/vim-terraform-completion' "Terraform
+Plug 'juliosueiras/vim-terraform-completion' "Terraform
 Plug 'cespare/vim-toml' "Toml (Traefik/Cargo)
 "" End Plugins }
 
