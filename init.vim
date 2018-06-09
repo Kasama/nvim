@@ -433,10 +433,23 @@ autocmd FileType html,css,javascript.jsx EmmetInstall
 " }
 
 " Language Server Configs {
-let g:LanguageClient_serverCommands = {
-  \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-  \ 'vue': ['tcp://127.0.0.1:2089'],
-  \ }
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {}
+if executable('javascript-typescript-stdio')
+  let g:LanguageClient_serverCommands['javascript.jsx'] = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands['javascript'] = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands['typescript'] = ['javascript-typescript-stdio']
+  autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
+  autocmd FileType javascript nnoremap <buffer> <silent>
+        \ <leader>lh :call LanguageClient_textDocument_hover()<CR>
+  autocmd FileType javascript inoremap <buffer> <silent>
+        \ <C-Space> <c-o>:call LanguageClient#textDocument_signatureHelp()<CR>
+  autocmd FileType javascript nnoremap <buffer> <silent>
+        \ K :call LanguageClient#textDocument_hover()<CR>
+else
+  echo "javascript-typescript-stdio not installed!\n"
+  :cq
+endif
 " }
 
 " deoplete config {
