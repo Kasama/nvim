@@ -27,6 +27,7 @@ Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 Plug 'machakann/vim-highlightedyank'
+Plug 'luochen1990/rainbow' | let g:rainbow_active = 1 " Rainbow parens
 "Plug 'nathanaelkane/vim-indent-guides' "Performance Issues
 
 " Coding ======================================================================
@@ -54,6 +55,7 @@ Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
 Plug 'metakirby5/codi.vim'
+Plug 'jiangmiao/auto-pairs' | let g:AutoPairsFlyMode=1 " Automatically close opened [('
 " TODO test this
 " Plug 'turbio/bracey.vim' "HTML/CSS/Javascript
 
@@ -238,6 +240,28 @@ augroup HighlightTrailingWhitespaces
   match ExtraWhiteSpaces /\s\+$/
   match ExtraWhiteSpaces /\s\+$\| \+\ze\t/
 augroup END
+" }
+
+" OperatorMono Colorscheme "{
+" Discover Highlight section
+function! GetHighlightSection() "{
+  function! s:SyntaxId(modifier)
+    return synIDattr(synID(line("."), col("."), a:modifier), "name")
+  endfunction
+
+  let highlightId = s:SyntaxId(1)
+  let transId = s:SyntaxId(0)
+  let loId = synIDattr(synIDtrans(synID(line("."), col("."), 0)), "name")
+
+  return "hi<" . highlightId . "> trans<" . transId . "> lo<" . loId . ">"
+endfunction "}
+
+nnoremap <leader>h :echo GetHighlightSection()<CR>
+
+highlight vimLineComment gui=italic cterm=italic
+highlight vimCommand gui=italic cterm=italic
+highlight Comment gui=italic cterm=italic
+highlight Structure gui=italic cterm=italic
 " }
 
 " Highlight 81st column {
@@ -489,7 +513,6 @@ let g:deoplete#sources#rust#rust_source_path= '/Users/aenayet/.rustup/toolchains
 
 " vim-devicons config {
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = 'V'
 " }
 
 " vim-airline config {
