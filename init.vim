@@ -27,6 +27,7 @@ Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 Plug 'machakann/vim-highlightedyank'
+Plug 'luochen1990/rainbow' | let g:rainbow_active = 1 " Rainbow parens
 "Plug 'nathanaelkane/vim-indent-guides' "Performance Issues
 
 " Coding ======================================================================
@@ -49,6 +50,7 @@ Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
 Plug 'metakirby5/codi.vim'
+Plug 'jiangmiao/auto-pairs' | let g:AutoPairsFlyMode=1 " Automatically close opened [('
 " TODO test this
 " Plug 'turbio/bracey.vim' "HTML/CSS/Javascript
 
