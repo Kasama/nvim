@@ -58,6 +58,7 @@ Plug 'metakirby5/codi.vim'
 Plug 'jiangmiao/auto-pairs' | let g:AutoPairsFlyMode=1 " Automatically close opened [('
 " TODO test this
 " Plug 'turbio/bracey.vim' "HTML/CSS/Javascript
+Plug 'janko-m/vim-test'
 
 " Git =========================================================================
 Plug 'tpope/vim-git'
@@ -92,11 +93,11 @@ Plug 'mattn/emmet-vim' "HTML
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'erb'] } "Ruby
 Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] } "Rails
 Plug 'moll/vim-node', { 'for': ['javascript', 'html'] } "NodeJS
-Plug 'Quramy/tsuquyomi' "Typescript
-  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'Quramy/tsuquyomi' "Typescript
+"   Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'mhartington/nvim-typescript'
-"Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
- Plug 'HerringtonDarkholme/yats.vim' "Typescript
+" "Plug 'wookiehangover/jshint.vim', { 'for': ['javascript', 'html'] }
+Plug 'HerringtonDarkholme/yats.vim' "Typescript
 Plug 'othree/xml.vim' "XML
 " Plug 'tclem/vim-arduino' "Arduino
 " Plug 'jvirtanen/vim-octave' "Octave/Matlab
@@ -262,6 +263,7 @@ highlight vimLineComment gui=italic cterm=italic
 highlight vimCommand gui=italic cterm=italic
 highlight Comment gui=italic cterm=italic
 highlight Structure gui=italic cterm=italic
+highlight Typedef gui=italic cterm=italic
 " }
 
 " Highlight 81st column {
@@ -360,9 +362,9 @@ augroup customTabs "{
   au BufNewFile,BufRead *.erb setlocal shiftwidth=2
   au BufNewFile,BufRead *.erb setlocal softtabstop=2
   au BufNewFile,BufRead *.erb setlocal expandtab
-  au FileType haskell setlocal tabstop=8
-  au FileType haskell setlocal shiftwidth=8
-  au FileType haskell setlocal softtabstop=8
+  au FileType haskell setlocal tabstop=2
+  au FileType haskell setlocal shiftwidth=2
+  au FileType haskell setlocal softtabstop=2
   au FileType haskell setlocal expandtab
   au FileType html setlocal tabstop=2
   au FileType html setlocal shiftwidth=2
@@ -475,6 +477,16 @@ else
   echo "javascript-typescript-stdio not installed!\n"
   :cq
 endif
+if executable('hie-wrapper')
+  let g:LanguageClient_serverCommands['haskell'] = ['hie-wrapper', '+RTS', '-c', '-M1G', '-K1G', '-A16M', '-RTS', '--lsp']
+  autocmd FileType haskell setlocal omnifunc=LanguageClient#complete
+  autocmd FileType haskell nnoremap <buffer> <silent>
+        \ <leader>lh :call LanguageClient_textDocument_hover()<CR>
+  autocmd FileType haskell inoremap <buffer> <silent>
+        \ <C-Space> <c-o>:call LanguageClient#textDocument_signatureHelp()<CR>
+  autocmd FileType haskell nnoremap <buffer> <silent>
+        \ K :call LanguageClient#textDocument_hover()<CR>
+endif
 " }
 
 " deoplete config {
@@ -539,7 +551,8 @@ endif
 "}
 
 "CtrlP configs "{
-let g:ctrlp_map = '<leader>p'
+"let g:ctrlp_map = '<leader>p'
+nnoremap <silent> <leader>p :FZF<CR>
 let g:ctrlp_working_path_mode = 'ra'
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
