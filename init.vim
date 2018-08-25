@@ -55,7 +55,7 @@ Plug 'Rip-Rip/clang_complete', { 'for': ['cpp', 'c', 'h'] }
 "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
 Plug 'idanarye/vim-vebugger', { 'for': ['cpp', 'c', 'h'] }
 Plug 'metakirby5/codi.vim'
-Plug 'jiangmiao/auto-pairs' | let g:AutoPairsFlyMode=1 " Automatically close opened [('
+Plug 'jiangmiao/auto-pairs' " Automatically close opened [('
 " TODO test this
 " Plug 'turbio/bracey.vim' "HTML/CSS/Javascript
 Plug 'janko-m/vim-test'
