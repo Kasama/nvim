@@ -3,18 +3,24 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 nnoremap \ :NERDTreeToggle<CR>
 
-" Fast project-wide search
-Plug 'mileszs/ack.vim'
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
 " Fuzzy Find with FZF or CtrlP
 if (executable('fzf'))
-  nnoremap <silent> <leader>p :FZF<CR>
+  Plug 'junegunn/fzf.vim'
+
+  if (!executable('ag'))
+    Plug 'mileszs/ack.vim'
+  endif
+
+  nnoremap <silent> <leader>p :GFiles<CR>
+  nnoremap <silent> <leader>f :Buffers<CR>
 else
+  Plug 'mileszs/ack.vim'
   Plug 'kien/ctrlp.vim'
+
+  if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+  endif
+
   let g:ctrlp_map = '<leader>p'
   let g:ctrlp_working_path_mode = 'ra'
 

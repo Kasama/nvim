@@ -1,4 +1,4 @@
-Plug 'mhartington/nvim-typescript'
+" Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim' "Typescript
 Plug 'pangloss/vim-javascript' "Javascript
 Plug 'galooshi/vim-import-js', { 'on': 'ImportJSLoadPlugin' } "Javascript

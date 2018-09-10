@@ -13,6 +13,7 @@ function! s:postHook()
     autocmd FileType haskell nnoremap <buffer> <silent>
           \ <leader>lh :call LanguageClient_textDocument_hover()<CR>
   endif
+  let g:ale_linters['haskell'] = ['hie']
 endfunction
 
 call AddPostPluginHook(function('s:postHook'))
