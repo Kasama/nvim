@@ -13,7 +13,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }
 
 " Automatically close opened [('
-Plug 'Kasama/auto-pairs' | let g:AutoPairsEnableParensDecorators = 1
+Plug 'Kasama/auto-pairs'
+let g:AutoPairsEnableParensDecorators = 1
+let g:AutoPairsParensDecorators = {'%':'%', '#':'#', '=':'=', '-':'-'}
 
 " Test suite helper
 Plug 'janko-m/vim-test'
@@ -28,6 +30,7 @@ Plug 'KabbAmine/zeavim.vim'
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 let g:rainbow_conf = {
+\  'guifgs': ['MediumOrchid3', 'LightSalmon3', 'Plum2', 'HotPink'],
 \  'separately': {
 \    'liquid': 0
 \  }

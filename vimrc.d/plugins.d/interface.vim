@@ -9,6 +9,8 @@ Plug 'ryanoasis/vim-devicons'
 
 " Airline top and bottom status bars
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+
+Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 " Airline Config {
 
 let g:airline_powerline_fonts = 1

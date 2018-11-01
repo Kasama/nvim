@@ -12,7 +12,8 @@ if (executable('fzf'))
   endif
 
   nnoremap <silent> <leader>p :GFiles<CR>
-  nnoremap <silent> <leader>f :Buffers<CR>
+  nnoremap <silent> <leader>f :Files<CR>
+  nnoremap <silent> <leader>b :Buffers<CR>
 else
   Plug 'mileszs/ack.vim'
   Plug 'kien/ctrlp.vim'
