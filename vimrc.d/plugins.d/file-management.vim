@@ -5,6 +5,7 @@ nnoremap \ :NERDTreeToggle<CR>
 
 " Fuzzy Find with FZF or CtrlP
 if (executable('fzf'))
+  Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
 
   if (!executable('ag'))
@@ -16,7 +17,7 @@ if (executable('fzf'))
   nnoremap <silent> <leader>b :Buffers<CR>
 else
   Plug 'mileszs/ack.vim'
-  Plug 'kien/ctrlp.vim'
+  Plug 'ctrlpvim/ctrlp.vim'
 
   if executable('ag')
     let g:ackprg = 'ag --vimgrep'
