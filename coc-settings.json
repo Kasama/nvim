@@ -10,5 +10,9 @@
         "lintTool": "golint"
       }
     }
+  },
+  "yaml.format.enable": true,
+  "yaml.schemas": {
+    "kubernetes": "*.kube.yaml"
   }
 }
