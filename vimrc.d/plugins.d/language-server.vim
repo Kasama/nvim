@@ -21,5 +21,5 @@ if(has('nvim'))
   nnoremap <silent> <leader>rn :call CocAction('rename')<CR>
 
   " Highlight symbol under cursor on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
+  " autocmd CursorHold * silent call CocActionAsync('highlight')
 endif
