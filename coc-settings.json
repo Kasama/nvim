@@ -13,6 +13,7 @@
   },
   "yaml.format.enable": true,
   "yaml.schemas": {
-    "kubernetes": "*.kube.yaml"
+    "kubernetes": "*.kube.yaml",
+    "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml"
   }
 }
