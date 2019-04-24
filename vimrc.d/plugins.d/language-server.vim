@@ -20,6 +20,18 @@ if(has('nvim'))
   " Rename current Symbol
   nnoremap <silent> <leader>rn :call CocAction('rename')<CR>
 
+  " Jump To Definition on <C-]>
+  nnoremap <silent> <C-]> :call <SID>jumpDefinition()<CR>
+
+  function! s:jumpDefinition()
+    let s:defaultJumpDefinition = ['help']
+    if (index(s:defaultJumpDefinition, &filetype) >= 0)
+      execute "normal! \<C-]>"
+    else
+      call CocAction('jumpDefinition')
+    endif
+  endfunction
+
   " Highlight symbol under cursor on CursorHold
   " autocmd CursorHold * silent call CocActionAsync('highlight')
 endif

@@ -1,4 +1,4 @@
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 function! s:postHook()
   " Set this. Airline will handle the rest.
