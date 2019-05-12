@@ -51,5 +51,7 @@ nnoremap <silent> <C-\><C-q> :bdelete<CR>
 " Copy and Paste from X env
 nnoremap <silent> <leader>y "+y
 nnoremap <silent> <leader>Y "+Y
+vnoremap <silent> <leader>y "+y
+vnoremap <silent> <leader>Y "+Y
 "nnoremap <silent> <leader>p "+p
 "nnoremap <silent> <leader>P "+P
