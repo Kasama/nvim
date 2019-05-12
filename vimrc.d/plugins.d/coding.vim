@@ -1,6 +1,6 @@
 if (has('nvim'))
   " Floobits for collaborative editing
-  Plug 'floobits/floobits-neovim', { 'on': 'FloobitsLoadPlugin' }
+  " Plug 'floobits/floobits-neovim' ", { 'on': 'FloobitsLoadPlugin' }
 endif
 
 " must-have surround plugin
