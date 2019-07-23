@@ -2,7 +2,8 @@
 " Plug 'chrisbra/NrrwRgn'
 
 " Multiple cursors support
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
+let g:VM_mouse_mappings = 1
 
 " Sort folds by first line
 " Plug 'obreitwi/vim-sort-folds'
