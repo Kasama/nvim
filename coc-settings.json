@@ -12,6 +12,11 @@
         "diagnosticsEnabled": false,
         "lintTool": "golint"
       }
+    },
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
+      "initializationOptions": {}
     }
   },
   "yaml.format.enable": true,
