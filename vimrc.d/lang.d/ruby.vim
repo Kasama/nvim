@@ -19,3 +19,9 @@ augroup SpecialCTAGS "{
   autocmd! BufRead,BufNewFile *.rb unmap <leader>gt
   autocmd! BufRead,BufNewFile *.rb nnoremap <leader>gt :!ctags -R . $(bundle list --paths)<CR>
 augroup END"}
+
+augroup ERubyTags "{
+  autocmd!
+  autocmd! BufRead,BufNewFile *.erb inoremap %= <%= %><ESC>F=a
+  autocmd! BufRead,BufNewFile *.erb inoremap %% <% -%><ESC>F-hi
+augroup END"}

@@ -1,4 +1,4 @@
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 augroup GoFormat "{
   autocmd!
