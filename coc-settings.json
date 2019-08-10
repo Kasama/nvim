@@ -12,8 +12,15 @@
         "diagnosticsEnabled": false,
         "lintTool": "golint"
       }
+    },
+    "clangd": {
+      "command": "clangd",
+      "args": ["--background-index"],
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
     }
   },
+  "javascript.suggestionActions.enabled": false,
   "yaml.format.enable": true,
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",
