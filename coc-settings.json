@@ -9,12 +9,32 @@
       "filetypes": ["go"],
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     },
+    "clangd": {
+      "command": "clangd",
+      "args": ["--background-index"],
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "rootPatterns": [".stack.yaml", "cabal.config", "package.yaml"],
+      "filetypes": ["hs", "lhs", "haskell"],
+      "initializationOptions": {},
+      "settings": {
+        "languageServerHaskell": {
+          "hlintOn": true,
+          "maxNumberOfProblems": 10,
+          "completionSnippetsOn": true
+        }
+      }
+    },
     "terraform": {
       "command": "terraform-lsp",
       "filetypes": ["terraform"],
       "initializationOptions": {}
     }
   },
+  "javascript.suggestionActions.enabled": false,
   "yaml.format.enable": true,
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",

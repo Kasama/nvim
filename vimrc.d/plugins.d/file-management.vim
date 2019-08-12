@@ -12,7 +12,7 @@ if (executable('fzf'))
     Plug 'mileszs/ack.vim'
   endif
 
-  nnoremap <silent> <leader>a :Ag 
+  nnoremap <silent> <leader>a :Ag<Space>
   nnoremap <silent> <leader>p :GFiles<CR>
   nnoremap <silent> <leader>f :Files<CR>
   nnoremap <silent> <leader>b :Buffers<CR>

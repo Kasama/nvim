@@ -19,11 +19,14 @@ let g:AutoPairsParensDecorators = {'%':'%', '#':'#', '=':'=', '-':'-'}
 
 " Test suite helper
 Plug 'janko-m/vim-test'
-let test#strategy = 'neovim'
-nnoremap <silent> <leader>tt :TestLast<CR>
+if (has('nvim'))
+  let test#strategy = 'neovim'
+endif
+nnoremap <silent> <leader>tt :TestNearest<CR>
 nnoremap <silent> <leader>tf :TestFile<CR>
-nnoremap <silent> <leader>tn :TestNearest<CR>
 nnoremap <silent> <leader>ts :TestSuite<CR>
+nnoremap <silent> <leader>tl :TestLast<CR>
+nnoremap <silent> <leader>tv :TestVisit<CR>
 
 " Multiple syntax
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
