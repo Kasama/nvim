@@ -5,13 +5,9 @@
   "diagnostic.messageTarget": "float",
   "languageserver": {
     "golang": {
-      "command": "go-langserver",
+      "command": "gopls",
       "filetypes": ["go"],
-      "initializationOptions": {
-        "gocodeCompletionEnabled": true,
-        "diagnosticsEnabled": false,
-        "lintTool": "golint"
-      }
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     },
     "terraform": {
       "command": "terraform-lsp",

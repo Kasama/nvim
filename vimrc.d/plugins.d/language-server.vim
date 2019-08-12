@@ -3,8 +3,23 @@ if(has('nvim'))
 
   set updatetime=1000
 
-  " Trigger completion with <c-space>
-  inoremap <silent><expr> <c-space> coc#refresh()
+  " Trigger completion with <M-space>
+  inoremap <silent><expr> <M-space> coc#refresh()
+
+  " Use tab for everything
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  let g:coc_snippet_next = '<tab>'
 
   " Use Language Server Documentation
   nnoremap <silent> K :call <SID>show_documentation()<CR>
