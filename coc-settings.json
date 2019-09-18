@@ -39,5 +39,8 @@
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",
     "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml"
+  },
+  "diagnostic-languageserver.filetypes": {
+    "sh": "shellcheck"
   }
 }

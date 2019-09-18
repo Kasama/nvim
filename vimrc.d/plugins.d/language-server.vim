@@ -24,7 +24,7 @@ if(has('nvim'))
                                 \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji',
                                 \ 'coc-emmet', 'coc-yaml', 'coc-tsserver', 'coc-stylelint',
                                 \ 'coc-solargraph', 'coc-python', 'coc-pyls', 'coc-json',
-                                \ 'coc-html', 'coc-css' ]
+                                \ 'coc-html', 'coc-css', 'coc-diagnostic' ]
 
   let g:coc_snippet_next = '<tab>'
 
