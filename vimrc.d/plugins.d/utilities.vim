@@ -8,6 +8,9 @@ Plug 'godlygeek/tabular'
 Plug 'mg979/vim-visual-multi'
 let g:VM_mouse_mappings = 1
 
+"Firefox nvim
+Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
+
 " Sort folds by first line
 " Plug 'obreitwi/vim-sort-folds'
 
