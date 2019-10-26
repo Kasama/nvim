@@ -4,16 +4,26 @@
   "signature.target": "float",
   "diagnostic.messageTarget": "float",
   "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "filetypes": ["go"],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
-    },
     "clangd": {
       "command": "clangd",
       "args": ["--background-index"],
       "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "filetypes": ["c", "cpp", "objc", "objcpp"]
+    },
+    "clojure-lsp": {
+      "command": "bash",
+      "args": ["-c", "clojure-lsp"],
+      "filetypes": ["clojure"],
+      "rootPatterns": ["project.clj"],
+      "additionalSchemes": ["jar", "zipfile"],
+      "trace.server": "verbose",
+      "initializationOptions": {
+      }
+    },
+    "golang": {
+      "command": "gopls",
+      "filetypes": ["go"],
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     },
     "haskell": {
       "command": "hie-wrapper",
@@ -28,11 +38,19 @@
         }
       }
     },
+    "ocaml": {
+      "command": "ocaml-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["ocaml", "reason"]
+    },
     "terraform": {
       "command": "terraform-lsp",
       "filetypes": ["terraform"],
       "initializationOptions": {}
     }
+  },
+  "emmet.includeLanguages": {
+    "reason": "javascriptreact"
   },
   "javascript.suggestionActions.enabled": false,
   "yaml.format.enable": true,
