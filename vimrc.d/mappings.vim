@@ -48,6 +48,10 @@ nnoremap <silent> <C-\><C-\> :b#<CR>
 nnoremap <silent> <C-\>q :bdelete<CR>
 nnoremap <silent> <C-\><C-q> :bdelete<CR>
 
+"" Base64 encode/decode
+vnoremap <leader>e64 c<C-R>=system('base64 -w 0', @")<CR><ESC>
+vnoremap <leader>d64 c<C-R>=system('base64 -w 0 --decode', @")<CR><ESC>
+
 " Copy and Paste from X env
 nnoremap <silent> <leader>y "+y
 nnoremap <silent> <leader>Y "+Y
