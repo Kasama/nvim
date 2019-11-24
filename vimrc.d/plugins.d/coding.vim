@@ -13,9 +13,10 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }
 
 " Automatically close opened [('
-Plug 'Kasama/auto-pairs'
-let g:AutoPairsEnableParensDecorators = 1
-let g:AutoPairsParensDecorators = {'%':'%', '#':'#', '=':'=', '-':'-'}
+" Plug 'Kasama/auto-pairs'
+" let g:AutoPairsEnableParensDecorators = 1
+" let g:AutoPairsParensDecorators = {'%':'%', '#':'#', '=':'=', '-':'-'}
+Plug 'vim-scripts/paredit.vim'
 
 " Test suite helper
 Plug 'janko-m/vim-test'

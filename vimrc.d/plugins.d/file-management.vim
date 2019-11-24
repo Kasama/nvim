@@ -8,6 +8,34 @@ if (executable('fzf'))
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
 
+  if (executable('bat'))
+    let $FZF_DEFAULT_OPTS = "--preview 'bat --style=plain --color=always --line-range :40 {}'"
+  else
+    let $FZF_DEFAULT_OPTS = "--preview 'head -40 {}'"
+  endif
+  if (has('nvim'))
+    let $FZF_DEFAULT_OPTS = "--layout=reverse --inline-info --preview-window=40 " . $FZF_DEFAULT_OPTS
+    let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
+
+    function! OpenFloatingWin()
+      let height = &lines - 3
+      let width = float2nr(&columns - (&columns * 2 / 10))
+      let col = float2nr((&columns - width) / 2)
+      let opts = {
+            \ 'relative': 'editor',
+            \ 'row': height * 0.3,
+            \ 'col': col + 30,
+            \ 'width': width * 2 / 3,
+            \ 'height': height / 2
+            \ }
+      let buf = nvim_create_buf(v:false, v:true)
+      let win = nvim_open_win(buf, v:true, opts)
+      call setwinvar(win, '&winhl', 'Normal:Pmenu')
+      setlocal buftype=nofile nobuflisted bufhidden=hide
+             \ nonumber norelativenumber signcolumn=no
+    endfunction
+  endif
+
   if (!executable('ag'))
     Plug 'mileszs/ack.vim'
   endif

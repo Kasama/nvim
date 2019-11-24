@@ -17,8 +17,7 @@
       "rootPatterns": ["project.clj"],
       "additionalSchemes": ["jar", "zipfile"],
       "trace.server": "verbose",
-      "initializationOptions": {
-      }
+      "initializationOptions": {}
     },
     "golang": {
       "command": "gopls",
