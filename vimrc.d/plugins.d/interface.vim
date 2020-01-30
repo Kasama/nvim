@@ -13,6 +13,8 @@ Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 " Airline Config {
 
+Plug 'junegunn/goyo.vim', { 'on': ['Goyo', 'Goyo!'] }
+
 let g:airline_powerline_fonts = 1
 " let g:airline_theme='base16_grayscale'
 let g:airline_theme='one'
