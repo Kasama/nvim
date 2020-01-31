@@ -3,6 +3,7 @@
   "suggest.echodocSupport": true,
   "signature.target": "float",
   "diagnostic.messageTarget": "float",
+  "codeLens.enable": true,
   "languageserver": {
     "clangd": {
       "command": "clangd",
