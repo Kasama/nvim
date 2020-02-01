@@ -3,6 +3,7 @@
   "suggest.echodocSupport": true,
   "signature.target": "float",
   "diagnostic.messageTarget": "float",
+  "codeLens.enable": true,
   "languageserver": {
     "clangd": {
       "command": "clangd",
@@ -63,7 +64,8 @@
   "yaml.format.enable": true,
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",
-    "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml"
+    "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml",
+    "http://json.schemastore.org/gitlab-ci": ".gitlab-ci.y*l"
   },
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"
