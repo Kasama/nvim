@@ -19,7 +19,7 @@ if(has('nvim'))
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
-  let g:coc_global_extensions = [ 'coc-tabnine', 'coc-snippets', 'coc-prettier',
+  let g:coc_global_extensions = [ 'coc-tabnine', 'coc-snippets', 'coc-prettier', 'coc-elixir',
                                 \ 'coc-post', 'coc-lists', 'coc-imselect', 'coc-rls',
                                 \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji',
                                 \ 'coc-emmet', 'coc-yaml', 'coc-tsserver', 'coc-stylelint',

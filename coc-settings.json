@@ -47,10 +47,6 @@
       "args": ["--stdio"],
       "filetypes": ["ocaml"]
     },
-    "elixir": {
-      "command": "elixir-ls",
-      "filetypes": ["elixir", "eelixir"]
-    },
     "terraform": {
       "command": "terraform-lsp",
       "filetypes": ["terraform"],
