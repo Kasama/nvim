@@ -4,6 +4,14 @@
   "signature.target": "float",
   "diagnostic.messageTarget": "float",
   "codeLens.enable": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.enableVimDevicons": true,
+  "explorer.previewAction.onHover": false,
+  "explorer.file.showHiddenFiles": true,
+  "explorer.keyMappings": {
+    "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
+    "cd": ["expandable?", "cd", "open"]
+  },
   "languageserver": {
     "clangd": {
       "command": "clangd",
@@ -27,7 +35,7 @@
     },
     "haskell": {
       "command": "hie-wrapper",
-      "rootPatterns": [".stack.yaml", "cabal.config", "package.yaml"],
+      "rootPatterns": ["*.cabal", ".stack.yaml", "cabal.config", "package.yaml"],
       "filetypes": ["hs", "lhs", "haskell"],
       "initializationOptions": {},
       "settings": {

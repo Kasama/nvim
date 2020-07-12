@@ -1,7 +1,8 @@
 " File tree as a side bar
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-
-nnoremap \ :NERDTreeToggle<CR>
+"
+" nnoremap \ :NERDTreeToggle<CR>
+nnoremap \ :CocCommand explorer<CR>
 
 " Fuzzy Find with FZF or CtrlP
 if (executable('fzf'))
