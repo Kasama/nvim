@@ -4,8 +4,10 @@ Plug 'vim-scripts/CycleColor', { 'on': ['CycleColorNext', 'CycleColorPrev'] }
 " Hightlight yanked text
 Plug 'machakann/vim-highlightedyank'
 
-" Pretty icons for NerdTree, Airline, etc
+" Pretty icons for Coc-Explorer, Airline, etc
 Plug 'ryanoasis/vim-devicons'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['re'] = ''
 
 " Airline top and bottom status bars
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
