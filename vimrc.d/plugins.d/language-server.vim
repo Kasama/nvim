@@ -21,7 +21,7 @@ if(has('nvim'))
   endfunction
 
   let g:coc_global_extensions = [ 'coc-tabnine', 'coc-snippets', 'coc-prettier', 'coc-elixir',
-                                \ 'coc-post', 'coc-lists', 'coc-imselect', 'coc-rls', 'coc-explorer',
+                                \ 'coc-post', 'coc-lists', 'coc-imselect', 'coc-rust-analyzer', 'coc-explorer',
                                 \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji',
                                 \ 'coc-emmet', 'coc-yaml', 'coc-tsserver', 'coc-stylelint',
                                 \ 'coc-solargraph', 'coc-python', 'coc-pyls', 'coc-json', 'coc-elixir',
