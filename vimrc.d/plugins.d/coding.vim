@@ -10,7 +10,7 @@ Plug 'tpope/vim-surround'
 Plug 'editorconfig/editorconfig-vim'
 
 " Live scrachpad
-Plug 'metakirby5/codi.vim', { 'on': 'Codi' }
+Plug 'metakirby5/codi.vim'
 
 " Automatically close opened [('
 " Plug 'Kasama/auto-pairs'

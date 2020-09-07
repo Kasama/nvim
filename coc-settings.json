@@ -34,17 +34,11 @@
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     },
     "haskell": {
-      "command": "hie-wrapper",
+      "command": "haskell-language-server-wrapper",
+      "args": [ "--lsp" ],
       "rootPatterns": ["*.cabal", ".stack.yaml", "cabal.config", "package.yaml"],
-      "filetypes": ["hs", "lhs", "haskell"],
+      "filetypes": ["hs", "lhs", "haskell", "lhaskell"],
       "initializationOptions": {},
-      "settings": {
-        "languageServerHaskell": {
-          "hlintOn": true,
-          "maxNumberOfProblems": 10,
-          "completionSnippetsOn": true
-        }
-      }
     },
     "reasonml": {
       "command": "reason-language-server",
