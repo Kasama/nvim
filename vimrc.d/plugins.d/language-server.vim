@@ -20,9 +20,9 @@ if(has('nvim'))
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
-  let g:coc_global_extensions = [ 'coc-tabnine', 'coc-snippets', 'coc-prettier', 'coc-elixir',
+  let g:coc_global_extensions = [ 'coc-snippets', 'coc-prettier', 'coc-elixir',
                                 \ 'coc-post', 'coc-lists', 'coc-imselect', 'coc-rust-analyzer', 'coc-explorer',
-                                \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji',
+                                \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji', 'coc-actions',
                                 \ 'coc-emmet', 'coc-yaml', 'coc-tsserver', 'coc-stylelint',
                                 \ 'coc-solargraph', 'coc-python', 'coc-pyls', 'coc-json', 'coc-elixir',
                                 \ 'coc-html', 'coc-css', 'coc-diagnostic', 'coc-pairs', 'coc-docker']
@@ -43,6 +43,20 @@ if(has('nvim'))
   " Rename current Symbol
   nnoremap <silent> <leader>rn :call CocAction('rename')<CR>
 
+  " Format
+  nnoremap <silent> <leader>cf <Plug>(coc-format-selected)
+  vnoremap <silent> <leader>cf <Plug>(coc-format-selected)
+
+  " Find references
+  nnoremap <silent> <leader>cref <Plug>(coc-references)
+
+  " Goto Implementation
+  nnoremap <silent> <leader>cimpl <Plug>(coc-implementation)
+
+  " Code lens action
+  nmap <silent> <leader>cl <Plug>(coc-codelens-action)
+  nmap <silent> <F2> <Plug>(coc-codelens-action)
+
   " Jump To Definition on <C-]>
   nnoremap <silent> <C-]> :call <SID>jumpDefinition()<CR>
 
@@ -54,6 +68,9 @@ if(has('nvim'))
       call CocAction('jumpDefinition')
     endif
   endfunction
+
+  " Invoke generic CocAction
+  noremap <silent> <C-Space> <ESC>:CocCommand actions.open<CR>
 
   " Highlight symbol under cursor on CursorHold
   " autocmd CursorHold * silent call CocActionAsync('highlight')
