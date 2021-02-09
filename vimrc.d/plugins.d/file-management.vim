@@ -1,5 +1,5 @@
 " File tree as a side bar
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 "
 " nnoremap \ :NERDTreeToggle<CR>
 nnoremap \ :CocCommand explorer<CR>
