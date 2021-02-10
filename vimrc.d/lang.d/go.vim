@@ -1,4 +1,4 @@
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 augroup GoFormat "{
   autocmd!
@@ -12,7 +12,11 @@ function! s:postHook()
   let g:go_highlight_operators = 1
   let g:go_highlight_extra_types = 1
   let g:go_highlight_build_constraints = 1
+  let g:go_def_mapping_enabled = 0
+  let g:go_doc_keywordprg_enabled = 0
+  let g:go_code_completion_enabled = 0
   let g:go_gopls_enabled = 0
+  let g:go_fmt_autosave = 1
   let g:go_gopls_options=['-remote=auto']
 endfunction
 

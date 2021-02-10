@@ -24,7 +24,7 @@ if(has('nvim'))
                                 \ 'coc-post', 'coc-lists', 'coc-imselect', 'coc-rust-analyzer', 'coc-explorer',
                                 \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji', 'coc-actions',
                                 \ 'coc-emmet', 'coc-yaml', 'coc-tsserver', 'coc-stylelint',
-                                \ 'coc-solargraph', 'coc-jedi', 'coc-json', 'coc-elixir',
+                                \ 'coc-solargraph', 'coc-jedi', 'coc-json', 'coc-elixir', 'coc-go',
                                 \ 'coc-html', 'coc-css', 'coc-diagnostic', 'coc-pairs', 'coc-docker']
 
   let g:coc_snippet_next = '<tab>'

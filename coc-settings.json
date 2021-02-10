@@ -8,7 +8,7 @@
   "explorer.icon.enableVimDevicons": true,
   "explorer.previewAction.onHover": false,
   "explorer.file.showHiddenFiles": true,
-  "explorer.keyMappings": {
+  "explorer.keyMappings.global": {
     "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
     "cd": ["expandable?", "cd", "open"]
   },
@@ -27,11 +27,6 @@
       "additionalSchemes": ["jar", "zipfile"],
       "trace.server": "verbose",
       "initializationOptions": {}
-    },
-    "golang": {
-      "command": "gopls",
-      "filetypes": ["go"],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     },
     "haskell": {
       "command": "haskell-language-server-wrapper",
