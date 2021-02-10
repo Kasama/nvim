@@ -1,5 +1,5 @@
 if(has('nvim'))
-  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install() }}
+  Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install() }}
   Plug 'honza/vim-snippets'
 
   set updatetime=1000
@@ -20,7 +20,7 @@ if(has('nvim'))
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
-  let g:coc_global_extensions = [ 'coc-snippets', 'coc-prettier', 'coc-elixir',
+  let g:coc_global_extensions = [ 'coc-snippets', 'coc-elixir', 'coc-prettier',
                                 \ 'coc-post', 'coc-lists', 'coc-imselect', 'coc-rust-analyzer', 'coc-explorer',
                                 \ 'coc-highlight', 'coc-git', 'coc-eslint', 'coc-emoji', 'coc-actions',
                                 \ 'coc-emmet', 'coc-yaml', 'coc-tsserver', 'coc-stylelint',
