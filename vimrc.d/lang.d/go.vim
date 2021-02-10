@@ -1,8 +1,14 @@
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+let scripts_dir = fnamemodify(expand('$VIMRC'), ":p:h") . "/scripts"
+if filereadable(scripts_dir . '/gofmt-safe')
+  let gofmt_bin = scripts_dir . '/gofmt-safe'
+else
+  let gofmt_bin = 'gofmt'
+end
 
 augroup GoFormat "{
   autocmd!
   autocmd BufNewFile,BufRead *.go setlocal noexpandtab
+  autocmd FileType go autocmd BufWritePre <buffer> execute "normal! mz:mkview\<esc>:%!" . gofmt_bin . "\<esc>:loadview\<esc>`z"
 augroup END "}
 
 function! s:postHook()
