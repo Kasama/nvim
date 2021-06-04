@@ -30,7 +30,21 @@ nnoremap <silent> <leader>tl :TestLast<CR>
 nnoremap <silent> <leader>tv :TestVisit<CR>
 
 " Multiple syntax
-Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+if (has('nvim'))
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+  function! s:postHook()
+  lua <<EOF
+  require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,
+    },
+  }
+EOF
+  endfunction
+
+  call AddPostPluginHook(function('s:postHook'))
+endif
 
 " Zeal documentation
 Plug 'KabbAmine/zeavim.vim'
@@ -44,3 +58,7 @@ let g:rainbow_conf = {
 \    'liquid': 0
 \  }
 \}
+
+" Support auto formatting for many languages
+Plug 'sbdchd/neoformat'
+let g:neoformat_only_msg_on_error = 1

@@ -10,39 +10,21 @@
   "explorer.previewAction.onHover": false,
   "explorer.file.showHiddenFiles": true,
   "explorer.keyMappings.global": {
-    "<cr>": [
-      "expandable?",
-      [
-        "expanded?",
-        "collapse",
-        "expand"
-      ],
-      "open"
-    ],
-    "cd": [
-      "expandable?",
-      "cd",
-      "open"
-    ],
-    "l": [
-      "expandable?",
-      "expand",
-      "preview:content"
-    ]
+    "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
+    "cd": ["expandable?", "cd", "open"],
+    "l": ["expandable?", "expand", "preview:content"]
   },
   "prettier.disableSuccessMessage": true,
-  "prettier.formatterPriority": -1,
+  "prettier.formatterPriority": 1,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
-    "typescript",
-    "javascript.jsx",
-    "typescript.jsx",
+    "tsx",
+    "jsx",
     "html",
     "css",
     "sass",
     "vue",
     "json",
-    "yaml",
     "rust"
   ],
   "javascript.format.enabled": true,
@@ -50,9 +32,7 @@
   "languageserver": {
     "clangd": {
       "command": "clangd",
-      "args": [
-        "--background-index"
-      ],
+      "args": ["--background-index"],
       "rootPatterns": [
         "compile_flags.txt",
         "compile_commands.json",
@@ -60,93 +40,63 @@
         ".git/",
         ".hg/"
       ],
-      "filetypes": [
-        "c",
-        "cpp",
-        "objc",
-        "objcpp"
-      ]
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
     },
     "clojure-lsp": {
       "command": "bash",
-      "args": [
-        "-c",
-        "clojure-lsp"
-      ],
-      "filetypes": [
-        "clojure"
-      ],
-      "rootPatterns": [
-        "project.clj"
-      ],
-      "additionalSchemes": [
-        "jar",
-        "zipfile"
-      ],
+      "args": ["-c", "clojure-lsp"],
+      "filetypes": ["clojure"],
+      "rootPatterns": ["project.clj"],
+      "additionalSchemes": ["jar", "zipfile"],
       "trace.server": "verbose",
       "initializationOptions": {}
     },
+    /*
     "golang": {
       "command": "gopls",
-      "filetypes": [
-        "go"
-      ],
-      "rootPatterns": [
-        "go.mod",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ]
+      "filetypes": ["go"],
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     },
+    */
     "haskell": {
       "command": "haskell-language-server-wrapper",
-      "args": [
-        "--lsp"
-      ],
+      "args": ["--lsp"],
       "rootPatterns": [
         "*.cabal",
         ".stack.yaml",
         "cabal.config",
         "package.yaml"
       ],
-      "filetypes": [
-        "hs",
-        "lhs",
-        "haskell",
-        "lhaskell"
-      ],
+      "filetypes": ["hs", "lhs", "haskell", "lhaskell"],
       "initializationOptions": {}
     },
     "reasonml": {
       "command": "reason-language-server",
-      "filetypes": [
-        "reason"
-      ]
+      "filetypes": ["reason"]
     },
     "ocaml": {
       "command": "ocaml-language-server",
-      "args": [
-        "--stdio"
-      ],
-      "filetypes": [
-        "ocaml"
-      ]
+      "args": ["--stdio"],
+      "filetypes": ["ocaml"]
     },
     "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {},
+      "settings": {}
+    },
+    /*
+    "terraform": {
       "command": "terraform-lsp",
-      "filetypes": [
-        "terraform"
-      ],
+      "filetypes": ["terraform"],
       "initializationOptions": {}
     },
+    */
     "elmLS": {
       "command": "elm-language-server",
-      "filetypes": [
-        "elm"
-      ],
-      "rootPatterns": [
-        "elm.json"
-      ],
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"],
       "initializationOptions": {
         "elmAnalyseTrigger": "change"
       }
@@ -160,7 +110,8 @@
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",
     "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml",
-    "http://json.schemastore.org/gitlab-ci": ".gitlab-ci.y*l"
+    "http://json.schemastore.org/gitlab-ci": ".gitlab-ci.y*l",
+    "/home/roberto/documents/work/gitlab-system-hooks/renderer_template.json": "*.tpl.*"
   },
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"

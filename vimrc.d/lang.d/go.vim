@@ -8,7 +8,7 @@ end
 augroup GoFormat "{
   autocmd!
   autocmd BufNewFile,BufRead *.go setlocal noexpandtab
-  autocmd FileType go autocmd BufWritePre <buffer> execute "normal! mz:mkview\<esc>:%!" . gofmt_bin . "\<esc>:loadview\<esc>`z"
+  autocmd FileType go autocmd BufWritePre <buffer> call CocAction('format')
 augroup END "}
 
 function! s:postHook()
