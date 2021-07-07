@@ -25,6 +25,7 @@
     "sass",
     "vue",
     "json",
+    "rescript",
     "rust"
   ],
   "javascript.format.enabled": true,
@@ -70,9 +71,12 @@
       "filetypes": ["hs", "lhs", "haskell", "lhaskell"],
       "initializationOptions": {}
     },
-    "reasonml": {
-      "command": "reason-language-server",
-      "filetypes": ["reason"]
+    "rescript": {
+      "enable": true,
+      "module": "~/.config/nvim/plugged/vim-rescript/server/out/server.js",
+      "args": ["--node-ipc"],
+      "filetypes": ["rescript"],
+      "rootPatterns": ["bsconfig.json"]
     },
     "ocaml": {
       "command": "ocaml-language-server",
@@ -107,11 +111,18 @@
   },
   "javascript.suggestionActions.enabled": true,
   "yaml.format.enable": true,
+  "json.schemas": [
+    {
+      "url": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
+      "fileMatch": ["bsconfig.json"]
+    }
+  ],
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",
     "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml",
     "http://json.schemastore.org/gitlab-ci": ".gitlab-ci.y*l",
-    "/home/roberto/documents/work/gitlab-system-hooks/renderer_template.json": "*.tpl.*"
+    "/home/roberto/documents/work/gitlab-system-hooks/renderer_template.json": "*.tpl.*",
+    "/home/roberto/documents/work/ring-infrastructure-plugin-backend/src/bundle/spec/schemas/bundle_list_schema.json": "*.bundle.y*l"
   },
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"

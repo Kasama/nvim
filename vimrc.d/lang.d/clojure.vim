@@ -1,6 +1,6 @@
 Plug 'guns/vim-sexp',       {'for': 'clojure'}
 Plug 'tpope/vim-salve',     {'for': 'clojure'}
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+" Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
 function! s:postHook()
   function! Expand(exp) abort

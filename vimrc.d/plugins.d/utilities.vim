@@ -13,7 +13,7 @@ let g:VM_maps['Find Under']         = '<C-n>'
 let g:VM_maps['Find Subword Under'] = '<C-n>'
 
 "Firefox nvim
-Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
+" Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
 " Grammar check
 Plug 'rhysd/vim-grammarous'

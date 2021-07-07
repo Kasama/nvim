@@ -45,14 +45,14 @@ if(has('nvim'))
     nnoremap <silent> <leader>rn :call CocAction('rename')<CR>
 
     " Format
-    nnoremap <silent> <leader>cf :CocCommand prettier.formatFile<CR>
-    vnoremap <silent> <leader>cf <Plug>(coc-format-selected)
+    nmap <silent> <leader>cf <Plug>(coc-format-selected)
+    vmap <silent> <leader>cf <Plug>(coc-format-selected)
 
     " Find references
-    nnoremap <silent> <leader>cref <Plug>(coc-references)
+    nmap <silent> <leader>cref <Plug>(coc-references)
 
     " Goto Implementation
-    nnoremap <silent> <leader>cimpl <Plug>(coc-implementation)
+    nmap <silent> <leader>cimpl <Plug>(coc-implementation)
 
     " Code lens action
     nmap <silent> <leader>cl <Plug>(coc-codelens-action)
@@ -71,7 +71,7 @@ if(has('nvim'))
     endfunction
 
     " Invoke generic CocAction
-    noremap <silent> <C-Space> <ESC>:CocCommand actions.open<CR>
+    nmap <silent> <C-Space> <Plug>(coc-codeaction)
 
     " Highlight symbol under cursor on CursorHold
     " autocmd CursorHold * silent call CocActionAsync('highlight')
