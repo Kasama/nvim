@@ -6,7 +6,6 @@
   "codeLens.enable": true,
   "codeLens.subseparator": "|",
   "explorer.icon.enableNerdfont": true,
-  "explorer.icon.enabledNerdFont": true,
   "explorer.icon.source": "vim-devicons",
   "explorer.previewAction.onHover": false,
   "explorer.file.showHiddenFiles": true,
@@ -107,6 +106,12 @@
       }
     }
   },
+  "Lua.workspace.library": {
+    "/usr/share/nvim/runtime/lua": true,
+    "/usr/share/nvim/runtime/lua/vim": true,
+    "/usr/share/nvim/runtime/lua/vim/lsp": true
+  },
+  "Lua.diagnostics.globals": ["vim"],
   "emmet.includeLanguages": {
     "reason": "javascriptreact"
   },
