@@ -18,6 +18,7 @@
   "prettier.formatterPriority": 1,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
+    "typescript",
     "tsx",
     "jsx",
     "html",
@@ -31,18 +32,6 @@
   "javascript.format.enabled": true,
   "typescript.format.enabled": true,
   "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "args": ["--background-index"],
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
-    },
     "clojure-lsp": {
       "command": "bash",
       "args": ["-c", "clojure-lsp"],

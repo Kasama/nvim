@@ -45,7 +45,7 @@ if(has('nvim'))
     nnoremap <silent> <leader>rn :call CocAction('rename')<CR>
 
     " Format
-    nmap <silent> <leader>cf <Plug>(coc-format-selected)
+    nmap <silent> <leader>cf <Plug>(coc-format)
     vmap <silent> <leader>cf <Plug>(coc-format-selected)
 
     " Find references
