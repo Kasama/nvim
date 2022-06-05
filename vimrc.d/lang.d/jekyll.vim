@@ -1,1 +1,0 @@
-Plug 'parkr/vim-jekyll'
