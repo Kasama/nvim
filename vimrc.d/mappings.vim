@@ -60,6 +60,9 @@ vnoremap <silent> <leader>Y "+Y
 "nnoremap <silent> <leader>p "+p
 "nnoremap <silent> <leader>P "+P
 
+" Restore normal Y behavior
+nnoremap <silent> Y yy
+
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
       \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>

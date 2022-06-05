@@ -27,7 +27,8 @@
     "vue",
     "json",
     "rescript",
-    "rust"
+    "rust",
+    "haskell"
   ],
   "javascript.format.enabled": true,
   "typescript.format.enabled": true,
@@ -105,6 +106,12 @@
     "reason": "javascriptreact"
   },
   "javascript.suggestionActions.enabled": true,
+  "go.goplsOptions": {
+    "staticcheck": true,
+    "codelenses": {
+      "generate": true
+    }
+  },
   "yaml.format.enable": true,
   "json.schemas": [
     {
@@ -115,7 +122,7 @@
   "yaml.schemas": {
     "kubernetes": "*.kube.yaml",
     "http://json.schemastore.org/ansible-stable-2.5": "*playbook.yml",
-    "http://json.schemastore.org/gitlab-ci": ".gitlab-ci.y*l",
+    "https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json": ".gitlab-ci.y*l",
     "/home/roberto/documents/work/gitlab-system-hooks/renderer_template.json": "*.tpl.*",
     "/home/roberto/documents/work/ring-infrastructure-plugin-backend/src/bundle/spec/schemas/bundle_list_schema.json": "*.bundle.y*l"
   },

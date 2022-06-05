@@ -1,0 +1,1 @@
+Plug 'kmonad/kmonad-vim'
