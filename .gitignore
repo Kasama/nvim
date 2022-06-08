@@ -1,5 +1,6 @@
 *.swp
 bundle
 plugged/*
+plugin/packer_compiled.lua
 .netrwhist
 lang-servers/*
