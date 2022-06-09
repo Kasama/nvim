@@ -25,7 +25,6 @@ return {
         local compare = require("cmp.config.compare")
         local lspkind = require("lspkind")
 
-        require('luasnip.loaders.from_vscode').lazy_load()
         lspkind.init()
 
         cmp.setup({
@@ -105,7 +104,7 @@ return {
 
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
         if cmp_autopairs ~= nil then
-          cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({map_char = { tex = '' }}))
+          cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
         end
       end
     }
@@ -133,28 +132,34 @@ return {
           local lspconfig = require('lspconfig')
 
           local function setup_lsp(lsp, configs) -- {
+            configs = configs or {}
             if (lsp_cmp) then
               local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-              client_capabilities.textDocument.completion.completionItem.snipperSupport = true
+
+              client_capabilities.textDocument.completion.completionItem.snippetSupport = true
               client_capabilities.textDocument.completion.completionItem.resolveSupport = {
                 properties = { "documentation", "detail", "additionalTextEdits" },
               }
-              local capabilities = lsp_cmp.update_capabilities(client_capabilities)
-              local default_configs  = {
+
+              local capabilities    = lsp_cmp.update_capabilities(client_capabilities)
+              local default_configs = {
                 capabilities = capabilities,
                 flags = { debounce_text_changes = 150 },
               }
-              configs.on_attacho = configs.on_attach
-              configs.on_attach = nil
+              configs.on_attach_tmp = configs.on_attach
+              configs.on_attach     = nil
+
               local cascading_on_attach = {
                 on_attach = function(client, bufnr)
-                  if configs.on_attacho ~= nil then
-                    configs.on_attacho(client, bufnr)
+                  if configs.on_attach_tmp ~= nil then
+                    configs.on_attach_tmp(client, bufnr)
                   end
-                  vim.api.nvim_exec_autocmds('User', {pattern = 'LspAttached'})
+                  vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
                 end
               }
-              configs = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, configs, cascading_on_attach)
+
+              configs = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, configs,
+                cascading_on_attach)
               lspconfig[lsp].setup(configs)
             else
               lspconfig[lsp].setup(configs)
@@ -164,7 +169,7 @@ return {
           -- Setup diganostic signs {
           for type, icon in pairs(GUTTER_SIGNS) do
             local hl = 'DiagnosticSign' .. type
-            vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
           end
 
           vim.diagnostic.config({
@@ -173,7 +178,7 @@ return {
               severity = vim.diagnostic.severity.ERROR,
               severity_sort = true,
               update_in_insert = true,
-              format = function (diagnostic)
+              format = function(diagnostic)
                 return string.format(DIAGNOSTICS_SIGNS[diagnostic.severity] .. " %s", diagnostic.message)
               end
             },
@@ -184,16 +189,16 @@ return {
           vim.o.updatetime = 250
           local diagnostics_hold = vim.api.nvim_create_augroup('DiagnosticsCursorHold', { clear = true })
           vim.api.nvim_create_autocmd(
-            {'CursorHold', 'CursorHoldI'},
+            { 'CursorHold', 'CursorHoldI' },
             {
               group = diagnostics_hold,
               pattern = '*',
-              callback = function ()
+              callback = function()
                 vim.diagnostic.open_float(nil, {
                   focus = false,
                   scope = 'cursor',
                   source = 'if_many',
-                  prefix = function (diagnostic, _, _)
+                  prefix = function(diagnostic, _, _)
                     local hl_map = {
                       [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
                       [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
@@ -242,13 +247,13 @@ return {
         require('trouble').setup {
           use_diagnostics_signs = true,
         }
-        require('utils').keybind({'n', '<leader>xx', '<cmd>TroubleToggle<CR>'})
+        require('utils').keybind({ 'n', '<leader>xx', '<cmd>TroubleToggle<CR>' })
       end,
     }
 
     use { -- null-ls
       'jose-elias-alvarez/null-ls.nvim',
-      config = function ()
+      config = function()
         local null_ls = require('null-ls')
         null_ls.setup {
           sources = {}
@@ -296,11 +301,11 @@ return {
     vim.api.nvim_create_autocmd('User', {
       pattern = 'LspAttached',
       desc = 'LSP actions',
-      callback = function (info)
+      callback = function(info)
 
         local bufmap = function(mode, lhs, rhs)
-          local opts = {buffer = true}
-          require('utils').keybind({mode, lhs, rhs, opts})
+          local opts = { buffer = true }
+          require('utils').keybind({ mode, lhs, rhs, opts })
         end
 
         -- enable codelens
@@ -314,12 +319,12 @@ return {
         if codelens_capable then
           local codelens_autocmd = vim.api.nvim_create_augroup('CodeLensGroup', { clear = true })
           vim.api.nvim_create_autocmd(
-          {'BufEnter', 'CursorHold', 'InsertLeave'},
-          {
-            group = codelens_autocmd,
-            buffer = info.buf,
-            callback = vim.lsp.codelens.refresh
-          })
+            { 'BufEnter', 'CursorHold', 'InsertLeave' },
+            {
+              group = codelens_autocmd,
+              buffer = info.buf,
+              callback = vim.lsp.codelens.refresh
+            })
           vim.cmd [[highlight LspCodeLens ctermfg=248 guifg=#999999]]
 
           bufmap('n', '<F2>', vim.lsp.codelens.run)
@@ -342,12 +347,12 @@ return {
           end
 
           local format_on_save = vim.api.nvim_create_augroup('FormatOnSave', { clear = true })
-          vim.api.nvim_create_autocmd({'BufWritePre'}, { group = format_on_save, buffer = info.buf, callback = format })
+          vim.api.nvim_create_autocmd({ 'BufWritePre' }, { group = format_on_save, buffer = info.buf, callback = format })
 
           local function toggle_format_on_save()
             FORMAT_ON_SAVE_ENABLED = not FORMAT_ON_SAVE_ENABLED
             local msg = (FORMAT_ON_SAVE_ENABLED and "Enabled" or "Disabled") .. " format on save"
-            vim.notify(msg, vim.log.levels.INFO, {title = "Format on Save", timeout = 10, hide_from_history = true})
+            vim.notify(msg, vim.log.levels.INFO, { title = "Format on Save", timeout = 10, hide_from_history = true })
           end
 
           bufmap('n', '<leader>=', vim.lsp.buf.formatting)

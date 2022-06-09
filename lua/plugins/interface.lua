@@ -9,7 +9,13 @@ return {
     }
 
     use { 'kyazdani42/nvim-web-devicons' }
-    use { 'machakann/vim-highlightedyank' }
+    local highlight_yank = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+    vim.api.nvim_create_autocmd('TextYankPost', {
+      group = highlight_yank, pattern = '*',
+      callback = function()
+        vim.highlight.on_yank()
+      end,
+    })
 
     use { -- lualine
       'nvim-lualine/lualine.nvim',
@@ -19,16 +25,19 @@ return {
           options = {
             icons_enabled = true,
             theme = 'onedark',
-            component_separators = { left = '', right = ''},
-            section_separators = { left = '', right = ''},
+            component_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
           },
           sections = {
-            lualine_a = {'mode'},
-            lualine_b = {'branch', 'diff'},
-            lualine_c = {'filename'},
-            lualine_x = {'fileformat', 'encoding'},
-            lualine_y = {'diagnostics'},
-            lualine_z = {'progress', 'location', 'filetype'},
+            lualine_a = { 'mode' },
+            lualine_b = { 'branch', 'diff' },
+            lualine_c = { { 'filename', file_status = true, path = 3 } },
+            lualine_x = { 'fileformat', 'encoding' },
+            lualine_y = { 'diagnostics' },
+            lualine_z = {
+              '%3p%% :%l/%L☰ :%-2v', -- percent through file; current line/total lines; current column
+              { 'filetype', colored = false }
+            },
           },
           tabline = {},
           extensions = {}
@@ -55,7 +64,7 @@ return {
       config = function()
         vim.g.rainbow_active = 1
         vim.g.rainbow_conf = {
-          guifgs = {'MediumOrchid3', 'LightSalmon3', 'Plum2', 'HotPink'},
+          guifgs = { 'MediumOrchid3', 'LightSalmon3', 'Plum2', 'HotPink' },
           separately = { liquid = 0 }
         }
       end
