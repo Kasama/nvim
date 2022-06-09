@@ -39,13 +39,27 @@ return {
       end,
     }
 
-    use { -- CHAD tree
-      'ms-jpq/chadtree',
-      run = 'CHADdeps',
-      config = function()
+    use {
+      'kyazdani42/nvim-tree.lua',
+      requires = {
+        'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      },
+      tag = 'nightly', -- optional, updated every week. (see issue #1193)
+      config = function ()
+        require('nvim-tree').setup {
+          git = {
+            enable = false,
+          },
+          renderer = {
+            indent_markers = {
+              enable = true,
+            },
+          }
+        }
+
         local keybind = require('utils').keybind
-        keybind({'n', [[\]], '<cmd>CHADopen<CR>'})
-      end,
+        keybind({'n', [[\]], '<cmd>NvimTreeToggle<CR>'})
+      end
     }
   end,
 }

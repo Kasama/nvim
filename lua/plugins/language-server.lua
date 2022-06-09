@@ -249,7 +249,10 @@ return {
     use { -- null-ls
       'jose-elias-alvarez/null-ls.nvim',
       config = function ()
-        require('null-ls').setup {}
+        local null_ls = require('null-ls')
+        null_ls.setup {
+          sources = {}
+        }
       end,
     }
 
@@ -295,6 +298,11 @@ return {
       desc = 'LSP actions',
       callback = function (info)
 
+        local bufmap = function(mode, lhs, rhs)
+          local opts = {buffer = true}
+          require('utils').keybind({mode, lhs, rhs, opts})
+        end
+
         -- enable codelens
         local codelens_capable = false
         for _, client in ipairs(vim.lsp.buf_get_clients()) do
@@ -313,20 +321,45 @@ return {
             callback = vim.lsp.codelens.refresh
           })
           vim.cmd [[highlight LspCodeLens ctermfg=248 guifg=#999999]]
+
+          bufmap('n', '<F2>', vim.lsp.codelens.run)
         end
 
-
-        local bufmap = function(mode, lhs, rhs)
-          local opts = {buffer = true}
-          require('utils').keybind({mode, lhs, rhs, opts})
+        -- auto format on save
+        local formatting_capable = false
+        for _, client in ipairs(vim.lsp.buf_get_clients()) do
+          if client.supports_method("textDocument/formatting") then
+            formatting_capable = true
+            break
+          end
         end
+        if formatting_capable then
+          FORMAT_ON_SAVE_ENABLED = true
+          local function format()
+            if (FORMAT_ON_SAVE_ENABLED) then
+              vim.lsp.buf.formatting_sync()
+            end
+          end
+
+          local format_on_save = vim.api.nvim_create_augroup('FormatOnSave', { clear = true })
+          vim.api.nvim_create_autocmd({'BufWritePre'}, { group = format_on_save, buffer = info.buf, callback = format })
+
+          local function toggle_format_on_save()
+            FORMAT_ON_SAVE_ENABLED = not FORMAT_ON_SAVE_ENABLED
+            local msg = (FORMAT_ON_SAVE_ENABLED and "Enabled" or "Disabled") .. " format on save"
+            vim.notify(msg, vim.log.levels.INFO, {title = "Format on Save", timeout = 10, hide_from_history = true})
+          end
+
+          bufmap('n', '<leader>=', vim.lsp.buf.formatting)
+          bufmap('n', '<leader><leader>=', toggle_format_on_save)
+        end
+
 
         local telescope = require('telescope.builtin')
 
         bufmap('n', 'K', vim.lsp.buf.hover)
         bufmap('n', '<A-Space>', vim.lsp.buf.code_action)
         bufmap('n', '<A-Enter>', vim.lsp.buf.code_action)
-        bufmap('n', '<F2>', vim.lsp.codelens.run)
         bufmap('n', '<leader>ref', telescope.lsp_references)
         bufmap('n', '<C-]>', telescope.lsp_definitions)
         bufmap('n', '<leader>impl', telescope.lsp_implementations)

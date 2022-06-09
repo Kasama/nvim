@@ -32,9 +32,11 @@ return packer.startup(function()
 
   --- General packages not related to plugins ---
   -- packer will manage itself
-  packer.use { 'wbthomason/packer.nvim' }
+  packer.use 'wbthomason/packer.nvim'
   -- basically a lua stdlib for neovim. Used by many plugins
   packer.use 'nvim-lua/plenary.nvim'
+  -- fix for https://github.com/neovim/neovim/issues/12587. Can be removed if that gets fixed
+  packer.use 'antoinemadec/FixCursorHold.nvim'
 
   -- load plugins
   local load_from = utils.load_from_factory('lua')

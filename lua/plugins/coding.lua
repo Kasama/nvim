@@ -7,7 +7,7 @@ return {
     -- automatically load editorconfig
     use { 'editorconfig/editorconfig-vim' }
 
-    -- Live scratchpad
+    -- live scratchpad
     use { 'metakirby5/codi.vim' }
 
     use { -- Treesitter
@@ -71,5 +71,29 @@ return {
         require('nvim-autopairs').setup {}
       end
     }
+
+    vim.cmd [[let test#strategy = 'neovim']]
+    use {
+      'janko-m/vim-test',
+      config = function()
+        local keybind = require('utils').keybind
+
+        keybind({'n', '<leader>tt', '<cmd>TestNearest<CR>'})
+        keybind({'n', '<leader>tf', '<cmd>TestFile<CR>'})
+        keybind({'n', '<leader>ts', '<cmd>TestSuite<CR>'})
+        keybind({'n', '<leader>tl', '<cmd>TestLast<CR>'})
+        keybind({'n', '<leader>tv', '<cmd>TestVisit<CR>'})
+      end,
+    }
+
+    use {
+      'mfussenegger/nvim-dap',
+      requires = {
+        'leoluz/nvim-dap-go',
+      },
+      config = function()
+      end,
+    }
+
     end
   }
