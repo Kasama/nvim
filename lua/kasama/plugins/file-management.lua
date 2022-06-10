@@ -58,6 +58,13 @@ return {
             indent_markers = {
               enable = true,
             },
+          },
+          view = {
+            mappings = {
+              list = {
+                {key = 'A', action = 'create'}
+              }
+            }
           }
         }
 

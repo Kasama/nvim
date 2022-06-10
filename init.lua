@@ -1,4 +1,4 @@
-package.path = package.path .. ';' .. vim.fn.stdpath('config') .. '/lua/lib/?.lua'
+package.path = package.path .. ';' .. vim.fn.stdpath('config') .. '/lua/kasama/lib/?.lua'
 
 LOADED_MODULES = {}
 local normal_require = _G.require
@@ -10,13 +10,13 @@ end
 vim.g.mapleader = ','
 vim.g.localleader = ';'
 
-require("plugins")
+require('kasama.plugins')
 
-require("options")
+require('kasama.options')
 
-require("mappings")
+require('kasama.mappings')
 
-require('augroups')
+require('kasama.augroups')
 
 -- Case insensitive :wq
 vim.api.nvim_create_user_command('W', 'w', {})
@@ -28,12 +28,9 @@ vim.api.nvim_create_user_command('WQ', 'wq', {})
 
 -- Reload everything
 require('utils').keybind({ 'n', '<leader>rc', function()
-  for mod, _ in pairs(LOADED_MODULES) do
-    if not string.find(mod, "^vim.") then
-      LOADED_MODULES[mod] = nil
-      package.loaded[mod] = nil
-    end
-  end
+  require('plenary.reload').reload_module('kasama')
+  require('plenary.reload').reload_module('utils')
+  require('plenary.reload').reload_module('plugins')
+  require('plenary.reload').reload_module('languages')
   vim.cmd [[source $MYVIMRC]]
-  vim.cmd [[PackerCompile]]
 end })

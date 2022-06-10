@@ -110,7 +110,7 @@ return {
     }
 
     -- Language specific configs
-    local load_from = require('utils').load_from_factory('lua/plugins')
+    local load_from = require('utils').load_from_factory('lua/kasama/plugins')
     LANGUAGE_LOADERS = load_from('languages')
     for _, language_loader in ipairs(LANGUAGE_LOADERS) do
       if type(language_loader.init) == "function" then
@@ -289,9 +289,13 @@ return {
           sign = {
             enabled = false,
           },
-          virtual_text = {
+          status_text = {
             enabled = true,
-            text = ''
+            text = ' action'
+          },
+          virtual_text = {
+            enabled = false,
+            text = ''
           },
         }
       end,
@@ -342,7 +346,7 @@ return {
           FORMAT_ON_SAVE_ENABLED = true
           local function format()
             if (FORMAT_ON_SAVE_ENABLED) then
-              vim.lsp.buf.formatting_sync()
+              vim.lsp.buf.formatting_seq_sync()
             end
           end
 

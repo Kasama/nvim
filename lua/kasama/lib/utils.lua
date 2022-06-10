@@ -44,7 +44,7 @@ end
 
 local table_merge
 table_merge = function(...)
-  local tables_to_merge = {...}
+  local tables_to_merge = { ... }
   assert(#tables_to_merge > 1, "There should be at least two tables to merge them")
 
   for k, t in ipairs(tables_to_merge) do
@@ -61,7 +61,7 @@ table_merge = function(...)
         assert(type(result[k]) == "table", string.format("Expected a table: '%s'", k))
         result[k] = table_merge(result[k], v)
       else
-      result[k] = v
+        result[k] = v
       end
     end
   end
@@ -73,10 +73,10 @@ end
 local function maximum(a)
   local values = {}
 
-  for k,v in pairs(a) do
+  for k, v in pairs(a) do
     v = tonumber(v, 10) or 0
     if type(k) == "number" and type(v) == "number" then
-      values[#values+1] = v
+      values[#values + 1] = v
     end
   end
   table.sort(values) -- automatically sorts lowest to highest
@@ -104,7 +104,8 @@ return {
   end,
 
   file_modified = function(filename)
-    local age = vim.split(vim.fn.system({"find", filename, "-type", "f", "-printf", '"%A@\n"'}):gsub("'", ''):gsub('"', ''), '\n')
+    local age = vim.split(vim.fn.system({ "find", filename, "-type", "f", "-printf", '"%A@\n"' }):gsub("'", ''):gsub('"'
+      , ''), '\n')
 
     local numberage = maximum(age)
 
@@ -112,7 +113,7 @@ return {
   end,
 
   keybind = keybind,
-  table_merge=table_merge,
+  table_merge = table_merge,
   lists = require('lists'),
   fun = require('fun'),
 }

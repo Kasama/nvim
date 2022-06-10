@@ -33,7 +33,7 @@ return {
             lualine_b = { 'branch', 'diff' },
             lualine_c = { { 'filename', file_status = true, path = 3 } },
             lualine_x = { 'fileformat', 'encoding' },
-            lualine_y = { 'diagnostics' },
+            lualine_y = { 'diagnostics', function() return require('nvim-lightbulb').get_status_text() end },
             lualine_z = {
               '%3p%% :%l/%L☰ :%-2v', -- percent through file; current line/total lines; current column
               { 'filetype', colored = false }
