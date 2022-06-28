@@ -11,7 +11,13 @@ local function keybind(mapping)
     opts[opt] = val
   end
 
-  vim.keymap.set(modes, rhs, lhs, opts)
+  if type(rhs) ~= 'table' then
+    rhs = {rhs}
+  end
+
+  for _, keys in ipairs(rhs) do
+    vim.keymap.set(modes, keys, lhs, opts)
+  end
 end
 
 ----------- Table Functions -------------

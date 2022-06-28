@@ -8,17 +8,27 @@ return {
       config = function()
         local keybind = require('utils').keybind
         local luasnip = require('luasnip')
-        require('luasnip.loaders.from_vscode').lazy_load({ paths = './snippets' })
+        local luasnip_types = require('luasnip.util.types')
+        -- require('luasnip.loaders.from_vscode').lazy_load({ paths = './snippets' })
 
         luasnip.config.set_config {
           history = true,
 
           updateevents = "TextChanged,TextChangedI",
 
-          enable_autosnippets = true
+          enable_autosnippets = true,
+
+          ext_opts = {
+            [luasnip_types.choiceNode] = {
+              active = {
+                virt_text = { { "<- Current Choice", "helpExample" } },
+                priority = 1
+              }
+            }
+          },
         }
 
-        keybind { { 'i', 's' }, '<c-k>', function()
+        keybind { { 'i', 's' }, { '<c-k>' }, function()
           if luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
           end
@@ -31,6 +41,11 @@ return {
         keybind { { 'i', 's' }, '<c-l>', function()
           if luasnip.choice_active() then
             luasnip.change_choice(1)
+          end
+        end }
+        keybind { { 'i', 's' }, '<c-u>', function()
+          if luasnip.choice_active() then
+            require('luasnip.extras.select_choice')()
           end
         end }
 

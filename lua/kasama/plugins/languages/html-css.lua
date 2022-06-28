@@ -1,6 +1,11 @@
 return {
   init = function(use)
-    use 'ap/vim-css-color' -- apply color to css color codes
+    use { -- apply color to css color codes
+      '/RRethy/vim-hexokinase',
+      run = 'make hexokinase',
+      config = function()
+      end,
+    }
   end,
   lsp = function(setup_lsp)
     setup_lsp('html', {})

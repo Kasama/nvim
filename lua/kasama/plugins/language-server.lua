@@ -34,6 +34,7 @@ return {
             end,
           },
           sources = {
+            { name = 'copilot' },
             { name = "nvim_lua" },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
@@ -45,6 +46,7 @@ return {
               mode = 'symbol',
               max_width = 50,
               menu = {
+                copilot = "[gh]",
                 nvim_lua = "[lua]",
                 nvim_lsp = "[lsp]",
                 path = "[path]",
@@ -55,7 +57,7 @@ return {
           },
           mapping = cmp.mapping.preset.insert({
             -- ["<tab>"] = cmp.config.disable,
-            ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+            -- ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
             ["<C-d>"] = cmp.mapping.scroll_docs(-4),
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-e>"] = cmp.mapping.close(),
@@ -312,6 +314,7 @@ return {
           require('utils').keybind({ mode, lhs, rhs, opts })
         end
 
+
         -- enable codelens
         local codelens_capable = false
         for _, client in ipairs(vim.lsp.buf_get_clients()) do
@@ -342,26 +345,24 @@ return {
             break
           end
         end
-        if formatting_capable then
-          FORMAT_ON_SAVE_ENABLED = true
-          local function format()
-            if (FORMAT_ON_SAVE_ENABLED) then
-              vim.lsp.buf.formatting_seq_sync()
-            end
+        FORMAT_ON_SAVE_ENABLED = true
+        local function format()
+          if (FORMAT_ON_SAVE_ENABLED) then
+            vim.lsp.buf.formatting_seq_sync()
           end
-
-          local format_on_save = vim.api.nvim_create_augroup('FormatOnSave', { clear = true })
-          vim.api.nvim_create_autocmd({ 'BufWritePre' }, { group = format_on_save, buffer = info.buf, callback = format })
-
-          local function toggle_format_on_save()
-            FORMAT_ON_SAVE_ENABLED = not FORMAT_ON_SAVE_ENABLED
-            local msg = (FORMAT_ON_SAVE_ENABLED and "Enabled" or "Disabled") .. " format on save"
-            vim.notify(msg, vim.log.levels.INFO, { title = "Format on Save", timeout = 10, hide_from_history = true })
-          end
-
-          bufmap('n', '<leader>=', vim.lsp.buf.formatting)
-          bufmap('n', '<leader><leader>=', toggle_format_on_save)
         end
+
+        local format_on_save = vim.api.nvim_create_augroup('FormatOnSave', { clear = true })
+        vim.api.nvim_create_autocmd({ 'BufWritePre' }, { group = format_on_save, buffer = info.buf, callback = format })
+
+        local function toggle_format_on_save()
+          FORMAT_ON_SAVE_ENABLED = not FORMAT_ON_SAVE_ENABLED
+          local msg = (FORMAT_ON_SAVE_ENABLED and "Enabled" or "Disabled") .. " format on save"
+          vim.notify(msg, vim.log.levels.INFO, { title = "Format on Save", timeout = 10, hide_from_history = true })
+        end
+
+        bufmap('n', '<leader>=', vim.lsp.buf.formatting)
+        bufmap('n', '<leader><leader>=', toggle_format_on_save)
 
 
         local telescope = require('telescope.builtin')

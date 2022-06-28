@@ -1,6 +1,7 @@
 return {
   init = function(use)
     use { 'b0o/SchemaStore.nvim' }
+    use { 'elzr/vim-json', ft = 'json' }
   end,
   lsp = function(setup_lsp)
     setup_lsp('jsonls', {

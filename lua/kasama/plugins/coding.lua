@@ -27,6 +27,7 @@ return {
               'haskell',
               'html',
               'java',
+              'java',
               'javascript',
               'json',
               'json5',
@@ -36,6 +37,7 @@ return {
               'rust',
               'scss',
               'toml',
+              'tsx',
               'typescript',
               'yaml',
             },
@@ -98,8 +100,8 @@ return {
     use { -- refactoring
       'ThePrimeagen/refactoring.nvim',
       requires = {
-        {"nvim-lua/plenary.nvim"},
-        {"nvim-treesitter/nvim-treesitter"}
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" }
       },
       config = function()
         local refactoring = require('refactoring')
@@ -126,6 +128,23 @@ return {
         end
       end
     }
+
+    -- use { -- Github copilot
+    --   'zbirenbaum/copilot-cmp',
+    --   requires={
+    --     'zbirenbaum/copilot.lua'
+    --     -- 'github/copilot.vim'
+    --   },
+    --   after = {'nvim-cmp'},
+    --   event = {"InsertEnter"},
+    --   config = function()
+    --     vim.schedule(function()
+    --       require("copilot").setup {
+    --         cmp_method = "getPanelCompletions",
+    --       }
+    --     end)
+    --   end,
+    -- }
 
   end
 }

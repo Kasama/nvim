@@ -24,7 +24,11 @@ vim.api.nvim_create_user_command('Q', 'q', {})
 vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('WQ', 'wq', {})
 
--- print(vim.inspect(LOADED_MODULES))
+-- print inspect anything
+P = function(val)
+  print(vim.inspect(val))
+  return val
+end
 
 -- Reload everything
 require('utils').keybind({ 'n', '<leader>rc', function()
