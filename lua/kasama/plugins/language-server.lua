@@ -133,8 +133,30 @@ return {
           local lsp_cmp = require('cmp_nvim_lsp')
           local lspconfig = require('lspconfig')
 
+          -- `setup_lsp` is designed to be called by each language's setup to add the language
+          -- server configuration.
+          --
+          -- Usage: `setup_lsp('rust_analyzer', {})`
+          --
+          -- @param lsp string or table
+          --   It will call `lspconfig[lsp].setup` if `lsp` is a string and call `lsp.setup` if it's not
+          --
+          -- @param configs table or function
+          --   if `configs` is a table, it will be injected with some defaults and passed to the setup
+          --   function as decribed above. If it's a function, it will be called with an argument that
+          --   is the function to inject the defaults and that function is expected to return a table
+          --   with the configs
           local function setup_lsp(lsp, configs) -- {
+
             configs = configs or {}
+
+            local setup_target = nil
+            if type(lsp) == 'string' then
+              setup_target = lspconfig[lsp]
+            else
+              setup_target = lsp
+            end
+
             if (lsp_cmp) then
               local client_capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -148,24 +170,33 @@ return {
                 capabilities = capabilities,
                 flags = { debounce_text_changes = 150 },
               }
-              configs.on_attach_tmp = configs.on_attach
-              configs.on_attach     = nil
 
-              local cascading_on_attach = {
-                on_attach = function(client, bufnr)
-                  if configs.on_attach_tmp ~= nil then
-                    configs.on_attach_tmp(client, bufnr)
+              local inject_config = function(config)
+                config.on_attach_tmp = config.on_attach
+                config.on_attach     = nil
+
+                local cascading_on_attach = {
+                  on_attach = function(client, bufnr)
+                    if config.on_attach_tmp ~= nil then
+                      config.on_attach_tmp(client, bufnr)
+                    end
+                    vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
                   end
-                  vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
-                end
-              }
+                }
 
-              configs = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, configs,
-                cascading_on_attach)
-              lspconfig[lsp].setup(configs)
-            else
-              lspconfig[lsp].setup(configs)
+                config = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, config,
+                  cascading_on_attach)
+
+                return config
+              end
+
+              if type(configs) == "function" then
+                configs = configs(inject_config)
+              else
+                inject_config(configs)
+              end
             end
+            setup_target.setup(configs)
           end -- }
 
           -- Setup diganostic signs {
@@ -274,30 +305,21 @@ return {
       'j-hui/fidget.nvim',
       config = function()
         require('fidget').setup {
-          text = {
-            spinner = 'arc'
-          }
+          text = { spinner = 'arc' }
         }
       end,
     }
 
-    use { -- lighbulb indicator for code actions
+    use { --  indicator for code actions
       'kosayoda/nvim-lightbulb',
       config = function()
         require('nvim-lightbulb').setup {
-          autocmd = {
-            enabled = true
-          },
-          sign = {
-            enabled = false,
-          },
+          autocmd = { enabled = true },
+          sign = { enabled = false, },
+          virtual_text = { enabled = false },
           status_text = {
             enabled = true,
             text = ' action'
-          },
-          virtual_text = {
-            enabled = false,
-            text = ''
           },
         }
       end,
@@ -364,7 +386,6 @@ return {
         bufmap('n', '<leader>=', vim.lsp.buf.formatting)
         bufmap('n', '<leader><leader>=', toggle_format_on_save)
 
-
         local telescope = require('telescope.builtin')
 
         bufmap('n', 'K', vim.lsp.buf.hover)
@@ -374,6 +395,9 @@ return {
         bufmap('n', '<C-]>', telescope.lsp_definitions)
         bufmap('n', '<leader>impl', telescope.lsp_implementations)
         bufmap('n', '<leader>rn', vim.lsp.buf.rename)
+
+        bufmap('n', 'g[', vim.diagnostic.goto_prev)
+        bufmap('n', 'g]', vim.diagnostic.goto_next)
       end
     })
   end

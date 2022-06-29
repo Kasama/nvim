@@ -19,13 +19,20 @@ opt.exrc = true
 opt.secure = true
 opt.hidden = true
 opt.number = true
-opt.relativenumber = true
+opt.relativenumber = false
 -- opt.completeopt = 'longest,menu,preview'
 opt.completeopt = 'menu,menuone,noselect'
 opt.lazyredraw = true
 opt.title = true
 opt.inccommand = 'split'
 opt.mouse = 'a'
+opt.signcolumn = 'yes'
+opt.listchars = {
+  tab = '» ',
+  trail = '¶',
+  space = '·',
+  eol = '↵',
+}
 
 -- notify override
 local ok, notify = pcall(require, "notify")
