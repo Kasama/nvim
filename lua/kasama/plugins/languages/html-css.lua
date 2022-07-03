@@ -1,7 +1,7 @@
 return {
   init = function(use)
     use { -- apply color to css color codes
-      '/RRethy/vim-hexokinase',
+      'RRethy/vim-hexokinase',
       run = 'make hexokinase',
       config = function()
       end,

@@ -13,59 +13,73 @@ return {
     use { -- Treesitter
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
-      {
+      requires = { -- plugins
         'nvim-treesitter/playground',
-        config = function()
-          require('nvim-treesitter.configs').setup {
-            ensure_installed = {
-              'c',
-              'cpp',
-              'css',
-              'dockerfile',
-              'elm',
-              'go',
-              'haskell',
-              'html',
-              'java',
-              'java',
-              'javascript',
-              'json',
-              'json5',
-              'lua',
-              'python',
-              'query',
-              'rust',
-              'scss',
-              'toml',
-              'tsx',
-              'typescript',
-              'yaml',
+        'p00f/nvim-ts-rainbow', -- rainbow parens
+        'nvim-treesitter/nvim-treesitter-context',
+        -- 'haringsrob/nvim_context_vt', -- Show virtual text with current context
+      },
+      config = function()
+
+        -- Treesitter Config
+        require('nvim-treesitter.configs').setup {
+          ensure_installed = {
+            'c', 'cpp', 'css', 'dockerfile', 'elm', 'go', 'haskell', 'hcl', 'html',
+            'java', 'java', 'javascript', 'json', 'json5', 'lua', 'python',
+            'query', 'rust', 'scss', 'toml', 'tsx', 'typescript', 'yaml',
+          },
+
+          highlight = { enable = true },
+          indent = { enable = true },
+
+          playground = {
+            enable = true,
+            disable = {},
+            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+            persist_queries = false, -- Whether the query persists across vim sessions
+            keybindings = {
+              toggle_query_editor = 'o',
+              toggle_hl_groups = 'i',
+              toggle_injected_languages = 't',
+              toggle_anonymous_nodes = 'a',
+              toggle_language_display = 'I',
+              focus_language = 'f',
+              unfocus_language = 'F',
+              update = 'R',
+              goto_node = '<cr>',
+              show_help = '?',
             },
+          },
 
-            highlight = { enable = true },
-            indent = { enable = true },
-
-            playground = {
-              enable = true,
-              disable = {},
-              updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-              persist_queries = false, -- Whether the query persists across vim sessions
-              keybindings = {
-                toggle_query_editor = 'o',
-                toggle_hl_groups = 'i',
-                toggle_injected_languages = 't',
-                toggle_anonymous_nodes = 'a',
-                toggle_language_display = 'I',
-                focus_language = 'f',
-                unfocus_language = 'F',
-                update = 'R',
-                goto_node = '<cr>',
-                show_help = '?',
-              },
-            }
+          rainbow = { -- rainbow parens
+            enable = true,
+            colors = { '#b452cd', '#cd8162', '#eeaeee', '#ff69b4' }
           }
-        end
-      }
+        }
+
+        require('treesitter-context').setup({
+          max_lines = 3,
+        })
+      end
+    }
+
+    use { -- tree climber
+      'drybalka/tree-climber.nvim',
+      requires = {
+        { "nvim-treesitter/nvim-treesitter" }
+      },
+      config = function()
+        local climber = require('tree-climber')
+        local keybind = require('utils').keybind
+
+        keybind({ 'n', 'H', function()
+          vim.cmd [[normal m']] -- add to jumplist
+          climber.goto_parent()
+        end })
+        keybind({ 'n', 'L', climber.goto_child })
+        keybind({ 'n', '<leader><C-K>', climber.swap_prev })
+        keybind({ 'n', '<leader><C-J>', climber.swap_next })
+      end
     }
 
     use { -- auto pairs
@@ -126,6 +140,23 @@ return {
           telescope.load_extension('refactoring')
           keybind({ { 'v' }, '<leader>rf', '<esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>' })
         end
+      end
+    }
+
+    use { -- Commentary
+      'numToStr/Comment.nvim',
+      config = function()
+        local keybind = require("utils").keybind
+        local comment = require('Comment.api')
+
+        require('Comment').setup({
+          ignore = '^$',
+          mappings = false,
+        })
+
+        keybind({ 'n', { '<leader>/' }, comment.toggle_current_linewise })
+        keybind({ 'x', { '<leader>/' },
+          '<ESC><CMD>lua require("Comment.api").locked.toggle_linewise_op(vim.fn.visualmode())<CR>' })
       end
     }
 

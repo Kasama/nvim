@@ -34,19 +34,18 @@ return {
             end,
           },
           sources = {
-            { name = 'copilot' },
             { name = "nvim_lua" },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' },
             { name = 'buffer', keyword_length = 5 },
+            { name = 'crates' },
           },
           formatting = {
             format = lspkind.cmp_format({
               mode = 'symbol',
               max_width = 50,
               menu = {
-                copilot = "[gh]",
                 nvim_lua = "[lua]",
                 nvim_lsp = "[lsp]",
                 path = "[path]",
@@ -193,7 +192,7 @@ return {
               if type(configs) == "function" then
                 configs = configs(inject_config)
               else
-                inject_config(configs)
+                configs = inject_config(configs)
               end
             end
             setup_target.setup(configs)

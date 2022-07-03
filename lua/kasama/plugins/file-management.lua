@@ -43,7 +43,7 @@ return {
       end,
     }
 
-    use {
+    use { -- nvim tree
       'kyazdani42/nvim-tree.lua',
       requires = {
         'kyazdani42/nvim-web-devicons', -- optional, for file icon
@@ -62,7 +62,7 @@ return {
           view = {
             mappings = {
               list = {
-                {key = 'A', action = 'create'}
+                { key = 'A', action = 'create' }
               }
             }
           }

@@ -1,4 +1,6 @@
 return {
+  init = function(use)
+  end,
   lsp = function(setup_lsp)
     setup_lsp('gopls', {
       staticcheck = true,
@@ -32,35 +34,36 @@ return {
     }
 
     local get_default_value_for_type = function(_type, info)
+
       local for_error = info and info.err_name
-      local n = function(content)
+      local n = function(content, inff)
         if for_error then
           return t(content)
         else
-          info.index = info.index + 1
-          return i(info.index, content)
+          inff.index = inff.index + 1
+          return i(inff.index, content)
         end
       end
       if _type == 'int' then
-        return n "0"
+        return n("0", info)
       elseif _type == 'error' then
         if for_error then
           info.index = info.index + 1
 
           return c(info.index, {
-            n(string.format('errors.Wrap(%s, "%s")', info.err_name, info.func_name)),
-            n(info.err_name)
+            n(string.format('errors.Wrap(%s, "%s")', info.err_name, info.func_name), info),
+            n(info.err_name, info)
           })
         else
-          return n 'nil'
+          return n('nil', info)
         end
       elseif _type == 'bool' then
-        return n 'false'
+        return n('false', info)
       elseif _type == 'string' then
-        return n '""'
+        return n('""', info)
       elseif string.find(_type, '*', 1, true) then
         if for_error then
-          return n 'nil'
+          return n('nil', info)
         else
           info.index = info.index + 2
           return c(info.index - 1, {
@@ -86,6 +89,7 @@ return {
           break
         end
       end
+      print("func node", function_node)
 
       local handlers = {
         ['parameter_list'] = function(node)
@@ -101,12 +105,13 @@ return {
         end,
         ['type_identifier'] = function(node)
           local text = vim.treesitter.get_node_text(node, 0)
-          return { value_for_type(text) }
+          return { value_for_type(text, info) }
         end,
       }
 
       local query = vim.treesitter.get_query('go', 'ClosestFuncReturnTypes')
-      for _, node in query:iter_captures(function_node, 0) do
+      for ii, node in query:iter_captures(function_node, 0) do
+        print("for " .. vim.inspect(ii) .. ". is:", vim.inspect(node))
         if handlers[node:type()] then
           return handlers[node:type()](node)
         end

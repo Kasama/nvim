@@ -59,15 +59,9 @@ return {
       end,
     }
 
-    use { -- rainbow parens
-      'luochen1990/rainbow',
-      config = function()
-        vim.g.rainbow_active = 1
-        vim.g.rainbow_conf = {
-          guifgs = { 'MediumOrchid3', 'LightSalmon3', 'Plum2', 'HotPink' },
-          separately = { liquid = 0 }
-        }
-      end
+    use { -- Stabilize window on split/popup/etc
+      "luukvbaal/stabilize.nvim",
+      config = function() require("stabilize").setup() end
     }
   end
 }

@@ -13,6 +13,17 @@ return {
     -- Grammar Check
     -- use { 'rhysd/vim-grammarous' }
 
+    -- Lua.
+
+    use({
+      'sQVe/sort.nvim',
+
+      -- Optional setup for overriding defaults.
+      config = function()
+        require("sort").setup({})
+      end
+    })
+
   end
 
 }

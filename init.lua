@@ -38,3 +38,19 @@ require('utils').keybind({ 'n', '<leader>rc', function()
   require('plenary.reload').reload_module('languages')
   vim.cmd [[source $MYVIMRC]]
 end })
+
+-- Extra treesitter parsers
+if not pcall(require, "nvim-treesitter") then
+  return
+end
+
+local list = require("nvim-treesitter.parsers").get_parser_configs()
+
+list.sql = {
+  install_info = {
+    url = "https://github.com/DerekStride/tree-sitter-sql",
+    -- url = "https://github.com/m-novikov/tree-sitter-sql",
+    files = { "src/parser.c" },
+    branch = "main",
+  },
+}
