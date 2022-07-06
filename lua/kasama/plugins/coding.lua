@@ -26,7 +26,7 @@ return {
           ensure_installed = {
             'c', 'cpp', 'css', 'dockerfile', 'elm', 'go', 'haskell', 'hcl', 'html',
             'java', 'java', 'javascript', 'json', 'json5', 'lua', 'python',
-            'query', 'rust', 'scss', 'toml', 'tsx', 'typescript', 'yaml',
+            'query', 'regex', 'ruby', 'rust', 'scss', 'toml', 'tsx', 'typescript', 'yaml',
           },
 
           highlight = { enable = true },
@@ -60,6 +60,41 @@ return {
         require('treesitter-context').setup({
           max_lines = 3,
         })
+
+        -- FIX for rust SQL highlight injection
+        require('vim.treesitter.query').set_query('rust', 'injections', [[
+        (macro_definition
+          (macro_rule
+            left: (token_tree_pattern) @rust
+            right: (token_tree) @rust))
+
+        [
+          (line_comment)
+          (block_comment)
+        ] @comment
+
+        (
+          (macro_invocation
+            macro: ((identifier) @_html_def)
+            (token_tree) @html)
+
+            (#eq? @_html_def "html")
+        )
+
+        (call_expression
+          function: (scoped_identifier
+            path: (identifier) @_regex (#eq? @_regex "Regex")
+            name: (identifier) @_new (#eq? @_new "new"))
+          arguments: (arguments
+            (raw_string_literal) @regex))
+
+        (call_expression
+          function: (scoped_identifier
+            path: (scoped_identifier (identifier) @_regex (#eq? @_regex "Regex").)
+            name: (identifier) @_new (#eq? @_new "new"))
+          arguments: (arguments
+            (raw_string_literal) @regex))
+                ]])
       end
     }
 
