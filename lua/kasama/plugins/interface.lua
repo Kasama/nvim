@@ -5,6 +5,9 @@ return {
       config = function()
         local notify = require('notify')
         vim.notify = notify
+        local keybind = require('utils').keybind
+
+        keybind({ 'n', '<leader>nd', notify.dismiss })
       end
     }
 
@@ -43,7 +46,7 @@ return {
             lualine_x = { 'fileformat', 'encoding' },
             lualine_y = { 'diagnostics', code_actions },
             lualine_z = {
-              '%3p%% :%l/%L☰ :%-2v', -- percent through file; current line/total lines; current column
+              '%3p%% %l/%L☰ %-2v', -- percent through file; current line/total lines; current column
               { 'filetype', colored = false }
             },
           },
@@ -62,6 +65,13 @@ return {
           options = {
             buffer_close_icon = '',
             show_close_icon = false,
+            custom_filter = function(buf_number)
+              -- filter out by buffer name
+              -- vim.notify("filtering buffers: " .. vim.fn.bufname(buf_number))
+              if vim.fn.bufname(buf_number) ~= "[dap-repl]" then
+                return true
+              end
+            end
           },
         }
       end,

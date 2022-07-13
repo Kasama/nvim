@@ -4,10 +4,13 @@ return {
     use { 'elzr/vim-json', ft = 'json' }
   end,
   lsp = function(setup_lsp)
+
+    local json_schemas = require('schemastore').json.schemas()
+
     setup_lsp('jsonls', {
       settings = {
         json = {
-          schemas = require('schemastore').json.schemas(),
+          schemas = json_schemas,
           validate = { enable = true },
         }
       }
@@ -21,11 +24,20 @@ return {
             ["http://json.schemastore.org/ansible-stable-2.5"] = "*playbook.yml",
             ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci.y*l",
             ["/home/roberto/documents/work/gitlab-system-hooks/renderer_template.json"] = "*.tpl.*",
-            ["/home/roberto/documents/work/ring-infrastructure-plugin-backend/src/bundle/spec/schemas/bundle_list_schema.json"] = "*.bundle.y*l"
+            ["/home/roberto/documents/work/ring-infrastructure-plugin-backend/src/bundle/spec/schemas/bundle_list_schema.json"] = "*.bundle.y*l",
           },
           schemaStore = {
             enable = true,
+            url = "https://www.schemastore.org/api/json/catalog.json"
           },
+          completion = true,
+          hover = true,
+          validate = true,
+          format = {
+            enable = true,
+            singleQuote = true,
+            bracketSpacing = true,
+          }
         }
       }
     })

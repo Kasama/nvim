@@ -140,9 +140,89 @@ return {
     use { -- nvim-dap (debugger)
       'mfussenegger/nvim-dap',
       requires = {
+        'rcarriga/nvim-dap-ui',
         'leoluz/nvim-dap-go',
+        'theHamsta/nvim-dap-virtual-text',
       },
       config = function()
+
+        require('dap-go').setup()
+        local dap_virtual = require('nvim-dap-virtual-text')
+        local dap, dapui = require('dap'), require('dapui')
+        dap_virtual.setup()
+        dapui.setup({
+          layouts = {
+            {
+              elements = {
+                -- Elements can be strings or table with id and size keys.
+                { id = "scopes", size = 0.25 },
+                "breakpoints",
+                "stacks",
+                "watches",
+              },
+              size = 0.2,
+              position = "left",
+            },
+          },
+          floating = {
+            max_width = 0.8,
+            border = "rounded"
+          }
+        })
+
+        -- icons
+        vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticSignError' })
+        vim.fn.sign_define('DapBreakpointCondition', { text = '', texthl = 'DiagnosticSignWarn' })
+        vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DiagnosticSignInfo' })
+        vim.fn.sign_define('DapBreakpointRejected', { text = '', texthl = 'debugBreakpoint' })
+
+        local keybind = require('utils').keybind
+
+        keybind({ 'n', '<leader>dd', dap.toggle_breakpoint })
+        keybind({ 'n', '<leader>dD', function() dap.set_breakpoint(vim.fn.input('Condition: ')) end })
+        keybind({ 'n', '<leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Message: ')) end })
+        keybind({ 'n', '<F5>', dap.continue })
+        keybind({ 'n', '<F6>', function()
+          dap.close()
+          dapui.close({})
+          dap_virtual.refresh()
+        end })
+        keybind({ 'n', '<F6><F6>', dap.clear_breakpoints })
+
+        local temporary_keybinds = function()
+          local cleaners = {}
+          local k = function(...)
+            table.insert(cleaners, keybind(...))
+          end
+
+          k({ 'n', '<leader><F5>', dap.restart })
+          k({ { 'n', 'v' }, '<M-K>', dapui.eval })
+          k({ 'n', '<leader>de', function() dapui.eval(vim.fn.input("Eval: ")) end })
+          k({ 'n', '<leader>dt', dapui.toggle })
+          k({ 'n', '<F8>', dap.step_over })
+          k({ 'n', '<F6><F8>', dap.step_into })
+          k({ 'n', '<F7>', dap.step_out })
+
+          return function()
+            for _, cleaner in ipairs(cleaners) do
+              cleaner()
+            end
+          end
+        end
+
+        local cleanup_temporary_keybinds = function() end
+
+        local on_close = function()
+          dapui.close({})
+          cleanup_temporary_keybinds()
+        end
+
+        dap.listeners.after.event_initialized['dapui_config'] = function()
+          dapui.open({})
+          cleanup_temporary_keybinds = temporary_keybinds()
+        end
+        dap.listeners.before.event_terminated['dapui_config'] = on_close
+        dap.listeners.before.event_exited['dapui_config'] = on_close
       end,
     }
 

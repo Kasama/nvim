@@ -254,6 +254,13 @@ return {
       }
     }
 
+    use {
+      'Maan2003/lsp_lines.nvim',
+      config = function()
+        require("lsp_lines").register_lsp_virtual_lines()
+      end,
+    }
+
     use { -- lsp_signature
       'ray-x/lsp_signature.nvim',
       config = function()
@@ -287,8 +294,40 @@ return {
       'jose-elias-alvarez/null-ls.nvim',
       config = function()
         local null_ls = require('null-ls')
+        local null_helpers = require('null-ls.helpers')
+        local null_methods = require('null-ls.methods')
+
+        local golint = null_helpers.make_builtin({
+          name = "golint",
+          method = null_methods.internal.DIAGNOSTICS_ON_SAVE,
+          filetypes = { "go" },
+          generator_opts = {
+            command = "go",
+            args = function()
+              return {
+                "run",
+                "golang.org/x/lint/golint",
+                "$FILENAME"
+              }
+            end,
+            to_stdin = false,
+            from_stderr = false,
+            format = "line",
+            on_output = null_helpers.diagnostics.from_patterns({
+              {
+                pattern = [[.+:(%d+):(%d+): (.+)]],
+                groups = { "row", "col", "message" }
+              }
+            })
+          },
+          factory = null_helpers.generator_factory
+        })
+
         null_ls.setup {
-          sources = {}
+          sources = {
+            null_ls.builtins.diagnostics.golangci_lint,
+            golint,
+          }
         }
       end,
     }

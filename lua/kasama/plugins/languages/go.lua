@@ -1,5 +1,12 @@
 return {
   init = function(use)
+    use {
+      'ray-x/go.nvim',
+      require = 'ray-x/guihua.lua', -- floating window support
+      config = function()
+        require('go').setup()
+      end
+    }
   end,
   lsp = function(setup_lsp)
     setup_lsp('gopls', {

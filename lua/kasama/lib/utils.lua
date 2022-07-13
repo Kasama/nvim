@@ -12,11 +12,21 @@ local function keybind(mapping)
   end
 
   if type(rhs) ~= 'table' then
-    rhs = {rhs}
+    rhs = { rhs }
   end
 
   for _, keys in ipairs(rhs) do
     vim.keymap.set(modes, keys, lhs, opts)
+  end
+
+  return function() -- function to clear keymap
+    local del_opts = {}
+    if opts.buffer ~= nil then
+      del_opts = { buffer = opts.buffer }
+    end
+    for _, keys in ipairs(rhs) do
+      vim.keymap.del(modes, keys, del_opts)
+    end
   end
 end
 

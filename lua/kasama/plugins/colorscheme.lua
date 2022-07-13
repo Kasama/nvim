@@ -45,7 +45,8 @@ return {
 
         require('onedark').setup({
           style = 'dark',
-          toggle_style_list = '',
+          toggle_style_key = '<Plug>toggleonedarkstyle',
+          toggle_style_list = { 'dark', 'light' },
           transparent = false,
 
           code_style = { -- italic text will use OperatorMono font
@@ -65,6 +66,8 @@ return {
         })
 
         require('onedark').load()
+
+        vim.api.nvim_create_user_command('ColorschemeToggleLight', require('onedark').toggle, {})
       end
     }
 
