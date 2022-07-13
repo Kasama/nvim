@@ -205,15 +205,6 @@ return {
           end
 
           vim.diagnostic.config({
-            virtual_text = {
-              prefix = '',
-              severity = vim.diagnostic.severity.ERROR,
-              severity_sort = true,
-              update_in_insert = true,
-              format = function(diagnostic)
-                return string.format(DIAGNOSTICS_SIGNS[diagnostic.severity] .. " %s", diagnostic.message)
-              end
-            },
             severity_sort = true,
           })
           -- }
@@ -226,20 +217,24 @@ return {
               group = diagnostics_hold,
               pattern = '*',
               callback = function()
-                vim.diagnostic.open_float(nil, {
-                  focus = false,
-                  scope = 'cursor',
-                  source = 'if_many',
-                  prefix = function(diagnostic, _, _)
-                    local hl_map = {
-                      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-                      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-                      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-                      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-                    }
-                    return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
-                  end,
-                })
+                local should_open_float = not vim.g["DiagnosticLinesEnabled"]
+
+                if should_open_float then
+                  vim.diagnostic.open_float(nil, {
+                    focus = false,
+                    scope = 'cursor',
+                    source = 'if_many',
+                    prefix = function(diagnostic, _, _)
+                      local hl_map = {
+                        [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+                        [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+                        [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+                        [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+                      }
+                      return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
+                    end,
+                  })
+                end
               end
             }
           )
@@ -258,6 +253,33 @@ return {
       'Maan2003/lsp_lines.nvim',
       config = function()
         require("lsp_lines").register_lsp_virtual_lines()
+
+        local diag_line = function(state)
+          if not state then
+            vim.g['DiagnosticLinesEnabled'] = false
+            vim.diagnostic.config({ virtual_lines = state, virtual_text = {
+              prefix = '',
+              severity = vim.diagnostic.severity.ERROR,
+              severity_sort = true,
+              update_in_insert = true,
+              format = function(diagnostic)
+                return string.format(DIAGNOSTICS_SIGNS[diagnostic.severity] .. " %s", diagnostic.message)
+              end
+            } })
+          else
+            vim.g['DiagnosticLinesEnabled'] = true
+            vim.diagnostic.config({ virtual_lines = state, virtual_text = not state })
+          end
+        end
+
+        diag_line(false)
+
+        vim.api.nvim_create_user_command('DiagnosticLinesToggle', function()
+          diag_line(not vim.g['DiagnosticLinesEnabled'])
+        end, {})
+
+        vim.api.nvim_create_user_command('DiagnosticLinesEnable', function() diag_line(true) end, {})
+        vim.api.nvim_create_user_command('DiagnosticLinesDisable', function() diag_line(false) end, {})
       end,
     }
 
