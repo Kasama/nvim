@@ -249,7 +249,7 @@ return {
       }
     }
 
-    use {
+    use { -- lsp diagnostic lines
       'Maan2003/lsp_lines.nvim',
       config = function()
         require("lsp_lines").register_lsp_virtual_lines()

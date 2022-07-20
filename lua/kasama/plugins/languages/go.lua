@@ -64,9 +64,10 @@ return {
         if for_error then
           info.index = info.index + 1
 
-          return c(info.index, {
-            n(string.format('fmt.Errorf("error in %s: %%w", %s)', info.func_name, info.err_name), info),
-            n(info.err_name, info)
+          return ls.sn(info.index, {
+            t 'fmt.Errorf("',
+            i(1, string.format('error in %s', info.func_name)),
+            t(string.format(': %%w", %s)', info.err_name)),
           })
         else
           return n('nil', info)
@@ -104,6 +105,10 @@ return {
         end
       end
 
+      if function_node == nil then
+        return {}
+      end
+
       local node_name = vim.treesitter.get_node_text(function_node:named_child('name'), 0)
       if node_name ~= nil then
         info.func_name = node_name
@@ -135,7 +140,7 @@ return {
           return handlers[node:type()](node)
         end
       end
-
+      return {}
     end
 
     local go_return_error = function(args)
