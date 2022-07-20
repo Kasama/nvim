@@ -7,6 +7,13 @@ return {
         require('go').setup()
       end
     }
+
+    local elm_augroup = vim.api.nvim_create_augroup('GoConfig', { clear = true })
+    vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+      group = elm_augroup,
+      pattern = '*.go',
+      command = "setlocal noexpandtab"
+    })
   end,
   lsp = function(setup_lsp)
     setup_lsp('gopls', {
@@ -58,7 +65,7 @@ return {
           info.index = info.index + 1
 
           return c(info.index, {
-            n(string.format('errors.Wrap(%s, "%s")', info.err_name, info.func_name), info),
+            n(string.format('fmt.Errorf("error in %s: %%w", %s)', info.func_name, info.err_name), info),
             n(info.err_name, info)
           })
         else
@@ -96,7 +103,13 @@ return {
           break
         end
       end
-      print("func node", function_node)
+
+      local node_name = vim.treesitter.get_node_text(function_node:named_child('name'), 0)
+      if node_name ~= nil then
+        info.func_name = node_name
+      else
+        info.func_name = "anonymous func"
+      end
 
       local handlers = {
         ['parameter_list'] = function(node)
@@ -117,8 +130,7 @@ return {
       }
 
       local query = vim.treesitter.get_query('go', 'ClosestFuncReturnTypes')
-      for ii, node in query:iter_captures(function_node, 0) do
-        print("for " .. vim.inspect(ii) .. ". is:", vim.inspect(node))
+      for _, node in query:iter_captures(function_node, 0) do
         if handlers[node:type()] then
           return handlers[node:type()](node)
         end
@@ -153,7 +165,7 @@ return {
         'ife',
         {
           t 'if ', i(1, { 'err' }), t { ' != nil {', '\treturn ' },
-          d(2, go_return_error, { 1 }),
+          d(2, go_return_error, { 1 }), i(3),
           t { '', '}' }, i(0),
         }
       ),
