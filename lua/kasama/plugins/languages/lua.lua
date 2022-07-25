@@ -1,7 +1,15 @@
 return {
-  init = function()
+  init = function(use)
     vim.opt.foldmethod = 'expr'
     vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
+
+    use {
+      'rafcamlet/nvim-luapad',
+      requires = "antoinemadec/FixCursorHold.nvim",
+      config = function()
+        local luapad = require('luapad')
+      end,
+    }
   end,
   lsp = function(setup_lsp)
     setup_lsp('sumneko_lua', {

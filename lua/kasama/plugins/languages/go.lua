@@ -22,6 +22,7 @@ return {
         generate = true
       }
     })
+    -- setup_lsp('golangci_lint_ls', {})
   end,
   snippets = function()
     local ls = require('luasnip')
@@ -174,7 +175,31 @@ return {
           t { '', '}' }, i(0),
         }
       ),
-      s('ret', { t 'return ', d(1, go_return_value, {}) })
+      s('ret', { t 'return ', d(1, go_return_value, {}) }),
+      s(
+        'forr',
+        {
+          t 'for ', i(1, "i"), t ', ', i(2, "v"), t ' := range ', i(3, "variable"), t { ' {', '\t' },
+          i(0),
+          t { '', '}' }
+        }
+      ),
+      s(
+        'if',
+        {
+          t 'if ', i(1, "i"), t { ' {', '\t' },
+          i(0),
+          t { '', '}' }
+        }
+      ),
+      s(
+        'for',
+        {
+          t 'for ', i(1, "i"), t { ' {', '\t' },
+          i(0),
+          t { '', '}' }
+        }
+      )
     }, { key = 'go' })
   end,
 }

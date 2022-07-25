@@ -12,6 +12,35 @@ return {
       end,
     }
 
+    use {
+      'Kasama/git-worktree.nvim', -- fork of 'ThePrimeagen/git-worktree.nvim',
+      branch = 'feature/switch-all-buffers',
+      config = function()
+        local keybind = require('utils').keybind
+        local ok, telescope = pcall(require, 'telescope')
+
+        if ok then
+          telescope.load_extension('git_worktree')
+          keybind({ 'n', '<leader>gw', '<cmd>Telescope git_worktree git_worktrees<CR>' })
+        end
+
+        local worktree = require('git-worktree')
+
+        worktree.on_tree_change(function(op, metadata)
+          if op == worktree.Operations.Switch then
+            -- write desired change to trigger file
+            os.execute(string.format('printf "%s\n%s" > /tmp/auto-dir-switch.cfg', metadata.prev_path, metadata.path))
+            os.execute("for pid in $(pgrep zsh); do kill -USR2 $pid; done")
+
+            local nvim_tree_ok, nvim_tree = pcall(require, 'nvim-tree')
+            if nvim_tree_ok then
+              nvim_tree.change_dir(metadata.path)
+            end
+          end
+        end)
+      end,
+    }
+
     use { -- Permalink parts of the code
       'ruifm/gitlinker.nvim',
       requires = 'nvim-lua/plenary.nvim',
