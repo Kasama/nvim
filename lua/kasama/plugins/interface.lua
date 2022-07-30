@@ -81,5 +81,21 @@ return {
       "luukvbaal/stabilize.nvim",
       config = function() require("stabilize").setup() end
     }
+
+    use { -- dressing (vim.ui.input)
+      'stevearc/dressing.nvim',
+      config = function()
+
+        require('dressing').setup({
+          input = {
+            enabled = true,
+          },
+          select = {
+            enabled = false,
+          },
+        })
+
+      end,
+    }
   end
 }

@@ -1,12 +1,12 @@
 return {
   init = function(use)
-    use {
-      'ray-x/go.nvim',
-      require = 'ray-x/guihua.lua', -- floating window support
-      config = function()
-        require('go').setup()
-      end
-    }
+    -- use {
+    --   'ray-x/go.nvim',
+    --   require = 'ray-x/guihua.lua', -- floating window support
+    --   config = function()
+    --     require('go').setup()
+    --   end
+    -- }
 
     local elm_augroup = vim.api.nvim_create_augroup('GoConfig', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufEnter' }, {

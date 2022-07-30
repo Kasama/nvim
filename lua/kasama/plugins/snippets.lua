@@ -55,6 +55,13 @@ return {
             language_loader.snippets()
           end
         end
+
+        -- general snippets
+        luasnip.add_snippets('all', {
+          luasnip.snippet('uuid', {
+            luasnip.function_node(require('utils').uuid)
+          }),
+        })
       end,
     }
 

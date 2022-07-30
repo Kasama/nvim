@@ -26,6 +26,8 @@ return {
 
         local worktree = require('git-worktree')
 
+        worktree.reset()
+
         worktree.on_tree_change(function(op, metadata)
           if op == worktree.Operations.Switch then
             -- write desired change to trigger file

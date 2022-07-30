@@ -252,7 +252,7 @@ return {
     use { -- lsp diagnostic lines
       'Maan2003/lsp_lines.nvim',
       config = function()
-        require("lsp_lines").register_lsp_virtual_lines()
+        require("lsp_lines").setup()
 
         local diag_line = function(state)
           if not state then
