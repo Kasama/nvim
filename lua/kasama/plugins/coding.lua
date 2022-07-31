@@ -124,16 +124,36 @@ return {
     }
 
     vim.cmd [[let test#strategy = 'neovim']]
-    use { -- Tests
-      'janko-m/vim-test',
+    use {
+      "nvim-neotest/neotest",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "antoinemadec/FixCursorHold.nvim",
+        'janko-m/vim-test',
+        'nvim-neotest/neotest-go',
+        'nvim-neotest/neotest-vim-test',
+      },
       config = function()
+        local neotest = require('neotest')
+        neotest.setup({
+          adapters = {
+            require('neotest-go'),
+            require("neotest-vim-test")({
+              ignore_file_types = { "go" },
+            }),
+          }
+        })
+
         local keybind = require('utils').keybind
 
-        keybind({ 'n', '<leader>tt', '<cmd>TestNearest<CR>' })
-        keybind({ 'n', '<leader>tf', '<cmd>TestFile<CR>' })
-        keybind({ 'n', '<leader>ts', '<cmd>TestSuite<CR>' })
-        keybind({ 'n', '<leader>tl', '<cmd>TestLast<CR>' })
-        keybind({ 'n', '<leader>tv', '<cmd>TestVisit<CR>' })
+        keybind({ 'n', '<leader>tt', neotest.run.run }) -- nearest
+        keybind({ 'n', '<leader>tf', function() return neotest.run.run(vim.fn.expand('%')) end }) -- file
+        keybind({ 'n', '<leader>to', neotest.output.open }) -- file
+        keybind({ 'n', '<leader>tr', neotest.summary.open }) -- file
+        keybind({ 'n', '<leader>ts', '<cmd>TestSuite<CR>' }) -- suite
+        keybind({ 'n', '<leader>tl', '<cmd>TestLast<CR>' }) -- last
+        keybind({ 'n', '<leader>tv', '<cmd>TestVisit<CR>' }) -- visit
       end,
     }
 
