@@ -59,7 +59,11 @@ return {
     use { -- buffer line
       'akinsho/bufferline.nvim',
       tag = "v2.*",
-      requires = 'kyazdani42/nvim-web-devicons',
+      requires = {
+        'kyazdani42/nvim-web-devicons',
+        'navarasu/onedark.nvim',
+      },
+      after = 'onedark.nvim',
       config = function()
         require('bufferline').setup {
           options = {

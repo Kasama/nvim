@@ -165,11 +165,14 @@ return {
         'theHamsta/nvim-dap-virtual-text',
       },
       config = function()
-
-        require('dap-go').setup()
         local dap_virtual = require('nvim-dap-virtual-text')
         local dap, dapui = require('dap'), require('dapui')
-        dap_virtual.setup()
+
+        -- languages
+        require('dap-go').setup()
+
+        -- configs
+        dap_virtual.setup({})
         dapui.setup({
           layouts = {
             {
@@ -231,10 +234,25 @@ return {
         end
 
         local cleanup_temporary_keybinds = function() end
+        local cleanup_dap_buffers = function()
+          local buffers = vim.api.nvim_list_bufs()
+
+          local daps = vim.tbl_filter(function(bufnr)
+            local bufname = vim.api.nvim_buf_get_name(bufnr)
+            return vim.api.nvim_buf_is_valid(bufnr)
+               and vim.api.nvim_buf_get_option(bufnr, 'buflisted')
+               and string.match(bufname, "%[dap-.+%]")
+          end, buffers)
+
+          for _, value in ipairs(daps) do
+            vim.api.nvim_buf_delete(value, { force = true })
+          end
+        end
 
         local on_close = function()
-          dapui.close({})
+          require('dapui').close({})
           cleanup_temporary_keybinds()
+          cleanup_dap_buffers()
         end
 
         dap.listeners.after.event_initialized['dapui_config'] = function()

@@ -27,7 +27,7 @@ local function keybind(mapping)
       del_opts = { buffer = opts.buffer }
     end
     for _, keys in ipairs(rhs) do
-      vim.keymap.del(modes, keys, del_opts)
+      pcall(vim.keymap.del, modes, keys, del_opts)
     end
   end
 end

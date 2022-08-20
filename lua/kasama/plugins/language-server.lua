@@ -6,7 +6,7 @@ DIAGNOSTICS_SIGNS = {
   [vim.diagnostic.severity.HINT] = GUTTER_SIGNS.Hint,
 }
 return {
-  init = function(use)
+  init = function(use, mason_install)
     use { -- nvim cmp
       'hrsh7th/nvim-cmp',
       requires = {
@@ -115,138 +115,139 @@ return {
     LANGUAGE_LOADERS = load_from('languages')
     for _, language_loader in ipairs(LANGUAGE_LOADERS) do
       if type(language_loader.init) == "function" then
-        language_loader.init(use)
+        language_loader.init(use, mason_install)
       end
     end
 
     use { -- lspconfig
-      'williamboman/nvim-lsp-installer',
-      {
-        'neovim/nvim-lspconfig',
-        config = function()
-          local lspinstaller = require('nvim-lsp-installer')
+      'neovim/nvim-lspconfig',
+      requires = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+      },
+      config = function()
+        local masonlspconfig = require('mason-lspconfig')
 
-          -- install all declared language servers automatically
-          lspinstaller.setup { automatic_installation = true }
+        -- install all declared language servers automatically
+        masonlspconfig.setup { automatic_installation = true }
 
-          local lsp_cmp = require('cmp_nvim_lsp')
-          local lspconfig = require('lspconfig')
+        local lsp_cmp = require('cmp_nvim_lsp')
+        local lspconfig = require('lspconfig')
 
-          -- `setup_lsp` is designed to be called by each language's setup to add the language
-          -- server configuration.
-          --
-          -- Usage: `setup_lsp('rust_analyzer', {})`
-          --
-          -- @param lsp string or table
-          --   It will call `lspconfig[lsp].setup` if `lsp` is a string and call `lsp.setup` if it's not
-          --
-          -- @param configs table or function
-          --   if `configs` is a table, it will be injected with some defaults and passed to the setup
-          --   function as decribed above. If it's a function, it will be called with an argument that
-          --   is the function to inject the defaults and that function is expected to return a table
-          --   with the configs
-          local function setup_lsp(lsp, configs) -- {
+        -- `setup_lsp` is designed to be called by each language's setup to add the language
+        -- server configuration.
+        --
+        -- Usage: `setup_lsp('rust_analyzer', {})`
+        --
+        -- @param lsp string or table
+        --   It will call `lspconfig[lsp].setup` if `lsp` is a string and call `lsp.setup` if it's not
+        --
+        -- @param configs table or function
+        --   if `configs` is a table, it will be injected with some defaults and passed to the setup
+        --   function as decribed above. If it's a function, it will be called with an argument that
+        --   is the function to inject the defaults and that function is expected to return a table
+        --   with the configs
+        local function setup_lsp(lsp, configs) -- {
 
-            configs = configs or {}
+          configs = configs or {}
 
-            local setup_target = nil
-            if type(lsp) == 'string' then
-              setup_target = lspconfig[lsp]
-            else
-              setup_target = lsp
-            end
-
-            if (lsp_cmp) then
-              local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-
-              client_capabilities.textDocument.completion.completionItem.snippetSupport = true
-              client_capabilities.textDocument.completion.completionItem.resolveSupport = {
-                properties = { "documentation", "detail", "additionalTextEdits" },
-              }
-
-              local capabilities    = lsp_cmp.update_capabilities(client_capabilities)
-              local default_configs = {
-                capabilities = capabilities,
-                flags = { debounce_text_changes = 150 },
-              }
-
-              local inject_config = function(config)
-                config.on_attach_tmp = config.on_attach
-                config.on_attach     = nil
-
-                local cascading_on_attach = {
-                  on_attach = function(client, bufnr)
-                    if config.on_attach_tmp ~= nil then
-                      config.on_attach_tmp(client, bufnr)
-                    end
-                    vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
-                  end
-                }
-
-                config = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, config,
-                  cascading_on_attach)
-
-                return config
-              end
-
-              if type(configs) == "function" then
-                configs = configs(inject_config)
-              else
-                configs = inject_config(configs)
-              end
-            end
-            setup_target.setup(configs)
-          end -- }
-
-          -- Setup diganostic signs {
-          for type, icon in pairs(GUTTER_SIGNS) do
-            local hl = 'DiagnosticSign' .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+          local setup_target = nil
+          if type(lsp) == 'string' then
+            setup_target = lspconfig[lsp]
+          else
+            setup_target = lsp
           end
 
-          vim.diagnostic.config({
-            severity_sort = true,
-          })
-          -- }
+          if (lsp_cmp) then
+            local client_capabilities = vim.lsp.protocol.make_client_capabilities()
 
-          vim.o.updatetime = 250
-          local diagnostics_hold = vim.api.nvim_create_augroup('DiagnosticsCursorHold', { clear = true })
-          vim.api.nvim_create_autocmd(
-            { 'CursorHold', 'CursorHoldI' },
-            {
-              group = diagnostics_hold,
-              pattern = '*',
-              callback = function()
-                local should_open_float = not vim.g["DiagnosticLinesEnabled"]
-
-                if should_open_float then
-                  vim.diagnostic.open_float(nil, {
-                    focus = false,
-                    scope = 'cursor',
-                    source = 'if_many',
-                    prefix = function(diagnostic, _, _)
-                      local hl_map = {
-                        [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-                        [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-                        [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-                        [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-                      }
-                      return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
-                    end,
-                  })
-                end
-              end
+            client_capabilities.textDocument.completion.completionItem.snippetSupport = true
+            client_capabilities.textDocument.completion.completionItem.resolveSupport = {
+              properties = { "documentation", "detail", "additionalTextEdits" },
             }
-          )
 
-          -- Language specific configs
-          for _, language_loader in ipairs(LANGUAGE_LOADERS) do
-            if type(language_loader.lsp) == "function" then
-              language_loader.lsp(setup_lsp)
+            local capabilities    = lsp_cmp.update_capabilities(client_capabilities)
+            local default_configs = {
+              capabilities = capabilities,
+              flags = { debounce_text_changes = 150 },
+            }
+
+            local inject_config = function(config)
+              config.on_attach_tmp = config.on_attach
+              config.on_attach     = nil
+
+              local cascading_on_attach = {
+                on_attach = function(client, bufnr)
+                  if config.on_attach_tmp ~= nil then
+                    config.on_attach_tmp(client, bufnr)
+                  end
+                  vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
+                end
+              }
+
+              config = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, config,
+                cascading_on_attach)
+
+              return config
             end
+
+            if type(configs) == "function" then
+              configs = configs(inject_config)
+            else
+              configs = inject_config(configs)
+            end
+          end
+          setup_target.setup(configs)
+        end -- }
+
+        -- Setup diganostic signs {
+        for type, icon in pairs(GUTTER_SIGNS) do
+          local hl = 'DiagnosticSign' .. type
+          vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        end
+
+        vim.diagnostic.config({
+          severity_sort = true,
+        })
+        -- }
+
+        vim.o.updatetime = 250
+        local diagnostics_hold = vim.api.nvim_create_augroup('DiagnosticsCursorHold', { clear = true })
+        vim.api.nvim_create_autocmd(
+          { 'CursorHold', 'CursorHoldI' },
+          {
+            group = diagnostics_hold,
+            pattern = '*',
+            callback = function()
+              local should_open_float = not vim.g["DiagnosticLinesEnabled"]
+
+              if should_open_float then
+                vim.diagnostic.open_float(nil, {
+                  focus = false,
+                  scope = 'cursor',
+                  source = 'if_many',
+                  prefix = function(diagnostic, _, _)
+                    local hl_map = {
+                      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+                      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+                      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+                      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+                    }
+                    return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
+                  end,
+                })
+              end
+            end
+          }
+        )
+
+        -- Language specific configs
+        for _, language_loader in ipairs(LANGUAGE_LOADERS) do
+          if type(language_loader.lsp) == "function" then
+            language_loader.lsp(setup_lsp)
           end
         end
-      }
+      end
     }
 
     use { -- lsp diagnostic lines
@@ -312,8 +313,13 @@ return {
       end,
     }
 
+    mason_install('golangci-lint')
+
     use { -- null-ls
       'jose-elias-alvarez/null-ls.nvim',
+      requires = {
+        'williamboman/mason.nvim',
+      },
       config = function()
         local null_ls = require('null-ls')
         local null_helpers = require('null-ls.helpers')
@@ -349,6 +355,8 @@ return {
           sources = {
             null_ls.builtins.diagnostics.golangci_lint,
             golint,
+            null_ls.builtins.code_actions.shellcheck,
+            null_ls.builtins.diagnostics.shellcheck,
           }
         }
       end,
@@ -383,6 +391,10 @@ return {
           },
         }
       end,
+    }
+
+    use { -- lsp outline
+      'simrat39/symbols-outline.nvim'
     }
 
     -- on lsp attach
