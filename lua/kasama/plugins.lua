@@ -27,6 +27,8 @@ function TableConcat(t1, t2)
   return t1
 end
 
+ENSURE_INSTALLED_MASON = {}
+
 return packer.startup(function()
   LOADED_PLUGINS = {}
 
@@ -40,9 +42,9 @@ return packer.startup(function()
       require('mason').setup()
     end
   }
-  local ensure_installed_mason = {}
   local mason_install = function(value)
-    table.insert(ensure_installed_mason, value)
+    -- use as a set to remove duplicates
+    ENSURE_INSTALLED_MASON[value] = true
   end
   -- basically a lua stdlib for neovim. Used by many plugins
   packer.use 'nvim-lua/plenary.nvim'
@@ -66,8 +68,12 @@ return packer.startup(function()
   packer.use {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     config = function()
+      local ensure_installed = {}
+      for k, _ in pairs(ENSURE_INSTALLED_MASON) do
+        table.insert(ensure_installed, k)
+      end
       require('mason-tool-installer').setup {
-        ensure_installed = ensure_installed_mason,
+        ensure_installed = ensure_installed,
         auto_update = true,
         run_on_start = true,
         start_delay = 3000,

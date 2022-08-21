@@ -24,12 +24,14 @@ return {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
       config = function()
-        local code_actions = function()
-          local ok, lightbulb = pcall(require, 'nvim-lightbulb')
-          if ok then
-            return lightbulb.get_status_text()
-          else
-            return ""
+        local status_from = function(package, func)
+          return function()
+            local ok, pkg = pcall(require, package)
+            if ok then
+              return pkg[func]()
+            else
+              return ""
+            end
           end
         end
         require('lualine').setup {
@@ -43,8 +45,8 @@ return {
             lualine_a = { 'mode' },
             lualine_b = { 'branch', 'diff' },
             lualine_c = { { 'filename', file_status = true, path = 3 } },
-            lualine_x = { 'fileformat', 'encoding' },
-            lualine_y = { 'diagnostics', code_actions },
+            lualine_x = { status_from('dap', 'status'), 'fileformat', 'encoding' },
+            lualine_y = { 'diagnostics', status_from('nvim-lightbulb', 'get_status_text') },
             lualine_z = {
               '%3p%% %l/%L☰ %-2v', -- percent through file; current line/total lines; current column
               { 'filetype', colored = false }

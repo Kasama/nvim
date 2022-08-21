@@ -1,5 +1,5 @@
 return {
-  init = function(use)
+  init = function(use, mason_install)
     -- use {
     --   'ray-x/go.nvim',
     --   require = 'ray-x/guihua.lua', -- floating window support
@@ -7,6 +7,8 @@ return {
     --     require('go').setup()
     --   end
     -- }
+
+    mason_install('delve')
 
     local go_augroup = vim.api.nvim_create_augroup('GoConfig', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufEnter' }, {

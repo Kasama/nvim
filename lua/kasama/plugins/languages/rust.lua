@@ -1,5 +1,8 @@
 return {
-  init = function(use)
+  init = function(use, mason_install)
+    -- debugger for rust
+    mason_install('codelldb')
+
     use {
       'simrat39/rust-tools.nvim',
       config = function()
@@ -38,7 +41,6 @@ return {
       tag = 'v0.2.1',
       requires = { 'nvim-lua/plenary.nvim', 'jose-elias-alvarez/null-ls.nvim' },
       config = function()
-        local null_ls = require('null-ls')
         require('crates').setup({
           null_ls = {
             enabled = true,
@@ -50,10 +52,19 @@ return {
   end,
   lsp = function(setup_lsp)
     local rust_tools = require('rust-tools')
+    local mason = require('mason-registry')
+    local dap_cfg = {}
 
-    local codelldb_extension_path = vim.env.HOME .. '/.vscode-oss/extensions/vadimcn.vscode-lldb-1.7.4/'
-    local codelldb_path = codelldb_extension_path .. 'adapter/codelldb'
-    local liblldb_path = codelldb_extension_path .. 'lldb/lib/liblldb.so'
+    local ok, corelldb = pcall(mason.get_package, 'codelldb')
+    if ok then
+      local codelldb_install_path = corelldb:get_install_path() .. '/extension'
+      local codelldb_path = codelldb_install_path .. '/adapter/codelldb'
+      local liblldb_path = codelldb_install_path .. '/lldb/lib/liblldb.so'
+
+      dap_cfg = {
+        adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
+      }
+    end
 
     setup_lsp(rust_tools, function(inject_config)
       return {
@@ -82,9 +93,7 @@ return {
             }
           }
         }),
-        dap = {
-          adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
-        }
+        dap = dap_cfg,
       }
     end)
   end,
