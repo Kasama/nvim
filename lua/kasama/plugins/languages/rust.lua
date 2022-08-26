@@ -1,5 +1,11 @@
 return {
   init = function(use, mason_install)
+    local rust_augroup = vim.api.nvim_create_augroup('RustConfig', { clear = true })
+    vim.api.nvim_create_autocmd({ 'FileType' }, {
+      group = rust_augroup,
+      pattern = 'rust',
+      command = "setlocal shiftwidth=4"
+    })
     -- debugger for rust
     mason_install('codelldb')
 

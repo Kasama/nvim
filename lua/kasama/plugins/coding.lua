@@ -125,13 +125,15 @@ return {
 
     vim.cmd [[let test#strategy = 'neovim']]
     use {
-      "nvim-neotest/neotest",
+      'nvim-neotest/neotest',
       requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-        "antoinemadec/FixCursorHold.nvim",
+        'nvim-lua/plenary.nvim',
+        'nvim-treesitter/nvim-treesitter',
+        'antoinemadec/FixCursorHold.nvim',
         'janko-m/vim-test',
         'nvim-neotest/neotest-go',
+        'nvim-neotest/neotest-plenary',
+        'rouge8/neotest-rust',
         'nvim-neotest/neotest-vim-test',
       },
       config = function()
@@ -139,7 +141,9 @@ return {
         neotest.setup({
           adapters = {
             require('neotest-go'),
-            require("neotest-vim-test")({
+            require('neotest-rust'),
+            require('neotest-plenary'),
+            require('neotest-vim-test')({
               ignore_file_types = { "go" },
             }),
           }
@@ -170,6 +174,13 @@ return {
 
         -- languages
         require('dap-go').setup()
+        table.insert(dap.configurations.go, 1, {
+          name = "Attach to Delve (localhost:4000)",
+          type = "go",
+          request = "attach",
+          mode = "remote",
+          port = 4000
+        })
 
         -- configs
         dap_virtual.setup({})
@@ -240,8 +251,8 @@ return {
           local daps = vim.tbl_filter(function(bufnr)
             local bufname = vim.api.nvim_buf_get_name(bufnr)
             return vim.api.nvim_buf_is_valid(bufnr)
-               and vim.api.nvim_buf_get_option(bufnr, 'buflisted')
-               and string.match(bufname, "%[dap-.+%]")
+                and vim.api.nvim_buf_get_option(bufnr, 'buflisted')
+                and string.match(bufname, "%[dap-.+%]")
           end, buffers)
 
           for _, value in ipairs(daps) do
@@ -307,9 +318,9 @@ return {
           mappings = false,
         })
 
-        keybind({ 'n', { '<leader>/' }, comment.toggle_current_linewise })
+        keybind({ 'n', { '<leader>/' }, comment.toggle.linewise.current })
         keybind({ 'x', { '<leader>/' },
-          '<ESC><CMD>lua require("Comment.api").locked.toggle_linewise_op(vim.fn.visualmode())<CR>' })
+          '<ESC><CMD>lua require("Comment.api").locked("toggle.linewise")(vim.fn.visualmode())<CR>gv' })
       end
     }
 
