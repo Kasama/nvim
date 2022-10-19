@@ -1,10 +1,10 @@
 return {
   init = function(use)
-    use { -- apply color to css color codes
-      'RRethy/vim-hexokinase',
-      run = 'make hexokinase',
+    use {
+      'NvChad/nvim-colorizer.lua',
       config = function()
-      end,
+        require('colorizer').setup()
+      end
     }
   end,
   lsp = function(setup_lsp)

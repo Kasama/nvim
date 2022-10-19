@@ -26,6 +26,7 @@ opt.lazyredraw = true
 opt.title = true
 opt.inccommand = 'split'
 opt.mouse = 'a'
+opt.mousemodel = extend
 opt.signcolumn = 'yes'
 opt.listchars = {
   tab = '» ',

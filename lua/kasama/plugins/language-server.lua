@@ -166,7 +166,7 @@ return {
               properties = { "documentation", "detail", "additionalTextEdits" },
             }
 
-            local capabilities    = lsp_cmp.update_capabilities(client_capabilities)
+            local capabilities    = lsp_cmp.default_capabilities(client_capabilities)
             local default_configs = {
               capabilities = capabilities,
               flags = { debounce_text_changes = 150 },
@@ -357,6 +357,7 @@ return {
             golint,
             null_ls.builtins.code_actions.shellcheck,
             null_ls.builtins.diagnostics.shellcheck,
+            null_ls.builtins.formatting.xmllint,
           }
         }
       end,
@@ -366,6 +367,14 @@ return {
       'Kasama/nvim-custom-diagnostic-highlight',
       config = function()
         require('nvim-custom-diagnostic-highlight').setup {}
+
+        require('nvim-custom-diagnostic-highlight').setup {
+          handler_name = "kasama/test_handler",
+          diagnostic_handler_namespace = 'Kasama/test_handler',
+          patterns_override = { 'global' },
+          highlight_group = 'ErrorMsg',
+          defer_until_n_lines_away = 3,
+        }
       end
     }
 
@@ -442,7 +451,7 @@ return {
         FORMAT_ON_SAVE_ENABLED = true
         local function format()
           if (FORMAT_ON_SAVE_ENABLED) then
-            vim.lsp.buf.formatting_seq_sync()
+            vim.lsp.buf.format()
           end
         end
 
@@ -455,7 +464,7 @@ return {
           vim.notify(msg, vim.log.levels.INFO, { title = "Format on Save", timeout = 10, hide_from_history = true })
         end
 
-        bufmap('n', '<leader>=', vim.lsp.buf.formatting)
+        bufmap('n', '<leader>=', function() vim.lsp.buf.format({ async = true }) end)
         bufmap('n', '<leader><leader>=', toggle_format_on_save)
 
         local telescope = require('telescope.builtin')

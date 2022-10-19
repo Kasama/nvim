@@ -197,6 +197,13 @@ return {
               size = 0.2,
               position = "left",
             },
+            {
+              elements = {
+                "repl",
+              },
+              size = 0.25,
+              position = "bottom",
+            },
           },
           floating = {
             max_width = 0.8,
