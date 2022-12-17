@@ -6,7 +6,7 @@ return {
       'nvim-telescope/telescope.nvim',
       requires = {
         { 'nvim-lua/plenary.nvim' },
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = function() return not vim.fn.executable('fzf') == 0 end },
       },
       config = function()
         local actions = require('telescope.actions')
@@ -40,7 +40,9 @@ return {
         -- extensions
         telescope.load_extension('notify')
         telescope.load_extension('ui-select')
-        telescope.load_extension('fzf')
+        if not vim.fn.executable('fzf') == 0 then
+          telescope.load_extension('fzf')
+        end
       end,
     }
 

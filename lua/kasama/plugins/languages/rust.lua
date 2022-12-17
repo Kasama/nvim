@@ -1,4 +1,7 @@
 return {
+  only_if = function()
+    return not vim.fn.executable('rustc') == 0
+  end,
   init = function(use, mason_install)
     local rust_augroup = vim.api.nvim_create_augroup('RustConfig', { clear = true })
     vim.api.nvim_create_autocmd({ 'FileType' }, {

@@ -1,4 +1,8 @@
 return {
+  only_if = function()
+    local go_exists = not vim.fn.executable('go') == 0
+    return go_exists
+  end,
   init = function(use, mason_install)
     -- use {
     --   'ray-x/go.nvim',
@@ -9,6 +13,7 @@ return {
     -- }
 
     mason_install('delve')
+    mason_install('golangci-lint')
 
     local go_augroup = vim.api.nvim_create_augroup('GoConfig', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufEnter' }, {

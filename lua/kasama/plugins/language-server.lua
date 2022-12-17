@@ -115,7 +115,13 @@ return {
     LANGUAGE_LOADERS = load_from('languages')
     for _, language_loader in ipairs(LANGUAGE_LOADERS) do
       if type(language_loader.init) == "function" then
-        language_loader.init(use, mason_install)
+        if type(language_loader.only_if) == "function" then
+          if language_loader.only_if() then
+            language_loader.init(use, mason_install)
+          end
+        else
+          language_loader.init(use, mason_install)
+        end
       end
     end
 
@@ -244,7 +250,13 @@ return {
         -- Language specific configs
         for _, language_loader in ipairs(LANGUAGE_LOADERS) do
           if type(language_loader.lsp) == "function" then
-            language_loader.lsp(setup_lsp)
+            if type(language_loader.only_if) == "function" then
+              if language_loader.only_if() then
+                language_loader.lsp(setup_lsp)
+              end
+            else
+              language_loader.lsp(setup_lsp)
+            end
           end
         end
       end
@@ -312,8 +324,6 @@ return {
         require('utils').keybind({ 'n', '<leader>xx', '<cmd>TroubleToggle<CR>' })
       end,
     }
-
-    mason_install('golangci-lint')
 
     use { -- null-ls
       'jose-elias-alvarez/null-ls.nvim',
