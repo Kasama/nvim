@@ -93,6 +93,11 @@ return {
               cargo = {
                 loadOutDirsFromCheck = true
               },
+              checkOnSave = {
+                -- default
+                -- command = "check"
+                command = "clippy",
+              },
               procMacro = {
                 enable = true
               }
