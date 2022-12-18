@@ -1,6 +1,6 @@
 return {
   only_if = function()
-    return not vim.fn.executable('terraform') == 0
+    return not (vim.fn.executable('terraform') == 0)
   end,
   init = function(use)
     use { 'hashivim/vim-terraform' }
