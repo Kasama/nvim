@@ -13,10 +13,10 @@
 
 ; (
 ;   (macro_invocation
-;     macro: ((identifier) @_html_def)
+;     macro: ((identifier) @_view_def)
 ;     (token_tree) @html)
 
-;     (#eq? @_html_def "html")
+;     (#eq? @_view_def "view")
 ; )
 
 ; (call_expression

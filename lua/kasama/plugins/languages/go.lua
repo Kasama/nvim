@@ -1,6 +1,6 @@
 return {
   only_if = function()
-    local go_exists = not vim.fn.executable('go') == 0
+    local go_exists = not (vim.fn.executable('go') == 0)
     return go_exists
   end,
   init = function(use, mason_install)
