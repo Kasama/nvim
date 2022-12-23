@@ -14,6 +14,7 @@ return {
 
     mason_install('delve')
     mason_install('golangci-lint')
+    mason_install('gofumpt')
 
     local go_augroup = vim.api.nvim_create_augroup('GoConfig', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufEnter' }, {
