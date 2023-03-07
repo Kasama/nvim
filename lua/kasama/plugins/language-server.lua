@@ -103,10 +103,10 @@ return {
           }
         })
 
-        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        if cmp_autopairs ~= nil then
-          cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
-        end
+        -- local cmp_autopairs, ok = pcall(require, 'nvim-autopairs.completion.cmp')
+        -- if ok and cmp_autopairs ~= nil then
+        --   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+        -- end
       end
     }
 
@@ -219,13 +219,22 @@ return {
 
         vim.o.updatetime = 250
         local diagnostics_hold = vim.api.nvim_create_augroup('DiagnosticsCursorHold', { clear = true })
+        local toggle_diagnostic_hover = function()
+          if vim.g['DiagnosticHoverEnabled'] then
+            vim.g['DiagnosticHoverEnabled'] = false
+          else
+            vim.g['DiagnosticHoverEnabled'] = true
+          end
+        end
+        vim.api.nvim_create_user_command('DiagnosticHoverToggle', toggle_diagnostic_hover, {})
+        vim.g['DiagnosticHoverEnabled'] = true
         vim.api.nvim_create_autocmd(
           { 'CursorHold', 'CursorHoldI' },
           {
             group = diagnostics_hold,
             pattern = '*',
             callback = function()
-              local should_open_float = not vim.g["DiagnosticLinesEnabled"]
+              local should_open_float = not vim.g["DiagnosticLinesEnabled"] and vim.g['DiagnosticHoverEnabled']
 
               if should_open_float then
                 vim.diagnostic.open_float(nil, {

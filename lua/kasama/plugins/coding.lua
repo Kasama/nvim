@@ -1,6 +1,5 @@
 return {
   init = function(use)
-
     -- must have surround
     use { 'tpope/vim-surround' }
 
@@ -10,23 +9,29 @@ return {
     -- live scratchpad
     use { 'metakirby5/codi.vim' }
 
+    vim.cmd [[
+    highlight TSRainbowViolet ctermfg=13 guifg=#b452cd
+    highlight TSRainbowOrange ctermfg=13 guifg=#FFB9B9
+    highlight TSRainbowRose   ctermfg=13 guifg=#eeaeee
+    highlight TSRainbowPink   ctermfg=13 guifg=#ff69b4
+    ]]
+
     use { -- Treesitter
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
       requires = { -- plugins
         'nvim-treesitter/playground',
-        'p00f/nvim-ts-rainbow', -- rainbow parens
+        'https://gitlab.com/HiPhish/nvim-ts-rainbow2',
         'nvim-treesitter/nvim-treesitter-context',
         -- 'haringsrob/nvim_context_vt', -- Show virtual text with current context
       },
       config = function()
-
         -- Treesitter Config
         require('nvim-treesitter.configs').setup {
           ensure_installed = {
             'c', 'cpp', 'css', 'dockerfile', 'elm', 'go', 'haskell', 'hcl', 'html',
-            'java', 'java', 'javascript', 'json', 'json5', 'lua', 'python',
-            'query', 'regex', 'ruby', 'rust', 'scss', 'toml', 'tsx', 'typescript', 'yaml',
+            'java', 'javascript', 'json', 'json5', 'lua', 'python', 'query', 'regex',
+            'ruby', 'rust', 'scss', 'toml', 'tsx', 'typescript', 'yaml',
           },
 
           highlight = { enable = true },
@@ -35,7 +40,7 @@ return {
           playground = {
             enable = true,
             disable = {},
-            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+            updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
             persist_queries = false, -- Whether the query persists across vim sessions
             keybindings = {
               toggle_query_editor = 'o',
@@ -51,9 +56,17 @@ return {
             },
           },
 
-          rainbow = { -- rainbow parens
+          rainbow = {
+            -- rainbow parens
             enable = true,
-            colors = { '#b452cd', '#cd8162', '#eeaeee', '#ff69b4' }
+            query = 'rainbow-parens',
+            hlgroups = {
+              "TSRainbowViolet",
+              "TSRainbowOrange",
+              "TSRainbowRose",
+              "TSRainbowPink",
+            },
+            -- colors = { '#b452cd', '#cd8162', '#eeaeee', '#ff69b4' }
           }
         }
 
@@ -117,10 +130,21 @@ return {
       end
     }
 
+    -- use { -- auto pairs
+    --   'windwp/nvim-autopairs', config = function()
+    --     require('nvim-autopairs').setup {}
+    --   end
+    -- }
+
     use { -- auto pairs
-      'windwp/nvim-autopairs', config = function()
-        require('nvim-autopairs').setup {}
-      end
+      'altermo/ultimate-autopair.nvim',
+      config = function()
+        require('ultimate-autopair').setup({
+          cr = {
+            addsemi = {}
+          }
+        })
+      end,
     }
 
     vim.cmd [[let test#strategy = 'neovim']]
@@ -151,13 +175,13 @@ return {
 
         local keybind = require('utils').keybind
 
-        keybind({ 'n', '<leader>tt', neotest.run.run }) -- nearest
+        keybind({ 'n', '<leader>tt', neotest.run.run })                                           -- nearest
         keybind({ 'n', '<leader>tf', function() return neotest.run.run(vim.fn.expand('%')) end }) -- file
-        keybind({ 'n', '<leader>to', neotest.output.open }) -- file
-        keybind({ 'n', '<leader>tr', neotest.summary.open }) -- file
-        keybind({ 'n', '<leader>ts', '<cmd>TestSuite<CR>' }) -- suite
-        keybind({ 'n', '<leader>tl', '<cmd>TestLast<CR>' }) -- last
-        keybind({ 'n', '<leader>tv', '<cmd>TestVisit<CR>' }) -- visit
+        keybind({ 'n', '<leader>to', neotest.output.open })                                       -- file
+        keybind({ 'n', '<leader>tr', neotest.summary.open })                                      -- file
+        keybind({ 'n', '<leader>ts', '<cmd>TestSuite<CR>' })                                      -- suite
+        keybind({ 'n', '<leader>tl', '<cmd>TestLast<CR>' })                                       -- last
+        keybind({ 'n', '<leader>tv', '<cmd>TestVisit<CR>' })                                      -- visit
       end,
     }
 
@@ -251,7 +275,8 @@ return {
           end
         end
 
-        local cleanup_temporary_keybinds = function() end
+        local cleanup_temporary_keybinds = function()
+        end
         local cleanup_dap_buffers = function()
           local buffers = vim.api.nvim_list_bufs()
 
@@ -347,6 +372,5 @@ return {
     --     end)
     --   end,
     -- }
-
   end
 }

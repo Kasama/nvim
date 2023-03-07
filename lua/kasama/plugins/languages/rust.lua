@@ -75,6 +75,33 @@ return {
       }
     end
 
+    local local_lsp_config = {}
+    local local_lsp_config_file = ".vim/ls-settings.json"
+    if vim.fn.filereadable(local_lsp_config_file) == 1 then
+      local lsp_config = vim.fn.json_decode(vim.fn.readfile(local_lsp_config_file))
+      if lsp_config["rust-analyzer"] ~= nil then
+        local_lsp_config = lsp_config["rust-analyzer"]
+      end
+    end
+
+    local rust_analyzer_configs = vim.tbl_deep_extend('force', {
+      assist = {
+        importGranularity = "module",
+        importPrefix = "self",
+      },
+      cargo = {
+        loadOutDirsFromCheck = true
+      },
+      checkOnSave = {
+        -- default
+        -- command = "check"
+        command = "clippy",
+      },
+      procMacro = {
+        enable = true
+      }
+    }, local_lsp_config)
+
     setup_lsp(rust_tools, function(inject_config)
       return {
         tools = {
@@ -88,23 +115,7 @@ return {
         },
         server = inject_config({
           settings = {
-            ["rust-analyzer"] = {
-              assist = {
-                importGranularity = "module",
-                importPrefix = "self",
-              },
-              cargo = {
-                loadOutDirsFromCheck = true
-              },
-              checkOnSave = {
-                -- default
-                -- command = "check"
-                command = "clippy",
-              },
-              procMacro = {
-                enable = true
-              }
-            }
+            ["rust-analyzer"] = rust_analyzer_configs
           }
         }),
         dap = dap_cfg,

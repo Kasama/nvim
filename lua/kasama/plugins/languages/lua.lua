@@ -12,7 +12,7 @@ return {
     }
   end,
   lsp = function(setup_lsp)
-    setup_lsp('sumneko_lua', {
+    setup_lsp('lua_ls', {
       settings = {
         Lua = {
           runtime = {
