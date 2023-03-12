@@ -2,16 +2,16 @@ return {
   init = function(use)
     use {
       'tpope/vim-dadbod',
-      requires = {
+      dependencies = {
         'kristijanhusak/vim-dadbod-completion'
       },
-      -- after = { 'hrsh7th/nvim-cmp' },
+      event = 'VeryLazy',
       config = function()
         vim.api.nvim_create_autocmd(
           "FileType",
           {
             group = vim.api.nvim_create_augroup("SQLCompletion", { clear = true }),
-            pattern = { 'sql','mysql','plsql' },
+            pattern = { 'sql', 'mysql', 'plsql' },
             callback = function()
               require('cmp').setup.buffer({
                 sources = {

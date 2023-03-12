@@ -14,6 +14,7 @@ return {
 
     use {
       'simrat39/rust-tools.nvim',
+      ft = 'rust',
       config = function()
         local keybind = require('utils').keybind
 
@@ -36,7 +37,6 @@ return {
                 else
                   dap.continue()
                 end
-
               end, { buffer = true } })
             end,
           }
@@ -47,8 +47,8 @@ return {
     use {
       'Saecki/crates.nvim',
       event = { "BufRead Cargo.toml" },
-      tag = 'v0.2.1',
-      requires = { 'nvim-lua/plenary.nvim', 'jose-elias-alvarez/null-ls.nvim' },
+      version = 'v0.2.1',
+      dependencies = { 'nvim-lua/plenary.nvim', 'jose-elias-alvarez/null-ls.nvim' },
       config = function()
         require('crates').setup({
           null_ls = {
@@ -115,7 +115,7 @@ return {
         },
         server = inject_config({
           settings = {
-            ["rust-analyzer"] = rust_analyzer_configs
+                ["rust-analyzer"] = rust_analyzer_configs
           }
         }),
         dap = dap_cfg,

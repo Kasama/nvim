@@ -1,10 +1,11 @@
 return {
   init = function(use)
     -- Simply the best git plugin around
-    use { 'tpope/vim-fugitive' }
+    use { 'tpope/vim-fugitive', event = 'VeryLazy' }
 
     use {
       'lewis6991/gitsigns.nvim',
+      lazy = false,
       config = function()
         require('gitsigns').setup {
           attach_to_untracked = false,
@@ -15,6 +16,7 @@ return {
     use {
       'Kasama/git-worktree.nvim', -- fork of 'ThePrimeagen/git-worktree.nvim',
       branch = 'feature/switch-all-buffers',
+      keys = '<leader>gw',
       config = function()
         local keybind = require('utils').keybind
         local ok, telescope = pcall(require, 'telescope')
@@ -45,12 +47,13 @@ return {
 
     use { -- Permalink parts of the code
       'ruifm/gitlinker.nvim',
-      requires = 'nvim-lua/plenary.nvim',
+      dependencies = 'nvim-lua/plenary.nvim',
+      cmd = "GitLink",
       config = function()
         require('gitlinker').setup({
           mappings = '<Plug>gitlink',
           callbacks = {
-            ["git.topfreegames.com"] = require('gitlinker.hosts').get_gitlab_type_url,
+                ["git.topfreegames.com"] = require('gitlinker.hosts').get_gitlab_type_url,
           }
         })
         vim.api.nvim_create_user_command(

@@ -2,6 +2,7 @@ return {
   init = function(use)
     use {
       'NvChad/nvim-colorizer.lua',
+      event = 'VeryLazy',
       config = function()
         require('colorizer').setup()
       end

@@ -4,11 +4,24 @@ return {
 
     use { -- Telescope
       'nvim-telescope/telescope.nvim',
-      requires = {
+      dependencies = {
         { 'nvim-lua/plenary.nvim' },
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
-          module_pattern = "telescope._extensions.fzf" },
+        {
+          'nvim-telescope/telescope-fzf-native.nvim',
+          build = 'make',
+          module_pattern = "telescope._extensions.fzf"
+        },
       },
+      init = function()
+        local keybind = require('utils').keybind
+
+        keybind({ 'n', '<leader>a', '<cmd>Telescope live_grep<CR>' })
+        keybind({ 'n', '<leader>f', '<cmd>Telescope find_files prompt_prefix=<CR>' })
+        keybind({ 'n', '<leader>b', '<cmd>Telescope buffers<CR>' })
+        keybind({ 'n', '<leader>n', '<cmd>Telescope notify<CR>' })
+        keybind({ 'n', '<leader>p', require('telescope.builtin').commands })
+      end,
+      cmd = 'Telescope',
       config = function()
         local actions = require('telescope.actions')
 
@@ -17,26 +30,18 @@ return {
           defaults = {
             mappings = {
               i = {
-                ['<esc>'] = actions.close,
-                ['<C-k>'] = actions.move_selection_previous,
-                ['<C-j>'] = actions.move_selection_next,
+                    ['<esc>'] = actions.close,
+                    ['<C-k>'] = actions.move_selection_previous,
+                    ['<C-j>'] = actions.move_selection_next,
               }
             }
           },
           extensions = {
-            ["ui-select"] = {
+                ["ui-select"] = {
               require('telescope.themes').get_dropdown {}
             },
           },
         }
-
-        local keybind = require('utils').keybind
-
-        keybind({ 'n', '<leader>a', '<cmd>Telescope live_grep<CR>' })
-        keybind({ 'n', '<leader>f', '<cmd>Telescope find_files prompt_prefix=<CR>' })
-        keybind({ 'n', '<leader>b', '<cmd>Telescope buffers<CR>' })
-        keybind({ 'n', '<leader>n', '<cmd>Telescope notify<CR>' })
-        keybind({ 'n', '<leader>p', require('telescope.builtin').commands })
 
         -- extensions
         telescope.load_extension('notify')
@@ -46,6 +51,5 @@ return {
         end
       end,
     }
-
   end,
 }

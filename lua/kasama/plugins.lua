@@ -1,95 +1,83 @@
 local fn = vim.fn
-local packer_install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-local packer_bootstrap
-if fn.empty(fn.glob(packer_install_path)) > 0 then
-  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
-    packer_install_path })
+local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-vim.cmd [[packadd packer.nvim]]
+-- TODO: add hot-reload on plugins change
 
-local packer = require('packer')
+local plugins = {
+  {}
+}
 
-local packer_group = vim.api.nvim_create_augroup("PackerUserConfig", { clear = true })
-vim.api.nvim_create_autocmd(
-  "BufWritePost",
-  { group = packer_group, pattern = {
-    fn.stdpath('config') .. "/lua/plugins.lua",
-    fn.stdpath('config') .. "/lua/plugins/*.lua"
-  }, command = "source " .. fn.stdpath('config') .. "/lua/plugins.lua | PackerCompile profile=true" }
-)
-
-function TableConcat(t1, t2)
-  for i = 1, #t2 do
-    t1[#t1 + 1] = t2[i]
+local use = function(tbl)
+  if type(tbl) == "string" then
+    tbl = { tbl }
   end
-  return t1
+  vim.list_extend(plugins, { tbl })
 end
 
 ENSURE_INSTALLED_MASON = {}
 
-return packer.startup(function()
-  LOADED_PLUGINS = {}
+--- General packages not related to plugins ---
+-- package manager for external things (lsp, dap, etc)
+use {
+  'williamboman/mason.nvim',
+  event = 'VeryLazy',
+  dependencies = { 'mason-tool-installer.nvim' },
+  config = function()
+    require('mason').setup()
+  end
+}
+local mason_install = function(value)
+  -- use as a set to remove duplicates
+  ENSURE_INSTALLED_MASON[value] = true
+end
+-- basically a lua stdlib for neovim. Used by many plugins
+use 'nvim-lua/plenary.nvim'
 
-  --- General packages not related to plugins ---
-  -- packer will manage itself
-  packer.use 'wbthomason/packer.nvim'
-  -- package manager for external things (lsp, dap, etc)
-  packer.use {
-    'williamboman/mason.nvim',
-    config = function()
-      require('mason').setup()
+-- load plugins
+local utils = require('utils')
+local load_from = utils.load_from_factory('lua/kasama')
+
+local loaded = load_from('plugins')
+
+for _, plugin_loader in pairs(loaded) do
+  if type(plugin_loader.init) == 'function' then
+    plugin_loader.init(use, mason_install)
+  end
+end
+
+-- load mason packages
+use {
+  'WhoIsSethDaniel/mason-tool-installer.nvim',
+  config = function()
+    local ensure_installed = {}
+    for k, _ in pairs(ENSURE_INSTALLED_MASON) do
+      table.insert(ensure_installed, k)
     end
+    require('mason-tool-installer').setup {
+      ensure_installed = ensure_installed,
+      auto_update = true,
+      run_on_start = true,
+      start_delay = 3000,
+    }
+  end
+}
+
+require('lazy').setup(plugins, {
+  defaults = {
+    lazy = true,
+  },
+  install = {
+    colorscheme = { "onedark" }
   }
-  local mason_install = function(value)
-    -- use as a set to remove duplicates
-    ENSURE_INSTALLED_MASON[value] = true
-  end
-  -- basically a lua stdlib for neovim. Used by many plugins
-  packer.use 'nvim-lua/plenary.nvim'
-  -- fix for https://github.com/neovim/neovim/issues/12587. Can be removed if that gets fixed
-  packer.use 'antoinemadec/FixCursorHold.nvim'
-
-  -- load plugins
-  local utils = require('utils')
-  local load_from = utils.load_from_factory('lua/kasama')
-
-  local loaded = load_from('plugins')
-
-  for _, plugin_loader in pairs(loaded) do
-    if type(plugin_loader.init) == 'function' then
-      plugin_loader.init(packer.use, mason_install)
-    end
-  end
-  TableConcat(LOADED_PLUGINS, loaded)
-
-  -- load mason packages
-  packer.use {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    config = function()
-      local ensure_installed = {}
-      for k, _ in pairs(ENSURE_INSTALLED_MASON) do
-        table.insert(ensure_installed, k)
-      end
-      require('mason-tool-installer').setup {
-        ensure_installed = ensure_installed,
-        auto_update = true,
-        run_on_start = true,
-        start_delay = 3000,
-      }
-    end
-  }
-
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    vim.notify("Installing plugins...")
-    packer.sync()
-  end
-
-  if utils.file_modified(fn.stdpath('config') .. '/lua') > utils.file_modified(packer.config.compile_path) then
-    vim.notify("Recompiling configs...", vim.log.levels.INFO, { title = "Packer" })
-    packer.compile()
-  end
-end)
+})

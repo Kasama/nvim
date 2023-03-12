@@ -1,15 +1,16 @@
 GUTTER_SIGNS = { Info = '', Hint = '', Warn = '', Error = '' }
 DIAGNOSTICS_SIGNS = {
-  [vim.diagnostic.severity.ERROR] = GUTTER_SIGNS.Error,
-  [vim.diagnostic.severity.WARN] = GUTTER_SIGNS.Warn,
-  [vim.diagnostic.severity.INFO] = GUTTER_SIGNS.Info,
-  [vim.diagnostic.severity.HINT] = GUTTER_SIGNS.Hint,
+      [vim.diagnostic.severity.ERROR] = GUTTER_SIGNS.Error,
+      [vim.diagnostic.severity.WARN] = GUTTER_SIGNS.Warn,
+      [vim.diagnostic.severity.INFO] = GUTTER_SIGNS.Info,
+      [vim.diagnostic.severity.HINT] = GUTTER_SIGNS.Hint,
 }
 return {
   init = function(use, mason_install)
     use { -- nvim cmp
       'hrsh7th/nvim-cmp',
-      requires = {
+      event = "InsertEnter",
+      dependencies = {
         'onsails/lspkind-nvim',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-nvim-lsp',
@@ -38,7 +39,7 @@ return {
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' },
-            { name = 'buffer', keyword_length = 5 },
+            { name = 'buffer',  keyword_length = 5 },
             { name = 'crates' },
           },
           formatting = {
@@ -57,20 +58,20 @@ return {
           mapping = cmp.mapping.preset.insert({
             -- ["<tab>"] = cmp.config.disable,
             -- ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
-            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-            ["<C-f>"] = cmp.mapping.scroll_docs(4),
-            ["<C-e>"] = cmp.mapping.close(),
-            ["<C-y>"] = cmp.mapping.confirm({
+                ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+                ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                ["<C-e>"] = cmp.mapping.close(),
+                ["<C-y>"] = cmp.mapping.confirm({
               behavior = cmp.ConfirmBehavior.Insert,
               select = true,
             }, { "i", "c" }),
-            ["<C-n>"] = {
+                ["<C-n>"] = {
               i = cmp.mapping.select_next_item(),
             },
-            ["<C-p>"] = {
+                ["<C-p>"] = {
               i = cmp.mapping.select_prev_item(),
             },
-            ["<C-Space>"] = cmp.mapping({
+                ["<C-Space>"] = cmp.mapping({
               i = cmp.mapping.complete(),
               c = function(_)
                 if cmp.visible() then
@@ -127,7 +128,8 @@ return {
 
     use { -- lspconfig
       'neovim/nvim-lspconfig',
-      requires = {
+      lazy = false,
+      dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
       },
@@ -154,7 +156,6 @@ return {
         --   is the function to inject the defaults and that function is expected to return a table
         --   with the configs
         local function setup_lsp(lsp, configs) -- {
-
           configs = configs or {}
 
           local setup_target = nil
@@ -172,7 +173,7 @@ return {
               properties = { "documentation", "detail", "additionalTextEdits" },
             }
 
-            local capabilities    = lsp_cmp.default_capabilities(client_capabilities)
+            local capabilities = lsp_cmp.default_capabilities(client_capabilities)
             local default_configs = {
               capabilities = capabilities,
               flags = { debounce_text_changes = 150 },
@@ -180,7 +181,7 @@ return {
 
             local inject_config = function(config)
               config.on_attach_tmp = config.on_attach
-              config.on_attach     = nil
+              config.on_attach = nil
 
               local cascading_on_attach = {
                 on_attach = function(client, bufnr)
@@ -191,7 +192,8 @@ return {
                 end
               }
 
-              config = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs, config,
+              config = vim.tbl_deep_extend('force', lspconfig.util.default_config, default_configs,
+                config,
                 cascading_on_attach)
 
               return config
@@ -243,10 +245,10 @@ return {
                   source = 'if_many',
                   prefix = function(diagnostic, _, _)
                     local hl_map = {
-                      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-                      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-                      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-                      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+                          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+                          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+                          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+                          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
                     }
                     return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
                   end,
@@ -273,21 +275,25 @@ return {
 
     use { -- lsp diagnostic lines
       'Maan2003/lsp_lines.nvim',
+      event = 'VeryLazy',
       config = function()
         require("lsp_lines").setup()
 
         local diag_line = function(state)
           if not state then
             vim.g['DiagnosticLinesEnabled'] = false
-            vim.diagnostic.config({ virtual_lines = state, virtual_text = {
-              prefix = '',
-              severity = vim.diagnostic.severity.ERROR,
-              severity_sort = true,
-              update_in_insert = true,
-              format = function(diagnostic)
-                return string.format(DIAGNOSTICS_SIGNS[diagnostic.severity] .. " %s", diagnostic.message)
-              end
-            } })
+            vim.diagnostic.config({
+              virtual_lines = state,
+              virtual_text = {
+                prefix = '',
+                severity = vim.diagnostic.severity.ERROR,
+                severity_sort = true,
+                update_in_insert = true,
+                format = function(diagnostic)
+                  return string.format(DIAGNOSTICS_SIGNS[diagnostic.severity] .. " %s", diagnostic.message)
+                end
+              }
+            })
           else
             vim.g['DiagnosticLinesEnabled'] = true
             vim.diagnostic.config({ virtual_lines = state, virtual_text = not state })
@@ -307,6 +313,7 @@ return {
 
     use { -- lsp_signature
       'ray-x/lsp_signature.nvim',
+      event = 'InsertEnter',
       config = function()
         require('lsp_signature').setup {
           bind = true,
@@ -326,17 +333,21 @@ return {
 
     use { -- trouble
       'folke/trouble.nvim',
+      init = function()
+        require('utils').keybind({ 'n', '<leader>xx', '<cmd>TroubleToggle<CR>' })
+      end,
+      cmd = { 'TroubleToggle' },
       config = function()
         require('trouble').setup {
           use_diagnostics_signs = true,
         }
-        require('utils').keybind({ 'n', '<leader>xx', '<cmd>TroubleToggle<CR>' })
       end,
     }
 
     use { -- null-ls
       'jose-elias-alvarez/null-ls.nvim',
-      requires = {
+      event = "VeryLazy",
+      dependencies = {
         'williamboman/mason.nvim',
       },
       config = function()
@@ -384,6 +395,7 @@ return {
 
     use { -- highlight unused variables
       'Kasama/nvim-custom-diagnostic-highlight',
+      lazy = true,
       config = function()
         require('nvim-custom-diagnostic-highlight').setup {}
 
@@ -399,6 +411,7 @@ return {
 
     use { -- fidget LSP status
       'j-hui/fidget.nvim',
+      event = 'VeryLazy',
       config = function()
         require('fidget').setup {
           text = { spinner = 'arc' }
@@ -408,6 +421,7 @@ return {
 
     use { --  indicator for code actions
       'kosayoda/nvim-lightbulb',
+      event = 'VeryLazy',
       config = function()
         require('nvim-lightbulb').setup {
           autocmd = { enabled = true },
@@ -422,7 +436,11 @@ return {
     }
 
     use { -- lsp outline
-      'simrat39/symbols-outline.nvim'
+      cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen' },
+      'simrat39/symbols-outline.nvim',
+      config = function()
+        require("symbols-outline").setup()
+      end,
     }
 
     -- on lsp attach
@@ -430,12 +448,10 @@ return {
       pattern = 'LspAttached',
       desc = 'LSP actions',
       callback = function(info)
-
         local bufmap = function(mode, lhs, rhs)
           local opts = { buffer = true }
           require('utils').keybind({ mode, lhs, rhs, opts })
         end
-
 
         -- enable codelens
         local codelens_capable = false

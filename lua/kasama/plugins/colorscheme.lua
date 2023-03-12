@@ -2,6 +2,7 @@ return {
   init = function(use)
     -- use {
     --   'rakr/vim-one',
+    --   lazy = false,
     --   config = function()
     --     vim.opt.termguicolors = true
 
@@ -33,8 +34,8 @@ return {
 
     use {
       'navarasu/onedark.nvim',
+      lazy = false,
       config = function()
-
         vim.cmd([[
         augroup HighlightTrailingWhitespaces
         autocmd!
@@ -48,17 +49,15 @@ return {
           toggle_style_key = '<Plug>toggleonedarkstyle',
           toggle_style_list = { 'dark', 'light' },
           transparent = false,
-
-          code_style = { -- italic text will use OperatorMono font
+          code_style = {
+            -- italic text will use OperatorMono font
             comments = 'italic',
             keywords = 'italic',
           },
-
           highlights = {
             ExtraWhiteSpaces = { bg = '#dddddd' },
             TreesitterContext = { bg = '#333333' },
           },
-
           diagnostics = {
             background = true,
             undercurl = false,
@@ -70,6 +69,5 @@ return {
         vim.api.nvim_create_user_command('ColorschemeToggleLight', require('onedark').toggle, {})
       end
     }
-
   end
 }

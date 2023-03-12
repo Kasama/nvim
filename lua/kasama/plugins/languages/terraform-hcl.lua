@@ -3,7 +3,7 @@ return {
     return not (vim.fn.executable('terraform') == 0)
   end,
   init = function(use)
-    use { 'hashivim/vim-terraform' }
+    use { 'hashivim/vim-terraform', ft = { 'hcl', 'terraform' } }
   end,
   lsp = function(setup_lsp)
     setup_lsp('terraformls')

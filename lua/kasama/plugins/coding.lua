@@ -1,13 +1,13 @@
 return {
   init = function(use)
     -- must have surround
-    use { 'tpope/vim-surround' }
+    use { 'tpope/vim-surround', event = "InsertEnter" }
 
     -- automatically load editorconfig
-    use { 'editorconfig/editorconfig-vim' }
+    use { 'editorconfig/editorconfig-vim', event = 'VeryLazy' }
 
     -- live scratchpad
-    use { 'metakirby5/codi.vim' }
+    use { 'metakirby5/codi.vim', cmd = 'Codi' }
 
     vim.cmd [[
     highlight TSRainbowViolet ctermfg=13 guifg=#b452cd
@@ -18,13 +18,14 @@ return {
 
     use { -- Treesitter
       'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate',
-      requires = { -- plugins
+      build = ':TSUpdate',
+      dependencies = { -- plugins
         'nvim-treesitter/playground',
         'https://gitlab.com/HiPhish/nvim-ts-rainbow2',
         'nvim-treesitter/nvim-treesitter-context',
         -- 'haringsrob/nvim_context_vt', -- Show virtual text with current context
       },
+      lazy = false,
       config = function()
         -- Treesitter Config
         require('nvim-treesitter.configs').setup {
@@ -113,31 +114,25 @@ return {
 
     use { -- tree climber
       'drybalka/tree-climber.nvim',
-      requires = {
+      dependencies = {
         { "nvim-treesitter/nvim-treesitter" }
       },
-      config = function()
-        local climber = require('tree-climber')
+      init = function()
         local keybind = require('utils').keybind
 
         keybind({ 'n', 'H', function()
           vim.cmd [[normal m']] -- add to jumplist
-          climber.goto_parent()
+          require('tree-climber').goto_parent()
         end })
-        keybind({ 'n', 'L', climber.goto_child })
-        keybind({ 'n', '<leader><C-K>', climber.swap_prev })
-        keybind({ 'n', '<leader><C-J>', climber.swap_next })
+        keybind({ 'n', 'L', require('tree-climber').goto_child })
+        keybind({ 'n', '<leader><C-K>', require('tree-climber').swap_prev })
+        keybind({ 'n', '<leader><C-J>', require('tree-climber').swap_next })
       end
     }
 
-    -- use { -- auto pairs
-    --   'windwp/nvim-autopairs', config = function()
-    --     require('nvim-autopairs').setup {}
-    --   end
-    -- }
-
     use { -- auto pairs
       'altermo/ultimate-autopair.nvim',
+      event = 'InsertEnter',
       config = function()
         require('ultimate-autopair').setup({
           cr = {
@@ -150,15 +145,30 @@ return {
     vim.cmd [[let test#strategy = 'neovim']]
     use {
       'nvim-neotest/neotest',
-      requires = {
+      dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-treesitter/nvim-treesitter',
-        'antoinemadec/FixCursorHold.nvim',
         'janko-m/vim-test',
         'nvim-neotest/neotest-go',
         'nvim-neotest/neotest-plenary',
         'rouge8/neotest-rust',
         'nvim-neotest/neotest-vim-test',
+      },
+      init = function()
+        local keybind = require('utils').keybind
+
+        keybind({ 'n', '<leader>tt', function() require('neotest').run.run() end })                          -- nearest
+        keybind({ 'n', '<leader>tf', function() return require('neotest').run.run(vim.fn.expand('%')) end }) -- file
+        keybind({ 'n', '<leader>to', function() require('neotest').output.open() end })                      -- file
+        keybind({ 'n', '<leader>tr', function() require('neotest').summary.open() end })                     -- file
+        keybind({ 'n', '<leader>ts', '<cmd>TestSuite<CR>' })                                                 -- suite
+        keybind({ 'n', '<leader>tl', '<cmd>TestLast<CR>' })                                                  -- last
+        keybind({ 'n', '<leader>tv', '<cmd>TestVisit<CR>' })                                                 -- visit
+      end,
+      cmd = {
+        'TestSuite',
+        'TestLast',
+        'TestVisit',
       },
       config = function()
         local neotest = require('neotest')
@@ -172,26 +182,30 @@ return {
             }),
           }
         })
-
-        local keybind = require('utils').keybind
-
-        keybind({ 'n', '<leader>tt', neotest.run.run })                                           -- nearest
-        keybind({ 'n', '<leader>tf', function() return neotest.run.run(vim.fn.expand('%')) end }) -- file
-        keybind({ 'n', '<leader>to', neotest.output.open })                                       -- file
-        keybind({ 'n', '<leader>tr', neotest.summary.open })                                      -- file
-        keybind({ 'n', '<leader>ts', '<cmd>TestSuite<CR>' })                                      -- suite
-        keybind({ 'n', '<leader>tl', '<cmd>TestLast<CR>' })                                       -- last
-        keybind({ 'n', '<leader>tv', '<cmd>TestVisit<CR>' })                                      -- visit
       end,
     }
 
     use { -- nvim-dap (debugger)
       'mfussenegger/nvim-dap',
-      requires = {
+      dependencies = {
         'rcarriga/nvim-dap-ui',
         'leoluz/nvim-dap-go',
         'theHamsta/nvim-dap-virtual-text',
       },
+      init = function()
+        local keybind = require('utils').keybind
+
+        keybind({ 'n', '<leader>dd', function() require('dap').toggle_breakpoint() end })
+        keybind({ 'n', '<leader>dD', function() require('dap').set_breakpoint(vim.fn.input('Condition: ')) end })
+        keybind({ 'n', '<leader>dl', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Message: ')) end })
+        keybind({ 'n', '<F5>', function() require('dap').continue() end })
+        keybind({ 'n', '<F6>', function()
+          require('dap').close()
+          require('dapui').close({})
+          require('nvim-dap-virtual-text').refresh()
+        end })
+        keybind({ 'n', '<F6><F6>', function() require('dap').clear_breakpoints() end })
+      end,
       config = function()
         local dap_virtual = require('nvim-dap-virtual-text')
         local dap, dapui = require('dap'), require('dapui')
@@ -242,17 +256,6 @@ return {
         vim.fn.sign_define('DapBreakpointRejected', { text = '', texthl = 'debugBreakpoint' })
 
         local keybind = require('utils').keybind
-
-        keybind({ 'n', '<leader>dd', dap.toggle_breakpoint })
-        keybind({ 'n', '<leader>dD', function() dap.set_breakpoint(vim.fn.input('Condition: ')) end })
-        keybind({ 'n', '<leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Message: ')) end })
-        keybind({ 'n', '<F5>', dap.continue })
-        keybind({ 'n', '<F6>', function()
-          dap.close()
-          dapui.close({})
-          dap_virtual.refresh()
-        end })
-        keybind({ 'n', '<F6><F6>', dap.clear_breakpoints })
 
         local temporary_keybinds = function()
           local cleaners = {}
@@ -309,10 +312,11 @@ return {
 
     use { -- refactoring
       'ThePrimeagen/refactoring.nvim',
-      requires = {
+      dependencies = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" }
       },
+      keys = { '<leader>rf' },
       config = function()
         local refactoring = require('refactoring')
         refactoring.setup {
@@ -341,28 +345,28 @@ return {
 
     use { -- Commentary
       'numToStr/Comment.nvim',
-      config = function()
+      init = function()
         local keybind = require("utils").keybind
-        local comment = require('Comment.api')
 
+        keybind({ 'n', { '<leader>/' }, function() require('Comment.api').toggle.linewise.current() end })
+        keybind({ 'x', { '<leader>/' },
+          '<ESC><CMD>lua require("Comment.api").locked("toggle.linewise")(vim.fn.visualmode())<CR>gv' })
+      end,
+      config = function()
         require('Comment').setup({
           ignore = '^$',
           mappings = false,
         })
-
-        keybind({ 'n', { '<leader>/' }, comment.toggle.linewise.current })
-        keybind({ 'x', { '<leader>/' },
-          '<ESC><CMD>lua require("Comment.api").locked("toggle.linewise")(vim.fn.visualmode())<CR>gv' })
       end
     }
 
     -- use { -- Github copilot
     --   'zbirenbaum/copilot-cmp',
-    --   requires={
+    --   dependencies={
     --     'zbirenbaum/copilot.lua'
     --     -- 'github/copilot.vim'
+    --     'nvim-cmp',
     --   },
-    --   after = {'nvim-cmp'},
     --   event = {"InsertEnter"},
     --   config = function()
     --     vim.schedule(function()

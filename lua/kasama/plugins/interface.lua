@@ -2,6 +2,7 @@ return {
   init = function(use)
     use { -- vim notify
       'rcarriga/nvim-notify',
+      lazy = false,
       config = function()
         local notify = require('notify')
         vim.notify = notify
@@ -14,7 +15,8 @@ return {
     use { 'kyazdani42/nvim-web-devicons' }
     local highlight_yank = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
     vim.api.nvim_create_autocmd('TextYankPost', {
-      group = highlight_yank, pattern = '*',
+      group = highlight_yank,
+      pattern = '*',
       callback = function()
         vim.highlight.on_yank()
       end,
@@ -22,7 +24,8 @@ return {
 
     use { -- lualine
       'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      lazy = false,
+      dependencies = { 'kyazdani42/nvim-web-devicons' },
       config = function()
         local status_from = function(package, func)
           return function()
@@ -60,12 +63,12 @@ return {
 
     use { -- buffer line
       'akinsho/bufferline.nvim',
-      tag = "v2.*",
-      requires = {
+      version = "v2.*",
+      lazy = false,
+      dependencies = {
         'kyazdani42/nvim-web-devicons',
         'navarasu/onedark.nvim',
       },
-      after = 'onedark.nvim',
       config = function()
         require('bufferline').setup {
           options = {
@@ -85,13 +88,14 @@ return {
 
     use { -- Stabilize window on split/popup/etc
       "luukvbaal/stabilize.nvim",
+      event = 'VeryLazy',
       config = function() require("stabilize").setup() end
     }
 
     use { -- dressing (vim.ui.input)
       'stevearc/dressing.nvim',
+      event = 'VeryLazy',
       config = function()
-
         require('dressing').setup({
           input = {
             enabled = true,
@@ -100,13 +104,13 @@ return {
             enabled = false,
           },
         })
-
       end,
     }
 
     use { -- no-neck-pain (centralize buffer text)
       'shortcuts/no-neck-pain.nvim',
-      tag = "*",
+      event = 'VeryLazy',
+      version = "*",
       config = function()
         -- values below are the default
         require("no-neck-pain").setup({
@@ -142,7 +146,6 @@ return {
             },
           },
         })
-
       end,
     }
   end

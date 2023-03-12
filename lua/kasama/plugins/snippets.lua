@@ -2,7 +2,8 @@ return {
   init = function(use)
     use {
       'L3MON4D3/LuaSnip',
-      requires = {
+      event = 'InsertEnter',
+      dependencies = {
         'rafamadriz/friendly-snippets',
       },
       config = function()
@@ -19,7 +20,7 @@ return {
           enable_autosnippets = true,
 
           ext_opts = {
-            [luasnip_types.choiceNode] = {
+                [luasnip_types.choiceNode] = {
               active = {
                 virt_text = { { "<- Current Choice", "helpExample" } },
                 priority = 1
@@ -64,6 +65,5 @@ return {
         })
       end,
     }
-
   end,
 }

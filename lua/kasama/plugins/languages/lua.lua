@@ -5,7 +5,7 @@ return {
 
     use {
       'rafcamlet/nvim-luapad',
-      requires = "antoinemadec/FixCursorHold.nvim",
+      cmd = {'Luapad'},
       config = function()
         local luapad = require('luapad')
       end,
@@ -69,7 +69,7 @@ return {
     }}, {{ key = '{}' }})
 
   end,
-}}]]     ,
+}}]],
         { c(1, { f(function() return vim.fn.expand('%:t:r') end), i(nil) }), e.rep(1) }, {})
       ),
     }, { key = 'lua' })
