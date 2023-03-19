@@ -9,12 +9,14 @@ return {
     -- live scratchpad
     use { 'metakirby5/codi.vim', cmd = 'Codi' }
 
-    vim.cmd [[
-    highlight TSRainbowViolet ctermfg=13 guifg=#b452cd
-    highlight TSRainbowOrange ctermfg=13 guifg=#FFB9B9
-    highlight TSRainbowRose   ctermfg=13 guifg=#eeaeee
-    highlight TSRainbowPink   ctermfg=13 guifg=#ff69b4
-    ]]
+    local setup_colors = function()
+      vim.cmd [[
+      highlight TSRainbowViolet ctermfg=13 guifg=#b452cd
+      highlight TSRainbowOrange ctermfg=13 guifg=#FFB9B9
+      highlight TSRainbowRose   ctermfg=13 guifg=#eeaeee
+      highlight TSRainbowPink   ctermfg=13 guifg=#ff69b4
+      ]]
+    end
 
     use { -- Treesitter
       'nvim-treesitter/nvim-treesitter',
@@ -70,6 +72,7 @@ return {
             -- colors = { '#b452cd', '#cd8162', '#eeaeee', '#ff69b4' }
           }
         }
+        setup_colors()
 
         require('treesitter-context').setup({
           max_lines = 3,

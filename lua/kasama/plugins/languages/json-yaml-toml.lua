@@ -2,6 +2,7 @@ return {
   init = function(use)
     use { 'b0o/SchemaStore.nvim', ft = { 'json', 'toml', 'yaml', 'jsonp' } }
     use { 'elzr/vim-json', ft = { 'json', 'jsonp', 'toml', 'yaml' } }
+    use { 'cespare/vim-toml', lazy = false }
   end,
   lsp = function(setup_lsp)
     local json_schemas = require('schemastore').json.schemas()

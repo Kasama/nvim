@@ -51,10 +51,10 @@ return {
       dependencies = { 'nvim-lua/plenary.nvim', 'jose-elias-alvarez/null-ls.nvim' },
       config = function()
         require('crates').setup({
-          null_ls = {
-            enabled = true,
-            name = "crates.nvim"
-          }
+          -- null_ls = {
+          --   enabled = true,
+          --   name = "crates.nvim"
+          -- }
         })
       end,
     }
@@ -99,7 +99,10 @@ return {
       },
       procMacro = {
         enable = true
-      }
+      },
+      diagnostics = {
+        disabled = { "unresolved-proc-macro" },
+      },
     }, local_lsp_config)
 
     setup_lsp(rust_tools, function(inject_config)

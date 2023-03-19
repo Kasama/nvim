@@ -5,7 +5,7 @@ return {
 
     use {
       'rafcamlet/nvim-luapad',
-      cmd = {'Luapad'},
+      cmd = { 'Luapad' },
       config = function()
         local luapad = require('luapad')
       end,
@@ -22,7 +22,8 @@ return {
             globals = { 'vim' },
           },
           workspace = {
-            library = vim.api.nvim_get_runtime_file('', true)
+            library = vim.api.nvim_get_runtime_file('', true),
+            checkThirdParty = false
           },
           telemetry = {
             enable = false

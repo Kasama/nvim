@@ -22,6 +22,7 @@ return {
         keybind({ 'n', '<leader>p', require('telescope.builtin').commands })
       end,
       cmd = 'Telescope',
+      event = 'VeryLazy',
       config = function()
         local actions = require('telescope.actions')
 
