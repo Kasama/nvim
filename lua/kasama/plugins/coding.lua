@@ -214,7 +214,12 @@ return {
         local dap, dapui = require('dap'), require('dapui')
 
         -- languages
-        require('dap-go').setup()
+        require('dap-go').setup {
+          delve = {
+            port = "4000",
+          },
+        }
+
         table.insert(dap.configurations.go, 1, {
           name = "Attach to Delve (localhost:4000)",
           type = "go",
