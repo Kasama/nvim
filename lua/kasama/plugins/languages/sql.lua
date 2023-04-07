@@ -3,6 +3,7 @@ return {
     use {
       'tpope/vim-dadbod',
       dependencies = {
+        'kristijanhusak/vim-dadbod-ui',
         'kristijanhusak/vim-dadbod-completion'
       },
       event = 'VeryLazy',
@@ -23,6 +24,5 @@ return {
         )
       end,
     }
-    use { 'kristijanhusak/vim-dadbod-ui' }
   end,
 }

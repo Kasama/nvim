@@ -1,9 +1,9 @@
 GUTTER_SIGNS = { Info = '', Hint = '', Warn = '', Error = '' }
 DIAGNOSTICS_SIGNS = {
-      [vim.diagnostic.severity.ERROR] = GUTTER_SIGNS.Error,
-      [vim.diagnostic.severity.WARN] = GUTTER_SIGNS.Warn,
-      [vim.diagnostic.severity.INFO] = GUTTER_SIGNS.Info,
-      [vim.diagnostic.severity.HINT] = GUTTER_SIGNS.Hint,
+  [vim.diagnostic.severity.ERROR] = GUTTER_SIGNS.Error,
+  [vim.diagnostic.severity.WARN] = GUTTER_SIGNS.Warn,
+  [vim.diagnostic.severity.INFO] = GUTTER_SIGNS.Info,
+  [vim.diagnostic.severity.HINT] = GUTTER_SIGNS.Hint,
 }
 return {
   init = function(use, mason_install)
@@ -18,6 +18,7 @@ return {
         'hrsh7th/cmp-nvim-lua',
         -- cmp needs a snippet engine
         'saadparwaiz1/cmp_luasnip',
+        'jcdickinson/codeium.nvim',
         'L3MON4D3/LuaSnip',
       },
       config = function()
@@ -25,6 +26,7 @@ return {
         local luasnip = require('luasnip')
         local compare = require("cmp.config.compare")
         local lspkind = require("lspkind")
+        local codeium = require('codeium')
 
         lspkind.init()
 
@@ -39,6 +41,7 @@ return {
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' },
+            { name = 'codeium' },
             { name = 'buffer',  keyword_length = 5 },
             { name = 'crates' },
           },
@@ -52,26 +55,30 @@ return {
                 path = "[path]",
                 luasnip = "[snip]",
                 buffer = "[buf]",
+                codeium = "[llm]",
               },
+              symbol_map = {
+                Codeium = "",
+              }
             }),
           },
           mapping = cmp.mapping.preset.insert({
             -- ["<tab>"] = cmp.config.disable,
             -- ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
-                ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                ["<C-e>"] = cmp.mapping.close(),
-                ["<C-y>"] = cmp.mapping.confirm({
+            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-e>"] = cmp.mapping.close(),
+            ["<C-y>"] = cmp.mapping.confirm({
               behavior = cmp.ConfirmBehavior.Insert,
               select = true,
             }, { "i", "c" }),
-                ["<C-n>"] = {
+            ["<C-n>"] = {
               i = cmp.mapping.select_next_item(),
             },
-                ["<C-p>"] = {
+            ["<C-p>"] = {
               i = cmp.mapping.select_prev_item(),
             },
-                ["<C-Space>"] = cmp.mapping({
+            ["<C-Space>"] = cmp.mapping({
               i = cmp.mapping.complete(),
               c = function(_)
                 if cmp.visible() then
@@ -103,6 +110,8 @@ return {
             ghost_text = true
           }
         })
+
+        codeium.setup({})
 
         -- local cmp_autopairs, ok = pcall(require, 'nvim-autopairs.completion.cmp')
         -- if ok and cmp_autopairs ~= nil then
@@ -245,10 +254,10 @@ return {
                   source = 'if_many',
                   prefix = function(diagnostic, _, _)
                     local hl_map = {
-                          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-                          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-                          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-                          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+                      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+                      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+                      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+                      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
                     }
                     return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
                   end,
