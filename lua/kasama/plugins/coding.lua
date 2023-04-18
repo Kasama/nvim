@@ -3,9 +3,6 @@ return {
     -- must have surround
     use { 'tpope/vim-surround', event = "InsertEnter" }
 
-    -- automatically load editorconfig
-    use { 'editorconfig/editorconfig-vim', event = 'VeryLazy' }
-
     -- live scratchpad
     use { 'metakirby5/codi.vim', cmd = 'Codi' }
 
@@ -79,7 +76,7 @@ return {
         })
 
         -- FIX for rust SQL highlight injection
-        require('vim.treesitter.query').set_query('rust', 'injections', [[
+        vim.treesitter.query.set('rust', 'injections', [[
         (macro_definition
           (macro_rule
             left: (token_tree_pattern) @rust

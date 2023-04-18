@@ -357,7 +357,7 @@ return {
     local ts_utils = require('nvim-treesitter.ts_utils')
     local ts_locals = require('nvim-treesitter.locals')
 
-    vim.treesitter.set_query(
+    vim.treesitter.query.set(
       'go',
       'ClosestFuncReturnTypes',
       [[ [
@@ -373,7 +373,6 @@ return {
     }
 
     local get_default_value_for_type = function(_type, info)
-
       local for_error = info and info.err_name
       local n = function(content, inff)
         if for_error then
@@ -469,7 +468,7 @@ return {
         end,
       }
 
-      local query = vim.treesitter.get_query('go', 'ClosestFuncReturnTypes')
+      local query = vim.treesitter.query.get('go', 'ClosestFuncReturnTypes')
       for _, node in query:iter_captures(function_node, 0) do
         if handlers[node:type()] then
           return handlers[node:type()](node)
@@ -523,9 +522,9 @@ return {
 
       vim.lsp.buf_request(
         0, 'textDocument/signatureHelp', pos, function(_, r, _, _)
-        done = true
-        result = r
-      end
+          done = true
+          result = r
+        end
       )
 
       -- Wait, because we can't use callbacks with LuaSnip.
@@ -611,7 +610,7 @@ return {
 
     local function outer_returns()
       -- Go up using the result query defined above.
-      local query = vim.treesitter.query.get_query('go', 'ClosestFuncReturnTypes')
+      local query = vim.treesitter.query.get('go', 'ClosestFuncReturnTypes')
       for _, node in treesitter_utils.iter_captures_up(query) do
         local text = treesitter_utils.get_node_text(node)
         if text == nil then
@@ -692,26 +691,26 @@ return {
       return {}fmt.Errorf("{}: %w", {}err)
     }}
     {}
-    ]]     , {
-          d(4, ret_assignments, { 1 }),
-          i(1),
-          f(short_err_check, { 1 }),
-          f(long_err_check, { 1 }),
-          f(outer_returns),
-          i(2),
-          i(3),
-          i(0),
-        }
+    ]], {
+            d(4, ret_assignments, { 1 }),
+            i(1),
+            f(short_err_check, { 1 }),
+            f(long_err_check, { 1 }),
+            f(outer_returns),
+            i(2),
+            i(3),
+            i(0),
+          }
         ), {
-        callbacks = {
-          [-1] = {
-            [events.pre_expand] = function()
-              ret_assignments_cache = default_ret_assignments
-              ret_assignments_short = true
-            end,
+          callbacks = {
+            [-1] = {
+              [events.pre_expand] = function()
+                ret_assignments_cache = default_ret_assignments
+                ret_assignments_short = true
+              end,
+            },
           },
-        },
-      }
+        }
       ),
     }, { key = 'go' })
   end,
