@@ -23,5 +23,10 @@ return {
         require("sort").setup({})
       end
     })
+
+    use({
+      'tpope/vim-abolish',
+      cmd = { 'S', 'Subvert' }
+    })
   end
 }

@@ -31,14 +31,14 @@ return {
           defaults = {
             mappings = {
               i = {
-                    ['<esc>'] = actions.close,
-                    ['<C-k>'] = actions.move_selection_previous,
-                    ['<C-j>'] = actions.move_selection_next,
+                ['<esc>'] = actions.close,
+                ['<C-k>'] = actions.move_selection_previous,
+                ['<C-j>'] = actions.move_selection_next,
               }
             }
           },
           extensions = {
-                ["ui-select"] = {
+            ["ui-select"] = {
               require('telescope.themes').get_dropdown {}
             },
           },
@@ -47,6 +47,7 @@ return {
         -- extensions
         telescope.load_extension('notify')
         telescope.load_extension('ui-select')
+        telescope.load_extension('harpoon')
         if not (vim.fn.executable('fzf') == 0) then
           telescope.load_extension('fzf')
         end

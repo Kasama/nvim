@@ -143,7 +143,7 @@ return {
     }
 
     vim.cmd [[let test#strategy = 'neovim']]
-    use {
+    use { -- Neotest
       'nvim-neotest/neotest',
       dependencies = {
         'nvim-lua/plenary.nvim',

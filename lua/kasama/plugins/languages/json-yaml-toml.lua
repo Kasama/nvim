@@ -3,6 +3,34 @@ return {
     use { 'b0o/SchemaStore.nvim', ft = { 'json', 'toml', 'yaml', 'jsonp' } }
     use { 'elzr/vim-json', ft = { 'json', 'jsonp', 'toml', 'yaml' } }
     use { 'cespare/vim-toml', lazy = false }
+    use {
+      'phelipetls/jsonpath.nvim',
+      ft = { 'json', 'jsonp' },
+      config = function()
+        local json_path_ns = vim.api.nvim_create_namespace('json_path')
+
+        local function show_json_path()
+          local current_line = vim.fn.line('.') - 1
+          local json_path = require('jsonpath').get()
+
+          local bufnr = vim.api.nvim_get_current_buf()
+
+          vim.api.nvim_buf_clear_namespace(bufnr, json_path_ns, 0, -1)
+          vim.api.nvim_buf_set_extmark(bufnr, json_path_ns, current_line, 0, {
+            hl_group = "Comment",
+            hl_mode = "replace",
+            virt_text = { { json_path, 'Comment' } },
+            virt_text_pos = "eol",
+          })
+        end
+
+        -- create autocmd
+        vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "CursorMoved" }, {
+          pattern = '*.json',
+          callback = show_json_path,
+        })
+      end
+    }
   end,
   lsp = function(setup_lsp)
     local json_schemas = require('schemastore').json.schemas()

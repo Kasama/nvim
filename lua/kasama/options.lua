@@ -34,6 +34,7 @@ opt.listchars = {
   space = '·',
   eol = '↵',
 }
+opt.diffopt = "linematch:50"
 
 -- notify override
 local ok, notify = pcall(require, "notify")

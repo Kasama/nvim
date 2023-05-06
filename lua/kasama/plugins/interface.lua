@@ -63,11 +63,12 @@ return {
 
     use { -- buffer line
       'akinsho/bufferline.nvim',
-      version = "v2.*",
+      version = "*",
       lazy = false,
       dependencies = {
         'kyazdani42/nvim-web-devicons',
-        'navarasu/onedark.nvim',
+        -- 'navarasu/onedark.nvim',
+        'chomosuke/onedark.nvim',
       },
       config = function()
         require('bufferline').setup {
