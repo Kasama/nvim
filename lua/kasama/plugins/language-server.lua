@@ -237,8 +237,27 @@ return {
             vim.g['DiagnosticHoverEnabled'] = true
           end
         end
+        local open_diagnostic_float = function()
+          vim.diagnostic.open_float(nil, {
+            focus = false,
+            scope = 'cursor',
+            source = 'if_many',
+            prefix = function(diagnostic, _, _)
+              local hl_map = {
+                [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+                [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+                [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+                [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+              }
+              return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
+            end,
+          })
+        end
+
+        require('utils').keybind({ 'n', '<leader>e', open_diagnostic_float })
+
         vim.api.nvim_create_user_command('DiagnosticHoverToggle', toggle_diagnostic_hover, {})
-        vim.g['DiagnosticHoverEnabled'] = true
+        vim.g['DiagnosticHoverEnabled'] = false
         vim.api.nvim_create_autocmd(
           { 'CursorHold', 'CursorHoldI' },
           {
@@ -248,20 +267,7 @@ return {
               local should_open_float = not vim.g["DiagnosticLinesEnabled"] and vim.g['DiagnosticHoverEnabled']
 
               if should_open_float then
-                vim.diagnostic.open_float(nil, {
-                  focus = false,
-                  scope = 'cursor',
-                  source = 'if_many',
-                  prefix = function(diagnostic, _, _)
-                    local hl_map = {
-                      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-                      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-                      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-                      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-                    }
-                    return DIAGNOSTICS_SIGNS[diagnostic.severity] .. " ", hl_map[diagnostic.severity]
-                  end,
-                })
+                open_diagnostic_float()
               end
             end
           }
