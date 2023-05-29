@@ -1,4 +1,4 @@
-GUTTER_SIGNS = { Info = '', Hint = '', Warn = '', Error = '' }
+GUTTER_SIGNS = { Info = '', Hint = '', Warn = '', Error = '' }
 DIAGNOSTICS_SIGNS = {
   [vim.diagnostic.severity.ERROR] = GUTTER_SIGNS.Error,
   [vim.diagnostic.severity.WARN] = GUTTER_SIGNS.Warn,
@@ -348,10 +348,8 @@ return {
 
     use { -- trouble
       'folke/trouble.nvim',
-      init = function()
-        require('utils').keybind({ 'n', '<leader>xx', '<cmd>TroubleToggle<CR>' })
-      end,
-      cmd = { 'TroubleToggle' },
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
+      cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
       config = function()
         require('trouble').setup {
           use_diagnostics_signs = true,
@@ -490,6 +488,16 @@ return {
           bufmap('n', '<F2>', vim.lsp.codelens.run)
         end
 
+        -- setup lsp signature helper
+        require('lsp_signature').on_attach({
+          bind = true,
+          floating_window = true,
+          hint_enable = false,
+          handler_opts = {
+            border = 'none'
+          },
+        }, info.buf)
+
         -- auto format on save
         local formatting_capable = false
         for _, client in ipairs(vim.lsp.buf_get_clients()) do
@@ -525,6 +533,14 @@ return {
         bufmap('n', '<leader>ref', telescope.lsp_references)
         bufmap('n', '<C-]>', telescope.lsp_definitions)
         bufmap('n', '<leader>impl', telescope.lsp_implementations)
+        -- bufmap('n', '<leader>impl', function()
+        --   telescope.lsp_implementations({
+        --     finder = require('telescope.finders').new_table {
+        --       results = locations,
+        --       entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
+        --     },
+        --   })
+        -- end)
         bufmap('n', '<leader>rn', vim.lsp.buf.rename)
 
         bufmap('n', 'g[', vim.diagnostic.goto_prev)

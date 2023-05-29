@@ -12,7 +12,7 @@ return {
       end
     }
 
-    use { 'kyazdani42/nvim-web-devicons' }
+    use { 'nvim-tree/nvim-web-devicons' }
     local highlight_yank = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
     vim.api.nvim_create_autocmd('TextYankPost', {
       group = highlight_yank,
@@ -25,7 +25,7 @@ return {
     use { -- lualine
       'nvim-lualine/lualine.nvim',
       lazy = false,
-      dependencies = { 'kyazdani42/nvim-web-devicons' },
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
       config = function()
         local status_from = function(package, func)
           return function()
@@ -66,7 +66,7 @@ return {
       version = "*",
       lazy = false,
       dependencies = {
-        'kyazdani42/nvim-web-devicons',
+        'nvim-tree/nvim-web-devicons',
         -- 'navarasu/onedark.nvim',
         'chomosuke/onedark.nvim',
       },

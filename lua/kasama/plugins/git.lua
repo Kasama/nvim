@@ -1,7 +1,19 @@
 return {
   init = function(use)
     -- Simply the best git plugin around
-    use { 'tpope/vim-fugitive', event = 'VeryLazy' }
+    use {
+      'tpope/vim-fugitive',
+      event = 'VeryLazy',
+      config = function()
+        local keybind = require('utils').keybind
+        vim.api.nvim_create_autocmd({ 'FileType' }, {
+          pattern = 'fugitive',
+          callback = function()
+            keybind({ 'n', 'q', '<cmd>q<CR>', { buffer = true } })
+          end
+        })
+      end
+    }
 
     use {
       'lewis6991/gitsigns.nvim',
@@ -53,7 +65,7 @@ return {
         require('gitlinker').setup({
           mappings = '<Plug>gitlink',
           callbacks = {
-                ["git.topfreegames.com"] = require('gitlinker.hosts').get_gitlab_type_url,
+            ["git.topfreegames.com"] = require('gitlinker.hosts').get_gitlab_type_url,
           }
         })
         vim.api.nvim_create_user_command(

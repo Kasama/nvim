@@ -1,11 +1,11 @@
 return {
   init = function(use)
     use { -- nvim tree
-      'kyazdani42/nvim-tree.lua',
+      'nvim-tree/nvim-tree.lua',
       dependencies = {
-        'kyazdani42/nvim-web-devicons', -- optional, for file icon
+        'nvim-tree/nvim-web-devicons', -- optional, for file icon
       },
-      version = 'nightly',              -- optional, updated every week. (see issue #1193)
+      version = 'nightly',             -- optional, updated every week. (see issue #1193)
       init = function()
         local keybind = require('utils').keybind
         keybind({ 'n', [[\]], '<cmd>NvimTreeFindFileToggle<CR>' })

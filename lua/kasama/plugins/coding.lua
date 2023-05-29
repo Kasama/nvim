@@ -210,19 +210,25 @@ return {
         local dap_virtual = require('nvim-dap-virtual-text')
         local dap, dapui = require('dap'), require('dapui')
 
-        -- languages
-        require('dap-go').setup {
-          delve = {
-            port = "4000",
+        dap.adapters.delve_remote = {
+          type = "server",
+          port = "4000",
+          options = {
+            initialize_timeout_sec = "20",
           },
         }
 
+        -- languages
+        require('dap-go').setup {
+          delve = {},
+        }
+
         table.insert(dap.configurations.go, 1, {
-          name = "Attach to Delve (localhost:4000)",
-          type = "go",
+          name = "Attach to Delve (localhost:" .. dap.adapters.delve_remote.port .. ")",
+          type = "delve_remote",
           request = "attach",
           mode = "remote",
-          port = 4000
+          port = tonumber(dap.adapters.delve_remote.port)
         })
 
         -- configs
@@ -255,10 +261,10 @@ return {
         })
 
         -- icons
-        vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticSignError' })
-        vim.fn.sign_define('DapBreakpointCondition', { text = '', texthl = 'DiagnosticSignWarn' })
-        vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DiagnosticSignInfo' })
-        vim.fn.sign_define('DapBreakpointRejected', { text = '', texthl = 'debugBreakpoint' })
+        vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticSignError' })
+        vim.fn.sign_define('DapBreakpointCondition', { text = '󰋗', texthl = 'DiagnosticSignWarn' })
+        vim.fn.sign_define('DapLogPoint', { text = '󰵚', texthl = 'DiagnosticSignInfo' })
+        vim.fn.sign_define('DapBreakpointRejected', { text = '', texthl = 'debugBreakpoint' })
 
         local keybind = require('utils').keybind
 
@@ -364,6 +370,25 @@ return {
         })
       end
     }
+
+    use {
+      'Wansmer/sibling-swap.nvim',
+      init = function()
+        local keybind = require("utils").keybind
+
+        keybind({ 'n', '<leader><', function() require('sibling-swap').swap_with_left() end })
+        keybind({ 'n', '<leader>>', function() require('sibling-swap').swap_with_right() end })
+      end,
+      dependencies = { 'nvim-treesitter' },
+      config = function()
+        require('sibling-swap').setup {
+          use_default_keymaps = false
+        }
+      end
+    }
+
+    -- better quickfix window
+    -- use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
 
     -- use { -- Github copilot
     --   'zbirenbaum/copilot-cmp',
