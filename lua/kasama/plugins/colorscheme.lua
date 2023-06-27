@@ -1,9 +1,7 @@
 return {
   init = function(use)
     use {
-      -- 'navarasu/onedark.nvim',
-      'chomosuke/onedark.nvim',
-      branch = 'semantic-token',
+      'navarasu/onedark.nvim',
       lazy = false,
       config = function()
         vim.cmd([[

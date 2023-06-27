@@ -67,8 +67,7 @@ return {
       lazy = false,
       dependencies = {
         'nvim-tree/nvim-web-devicons',
-        -- 'navarasu/onedark.nvim',
-        'chomosuke/onedark.nvim',
+        'navarasu/onedark.nvim',
       },
       config = function()
         require('bufferline').setup {
