@@ -21,7 +21,7 @@ return {
       dependencies = { -- plugins
         'nvim-treesitter/playground',
         'https://gitlab.com/HiPhish/nvim-ts-rainbow2',
-        'nvim-treesitter/nvim-treesitter-context',
+        -- 'nvim-treesitter/nvim-treesitter-context',
         -- 'haringsrob/nvim_context_vt', -- Show virtual text with current context
       },
       lazy = false,
@@ -71,9 +71,9 @@ return {
         }
         setup_colors()
 
-        require('treesitter-context').setup({
-          max_lines = 3,
-        })
+        -- require('treesitter-context').setup({
+        --   max_lines = 3,
+        -- })
 
         -- FIX for rust SQL highlight injection
         vim.treesitter.query.set('rust', 'injections', [[

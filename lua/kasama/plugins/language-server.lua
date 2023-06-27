@@ -424,6 +424,7 @@ return {
 
     use { -- fidget LSP status
       'j-hui/fidget.nvim',
+      branch = 'legacy',
       event = 'VeryLazy',
       config = function()
         require('fidget').setup {
@@ -456,9 +457,21 @@ return {
       end,
     }
 
+    use {
+      'lvimuser/lsp-inlayhints.nvim',
+      config = function()
+        require("lsp-inlayhints").setup({
+          inlay_hints = {
+            other_hints_prefix = "‣",
+            highlight = "Conceal",
+          }
+        })
+      end
+    }
+
     -- on lsp attach
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'LspAttached',
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('LspAttach_default', { clear = true }),
       desc = 'LSP actions',
       callback = function(info)
         local bufmap = function(mode, lhs, rhs)
@@ -497,6 +510,9 @@ return {
             border = 'none'
           },
         }, info.buf)
+
+        -- setup lsp inlay hints
+        require('lsp-inlayhints').on_attach(vim.lsp.get_client_by_id(info.data.client_id), info.buf)
 
         -- auto format on save
         local formatting_capable = false

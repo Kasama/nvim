@@ -111,6 +111,7 @@ return {
           inlay_hints = {
             other_hints_prefix = "‣",
             highlight = "Conceal",
+            auto = false,
           },
           hover_actions = {
             border = false
@@ -118,7 +119,7 @@ return {
         },
         server = inject_config({
           settings = {
-                ["rust-analyzer"] = rust_analyzer_configs
+            ["rust-analyzer"] = rust_analyzer_configs
           }
         }),
         dap = dap_cfg,
