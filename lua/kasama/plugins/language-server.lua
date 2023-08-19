@@ -18,7 +18,9 @@ return {
         'hrsh7th/cmp-nvim-lua',
         -- cmp needs a snippet engine
         'saadparwaiz1/cmp_luasnip',
-        'jcdickinson/codeium.nvim',
+        -- 'jcdickinson/codeium.nvim',
+        'zbirenbaum/copilot-cmp',
+        'zbirenbaum/copilot.lua',
         'L3MON4D3/LuaSnip',
       },
       config = function()
@@ -26,7 +28,13 @@ return {
         local luasnip = require('luasnip')
         local compare = require("cmp.config.compare")
         local lspkind = require("lspkind")
-        local codeium = require('codeium')
+        -- local codeium = require('codeium')
+        local copilot = require('copilot').setup({
+          panel = { enabled = false },
+          suggestion = { enabled = false },
+          filetypes = { yaml = true },
+        })
+        require('copilot_cmp').setup()
 
         lspkind.init()
 
@@ -41,7 +49,8 @@ return {
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' },
-            { name = 'codeium' },
+            -- { name = 'codeium' },
+            { name = 'copilot' },
             { name = 'buffer',  keyword_length = 5 },
             { name = 'crates' },
           },
@@ -55,10 +64,12 @@ return {
                 path = "[path]",
                 luasnip = "[snip]",
                 buffer = "[buf]",
-                codeium = "[llm]",
+                -- codeium = "[llm]",
+                copilot = "[llm]",
               },
               symbol_map = {
-                Codeium = "",
+                -- Codeium = "",
+                Copilot = "",
               }
             }),
           },
@@ -111,7 +122,7 @@ return {
           }
         })
 
-        codeium.setup({})
+        -- codeium.setup({})
 
         -- local cmp_autopairs, ok = pcall(require, 'nvim-autopairs.completion.cmp')
         -- if ok and cmp_autopairs ~= nil then
