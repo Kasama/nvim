@@ -13,6 +13,7 @@
   "copilot.lua": { "branch": "master", "commit": "b3798d85322b1aaa56cad9d651d2d1aaec6298e9" },
   "crates.nvim": { "branch": "main", "commit": "e02eadc598b03d618c22200b0e7979048f6f96b1" },
   "dressing.nvim": { "branch": "master", "commit": "6bde51adabba06f7fd4a469885a85f36d78a5f52" },
+  "elixir-tools.nvim": { "branch": "main", "commit": "83d3b7946cf1ee2ec7eb69dd23c47092f085cd47" },
   "fidget.nvim": { "branch": "legacy", "commit": "90c22e47be057562ee9566bad313ad42d622c1d3" },
   "friendly-snippets": { "branch": "main", "commit": "377d45475b49e37460a902d6d569d2093d4037d0" },
   "git-worktree.nvim": { "branch": "feature/switch-all-buffers", "commit": "1fc963db1ef30b6e0c81ed7926497bee12659986" },

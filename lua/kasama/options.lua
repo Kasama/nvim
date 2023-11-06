@@ -39,5 +39,11 @@ opt.diffopt = "linematch:50"
 -- notify override
 local ok, notify = pcall(require, "notify")
 if ok then
-  vim.notify = notify
+  vim.notify = function(msg, ...)
+    if msg:match("warning: multiple different client offset_encodings") then
+      return
+    end
+
+    notify(msg, ...)
+  end
 end

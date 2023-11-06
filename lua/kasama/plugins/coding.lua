@@ -29,8 +29,8 @@ return {
         -- Treesitter Config
         require('nvim-treesitter.configs').setup {
           ensure_installed = {
-            'c', 'cpp', 'css', 'dockerfile', 'elm', 'go', 'haskell', 'hcl', 'html',
-            'java', 'javascript', 'json', 'json5', 'lua', 'ocaml', 'ocaml_interface',
+            'c', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'go', 'haskell', 'heex',
+            'hcl', 'html', 'java', 'javascript', 'json', 'json5', 'lua', 'ocaml', 'ocaml_interface',
             'python', 'query', 'regex', 'ruby', 'rust', 'scss', 'svelte', 'toml',
             'tsx', 'typescript', 'yaml',
           },
