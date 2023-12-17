@@ -26,6 +26,7 @@ return {
   lsp = function(setup_lsp)
     setup_lsp('gopls', {
       staticcheck = true,
+      singleFileSupport = true,
       codelenses = {
         generate = true
       },
@@ -536,7 +537,7 @@ return {
 
       -- If no result from LSP, return the previously cached result.
       if not (result and result['signatures'] and result['signatures'][1] and
-          result['signatures'][1]['label']) then
+            result['signatures'][1]['label']) then
         return ret_assignments_cache
       end
 

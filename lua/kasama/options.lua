@@ -26,7 +26,7 @@ opt.lazyredraw = true
 opt.title = true
 opt.inccommand = 'split'
 opt.mouse = 'a'
-opt.mousemodel = extend
+opt.mousemodel = 'extend'
 opt.signcolumn = 'yes'
 opt.listchars = {
   tab = '» ',
@@ -41,6 +41,12 @@ local ok, notify = pcall(require, "notify")
 if ok then
   vim.notify = function(msg, ...)
     if msg:match("warning: multiple different client offset_encodings") then
+      return
+    end
+    if msg:match("LanguageTree:for_each_child() is deprecated, use LanguageTree:children() instead.") then
+      return
+    end
+    if msg:match("share/nvim/runtime/lua/vim/treesitter/languagetree.lua:466: in function 'for_each_child'") then
       return
     end
 

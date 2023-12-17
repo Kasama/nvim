@@ -29,7 +29,7 @@ return {
         -- Treesitter Config
         require('nvim-treesitter.configs').setup {
           ensure_installed = {
-            'c', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'go', 'haskell', 'heex',
+            'c', 'clojure', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'go', 'haskell', 'heex',
             'hcl', 'html', 'java', 'javascript', 'json', 'json5', 'lua', 'ocaml', 'ocaml_interface',
             'python', 'query', 'regex', 'ruby', 'rust', 'scss', 'svelte', 'toml',
             'tsx', 'typescript', 'yaml',
@@ -201,7 +201,7 @@ return {
         keybind({ 'n', '<leader>dl', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Message: ')) end })
         keybind({ 'n', '<F5>', function() require('dap').continue() end })
         keybind({ 'n', '<F6>', function()
-          require('dap').close()
+          require('dap').terminate()
           require('dapui').close({})
           require('nvim-dap-virtual-text').refresh()
         end })

@@ -28,5 +28,10 @@ return {
       'tpope/vim-abolish',
       cmd = { 'S', 'Subvert' }
     })
+
+    use({
+      'skywind3000/asyncrun.vim',
+      cmd = { 'AsyncRun' }
+    })
   end
 }
