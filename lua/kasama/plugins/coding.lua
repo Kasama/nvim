@@ -6,21 +6,11 @@ return {
     -- live scratchpad
     use { 'metakirby5/codi.vim', cmd = 'Codi' }
 
-    local setup_colors = function()
-      vim.cmd [[
-      highlight TSRainbowViolet ctermfg=13 guifg=#b452cd
-      highlight TSRainbowOrange ctermfg=13 guifg=#FFB9B9
-      highlight TSRainbowRose   ctermfg=13 guifg=#eeaeee
-      highlight TSRainbowPink   ctermfg=13 guifg=#ff69b4
-      ]]
-    end
-
     use { -- Treesitter
       'nvim-treesitter/nvim-treesitter',
       build = ':TSUpdate',
       dependencies = { -- plugins
         'nvim-treesitter/playground',
-        'https://gitlab.com/HiPhish/nvim-ts-rainbow2',
         -- 'nvim-treesitter/nvim-treesitter-context',
         -- 'haringsrob/nvim_context_vt', -- Show virtual text with current context
       },
@@ -29,9 +19,9 @@ return {
         -- Treesitter Config
         require('nvim-treesitter.configs').setup {
           ensure_installed = {
-            'c', 'clojure', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'go', 'haskell', 'heex',
-            'hcl', 'html', 'java', 'javascript', 'json', 'json5', 'lua', 'ocaml', 'ocaml_interface',
-            'python', 'query', 'regex', 'ruby', 'rust', 'scss', 'svelte', 'toml',
+            'bash', 'c', 'clojure', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'go', 'haskell',
+            'heex', 'hcl', 'html', 'java', 'javascript', 'json', 'json5', 'lua', 'make', 'ocaml',
+            'ocaml_interface', 'python', 'query', 'regex', 'ruby', 'rust', 'scss', 'svelte', 'toml',
             'tsx', 'typescript', 'yaml',
           },
 
@@ -56,21 +46,7 @@ return {
               show_help = '?',
             },
           },
-
-          rainbow = {
-            -- rainbow parens
-            enable = true,
-            query = 'rainbow-parens',
-            hlgroups = {
-              "TSRainbowViolet",
-              "TSRainbowOrange",
-              "TSRainbowRose",
-              "TSRainbowPink",
-            },
-            -- colors = { '#b452cd', '#cd8162', '#eeaeee', '#ff69b4' }
-          }
         }
-        setup_colors()
 
         -- require('treesitter-context').setup({
         --   max_lines = 3,

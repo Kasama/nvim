@@ -43,12 +43,6 @@ if ok then
     if msg:match("warning: multiple different client offset_encodings") then
       return
     end
-    if msg:match("LanguageTree:for_each_child() is deprecated, use LanguageTree:children() instead.") then
-      return
-    end
-    if msg:match("share/nvim/runtime/lua/vim/treesitter/languagetree.lua:466: in function 'for_each_child'") then
-      return
-    end
 
     notify(msg, ...)
   end

@@ -148,5 +148,47 @@ return {
         })
       end,
     }
+
+    use {
+      'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
+      event = 'VeryLazy',
+      config = function()
+        local rainbow = require 'rainbow-delimiters'
+
+        local setup_colors = function()
+          vim.cmd [[
+            highlight TSRainbowViolet ctermfg=13 guifg=#b452cd
+            highlight TSRainbowOrange ctermfg=13 guifg=#FFB9B9
+            highlight TSRainbowRose   ctermfg=13 guifg=#eeaeee
+            highlight TSRainbowPink   ctermfg=13 guifg=#ff69b4
+          ]]
+        end
+
+        setup_colors()
+
+        require('rainbow-delimiters.setup').setup {
+          strategy = {
+            [''] = rainbow.strategy['global'],
+            commonlisp = rainbow.strategy['local'],
+            clojure = rainbow.strategy['local'],
+            html = rainbow.strategy['local'],
+          },
+
+          query = {
+            [''] = 'rainbow-delimiters',
+            lua = 'rainbow-blocks',
+          },
+
+          highlight = {
+            "TSRainbowViolet",
+            "TSRainbowOrange",
+            "TSRainbowRose",
+            "TSRainbowPink",
+          },
+
+          blacklist = {},
+        }
+      end,
+    }
   end
 }
