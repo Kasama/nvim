@@ -186,14 +186,20 @@ return {
           end
 
           if (lsp_cmp) then
-            local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-
-            client_capabilities.textDocument.completion.completionItem.snippetSupport = true
-            client_capabilities.textDocument.completion.completionItem.resolveSupport = {
-              properties = { "documentation", "detail", "additionalTextEdits" },
+            local extra_client_capabilities = {
+              textDocument = {
+                completion = {
+                  completionItem = {
+                    snippetSupport = true,
+                    resolveSupport = {
+                      properties = { "documentation", "detail", "additionalTextEdits" },
+                    },
+                  },
+                },
+              },
             }
 
-            local capabilities = lsp_cmp.default_capabilities(client_capabilities)
+            local capabilities = lsp_cmp.default_capabilities(extra_client_capabilities)
             local default_configs = {
               capabilities = capabilities,
               flags = { debounce_text_changes = 150 },

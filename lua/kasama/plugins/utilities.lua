@@ -31,6 +31,7 @@ return {
 
     use({
       'skywind3000/asyncrun.vim',
+      as = 'asyncrun',
       cmd = { 'AsyncRun' }
     })
   end
