@@ -20,7 +20,7 @@ return {
           enable_autosnippets = true,
 
           ext_opts = {
-                [luasnip_types.choiceNode] = {
+            [luasnip_types.choiceNode] = {
               active = {
                 virt_text = { { "<- Current Choice", "helpExample" } },
                 priority = 1

@@ -19,7 +19,8 @@ return {
         -- cmp needs a snippet engine
         'saadparwaiz1/cmp_luasnip',
         -- 'jcdickinson/codeium.nvim',
-        'zbirenbaum/copilot-cmp',
+        { 'tris203/copilot-cmp', branch = '0.11_compat' },
+        -- 'zbirenbaum/copilot-cmp', -- using deprecated apis
         'zbirenbaum/copilot.lua',
         'L3MON4D3/LuaSnip',
       },
@@ -88,6 +89,9 @@ return {
             },
             ["<C-p>"] = {
               i = cmp.mapping.select_prev_item(),
+            },
+            ["<C-h>"] = {
+              i = cmp.mapping.select_next_item(),
             },
             ["<C-Space>"] = cmp.mapping({
               i = cmp.mapping.complete(),
@@ -451,7 +455,7 @@ return {
     }
 
     use { --  indicator for code actions
-      'kosayoda/nvim-lightbulb',
+      'gh-liu/nvim-lightbulb',
       event = 'VeryLazy',
       config = function()
         require('nvim-lightbulb').setup {
@@ -474,7 +478,7 @@ return {
       end,
     }
 
-    use {
+    use { -- lsp inlay hints
       'lvimuser/lsp-inlayhints.nvim',
       config = function()
         require("lsp-inlayhints").setup({
@@ -483,6 +487,14 @@ return {
             highlight = "Conceal",
           }
         })
+      end
+    }
+
+    use { -- lsp links
+      'icholy/lsplinks.nvim',
+      keys = "gx",
+      config = function()
+        require('lsplinks').setup()
       end
     }
 
@@ -495,16 +507,18 @@ return {
           local opts = { buffer = true }
           require('utils').keybind({ mode, lhs, rhs, opts })
         end
+        local bufnr = info.buf
 
         -- enable codelens
         local codelens_capable = false
-        for _, client in ipairs(vim.lsp.buf_get_clients()) do
+        for _, client in ipairs(vim.lsp.get_clients({ buffer = bufnr })) do
           if client.supports_method("textDocument/codeLens") then
             codelens_capable = true
             break
           end
         end
-        if codelens_capable then
+        -- if codelens_capable then
+        if false then
           local codelens_autocmd = vim.api.nvim_create_augroup('CodeLensGroup', { clear = true })
           vim.api.nvim_create_autocmd(
             { 'BufEnter', 'CursorHold', 'InsertLeave' },
@@ -533,7 +547,7 @@ return {
 
         -- auto format on save
         local formatting_capable = false
-        for _, client in ipairs(vim.lsp.buf_get_clients()) do
+        for _, client in ipairs(vim.lsp.get_clients({ buffer = bufnr })) do
           if client.supports_method("textDocument/formatting") then
             formatting_capable = true
             break
@@ -566,6 +580,7 @@ return {
         bufmap('n', '<leader>ref', telescope.lsp_references)
         bufmap('n', '<C-]>', telescope.lsp_definitions)
         bufmap('n', '<leader>impl', telescope.lsp_implementations)
+        -- TODO: Eventually try to ignore mock implementations
         -- bufmap('n', '<leader>impl', function()
         --   telescope.lsp_implementations({
         --     finder = require('telescope.finders').new_table {

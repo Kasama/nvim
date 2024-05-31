@@ -20,7 +20,10 @@ return {
     vim.api.nvim_create_autocmd({ 'BufEnter' }, {
       group = go_augroup,
       pattern = '*.go',
-      command = "setlocal noexpandtab"
+      callback = function()
+        vim.cmd("setlocal noexpandtab")
+        vim.api.nvim_set_keymap("i", ";=", ":=", {})
+      end,
     })
   end,
   lsp = function(setup_lsp)
@@ -685,34 +688,49 @@ return {
           t { '', '}' }
         }
       ),
+      --   s(
+      --     { trig = 'ife', name = 'Expand err handling' }, fmt(
+      --       [[
+      -- {} := {}{}{}
+      --   return {}fmt.Errorf("{}: %w", {}err)
+      -- }}
+      -- {}
+      -- ]], {
+      --         d(4, ret_assignments, { 1 }),
+      --         i(1),
+      --         f(short_err_check, { 1 }),
+      --         f(long_err_check, { 1 }),
+      --         f(outer_returns),
+      --         i(2),
+      --         i(3),
+      --         i(0),
+      --       }
+      --     ), {
+      --       callbacks = {
+      --         [-1] = {
+      --           [events.pre_expand] = function()
+      --             ret_assignments_cache = default_ret_assignments
+      --             ret_assignments_short = false
+      --           end,
+      --         },
+      --       },
+      --     }
+      --   ),
       s(
-        { trig = 'ife', name = 'Expand err handling' }, fmt(
-          [[
-    {} := {}{}{}
-      return {}fmt.Errorf("{}: %w", {}err)
-    }}
-    {}
-    ]], {
-            d(4, ret_assignments, { 1 }),
-            i(1),
-            f(short_err_check, { 1 }),
-            f(long_err_check, { 1 }),
-            f(outer_returns),
-            i(2),
-            i(3),
-            i(0),
-          }
-        ), {
-          callbacks = {
-            [-1] = {
-              [events.pre_expand] = function()
-                ret_assignments_cache = default_ret_assignments
-                ret_assignments_short = true
-              end,
-            },
-          },
+        { trig = 'ife', name = "Expand err handling" }, fmt([[
+        if {} != nil {{
+          {}
+        }}
+        ]], {
+          i(1, "err"),
+          c(2, {
+            sn(1, { t 'return ', f(outer_returns), i(1) }),
+            i(1)
+          })
         }
-      ),
+
+        )
+      )
     }, { key = 'go' })
   end,
 }

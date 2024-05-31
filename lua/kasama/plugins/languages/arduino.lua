@@ -39,16 +39,21 @@ return {
       end
     end
 
-    keybind({ "n", "<leader>ac", asyncrun("arduino-cli compile") })
-    keybind({ "n", "<leader>au", asyncrun("arduino-cli compile -u") })
+    vim.api.nvim_create_autocmd({ 'FileType' }, {
+      pattern = 'ino',
+      callback = function()
+        keybind({ "n", "<leader>ac", asyncrun("arduino-cli compile") })
+        keybind({ "n", "<leader>au", asyncrun("arduino-cli compile -u") })
 
-    keybind({ "n", "<leader>sm", function()
-      if vim.fn.executable('picocom') == 1 then
-        vim.cmd("botright | terminal arduino-cli monitor")
-      else
-        vim.notify("picocom is not installed", vim.log.levels.ERROR)
+        keybind({ "n", "<leader>sm", function()
+          if vim.fn.executable('picocom') == 1 then
+            vim.cmd("botright | terminal arduino-cli monitor")
+          else
+            vim.notify("picocom is not installed", vim.log.levels.ERROR)
+          end
+        end })
       end
-    end })
+    })
 
     local caps = vim.lsp.protocol.make_client_capabilities()
     -- Arduino language server does not support semantic tokens

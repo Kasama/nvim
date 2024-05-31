@@ -19,10 +19,10 @@ return {
         -- Treesitter Config
         require('nvim-treesitter.configs').setup {
           ensure_installed = {
-            'bash', 'c', 'clojure', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'go', 'haskell',
-            'heex', 'hcl', 'html', 'java', 'javascript', 'json', 'json5', 'lua', 'make', 'ocaml',
-            'ocaml_interface', 'python', 'query', 'regex', 'ruby', 'rust', 'scss', 'svelte', 'toml',
-            'tsx', 'typescript', 'yaml',
+            'bash', 'c', 'clojure', 'cpp', 'css', 'dockerfile', 'eex', 'elixir', 'elm', 'gleam', 'go',
+            'haskell', 'heex', 'hcl', 'html', 'java', 'javascript', 'json', 'json5', 'lua', 'make', 'ocaml',
+            'ocaml_interface', 'python', 'query', 'regex', 'ruby', 'rust', 'scss', 'svelte', 'templ',
+            'toml', 'tsx', 'typescript', 'yaml',
           },
 
           highlight = { enable = true },
@@ -130,6 +130,7 @@ return {
         'nvim-neotest/neotest-plenary',
         'rouge8/neotest-rust',
         'nvim-neotest/neotest-vim-test',
+        'nvim-neotest/neotest-python',
       },
       init = function()
         local keybind = require('utils').keybind
@@ -157,6 +158,7 @@ return {
             require('neotest-vim-test')({
               ignore_file_types = { "go" },
             }),
+            require('neotest-python'),
           }
         })
       end,
@@ -166,6 +168,7 @@ return {
       'mfussenegger/nvim-dap',
       dependencies = {
         'rcarriga/nvim-dap-ui',
+        'nvim-neotest/nvim-nio',
         'leoluz/nvim-dap-go',
         'theHamsta/nvim-dap-virtual-text',
       },
