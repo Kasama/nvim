@@ -11,7 +11,7 @@ return {
     }
   end,
   lsp = function(setup_lsp)
-    setup_lsp('tsserver', {
+    setup_lsp('ts_ls', {
       root_dir = require('lspconfig.util').root_pattern('package.json'),
       single_file_support = false,
     })

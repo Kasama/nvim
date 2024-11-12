@@ -1,7 +1,8 @@
 return {
   init = function(use)
-    use { 'tsandall/vim-rego', ft = 'rego' }
+    use { 'ziglang/zig.vim', ft = 'zig' }
   end,
   lsp = function(setup_lsp)
+    setup_lsp("zls")
   end,
 }

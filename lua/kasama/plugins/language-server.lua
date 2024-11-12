@@ -20,8 +20,7 @@ return {
         'saadparwaiz1/cmp_luasnip',
         -- 'jcdickinson/codeium.nvim',
         { 'tris203/copilot-cmp', branch = '0.11_compat' },
-        -- 'zbirenbaum/copilot-cmp', -- using deprecated apis
-        'zbirenbaum/copilot.lua',
+        -- 'zbirenbaum/copilot.lua',
         'L3MON4D3/LuaSnip',
       },
       config = function()
@@ -30,11 +29,11 @@ return {
         local compare = require("cmp.config.compare")
         local lspkind = require("lspkind")
         -- local codeium = require('codeium')
-        local copilot = require('copilot').setup({
-          panel = { enabled = false },
-          suggestion = { enabled = false },
-          filetypes = { yaml = true },
-        })
+        -- local copilot = require('copilot').setup({
+        --   panel = { enabled = false },
+        --   suggestion = { enabled = false },
+        --   filetypes = { yaml = true },
+        -- })
         require('copilot_cmp').setup()
 
         lspkind.init()
@@ -51,7 +50,8 @@ return {
             { name = 'luasnip' },
             { name = 'path' },
             -- { name = 'codeium' },
-            { name = 'copilot' },
+            -- { name = 'copilot' },
+            { name = 'neorg' },
             { name = 'buffer',  keyword_length = 5 },
             { name = 'crates' },
           },
@@ -66,11 +66,11 @@ return {
                 luasnip = "[snip]",
                 buffer = "[buf]",
                 -- codeium = "[llm]",
-                copilot = "[llm]",
+                -- copilot = "[llm]",
               },
               symbol_map = {
                 -- Codeium = "",
-                Copilot = "",
+                -- Copilot = "",
               }
             }),
           },
