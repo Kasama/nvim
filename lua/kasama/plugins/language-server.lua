@@ -20,7 +20,7 @@ return {
         'saadparwaiz1/cmp_luasnip',
         -- 'jcdickinson/codeium.nvim',
         { 'tris203/copilot-cmp', branch = '0.11_compat' },
-        -- 'zbirenbaum/copilot.lua',
+        'zbirenbaum/copilot.lua',
         'L3MON4D3/LuaSnip',
       },
       config = function()
@@ -29,11 +29,6 @@ return {
         local compare = require("cmp.config.compare")
         local lspkind = require("lspkind")
         -- local codeium = require('codeium')
-        -- local copilot = require('copilot').setup({
-        --   panel = { enabled = false },
-        --   suggestion = { enabled = false },
-        --   filetypes = { yaml = true },
-        -- })
         require('copilot_cmp').setup()
 
         lspkind.init()
@@ -49,8 +44,8 @@ return {
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' },
+            { name = 'copilot' }, -- disabled by default, enable by calling
             -- { name = 'codeium' },
-            -- { name = 'copilot' },
             { name = 'neorg' },
             { name = 'buffer',  keyword_length = 5 },
             { name = 'crates' },
@@ -66,11 +61,11 @@ return {
                 luasnip = "[snip]",
                 buffer = "[buf]",
                 -- codeium = "[llm]",
-                -- copilot = "[llm]",
+                copilot = "[llm]",
               },
               symbol_map = {
                 -- Codeium = "",
-                -- Copilot = "",
+                Copilot = "",
               }
             }),
           },
@@ -478,18 +473,6 @@ return {
       end,
     }
 
-    use { -- lsp inlay hints
-      'lvimuser/lsp-inlayhints.nvim',
-      config = function()
-        require("lsp-inlayhints").setup({
-          inlay_hints = {
-            other_hints_prefix = "‣",
-            highlight = "Conceal",
-          }
-        })
-      end
-    }
-
     use { -- lsp links
       'icholy/lsplinks.nvim',
       keys = "gx",
@@ -543,7 +526,13 @@ return {
         }, info.buf)
 
         -- setup lsp inlay hints
-        require('lsp-inlayhints').on_attach(vim.lsp.get_client_by_id(info.data.client_id), info.buf)
+        for _, client in ipairs(vim.lsp.get_clients({ buffer = info.buf })) do
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, {
+              bufnr = info.buf,
+            })
+          end
+        end
 
         -- auto format on save
         local formatting_capable = false

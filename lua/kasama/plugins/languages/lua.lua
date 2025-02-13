@@ -28,6 +28,9 @@ return {
           telemetry = {
             enable = false
           },
+          hint = {
+            enable = true
+          }
         }
       },
       single_file_support = true,

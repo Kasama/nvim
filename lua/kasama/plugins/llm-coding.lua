@@ -1,4 +1,10 @@
 return {
+  only_if = function()
+    local handle = io.popen("hostname")
+    local hostname = handle:read("*a"):gsub("%s+", "")
+    handle:close()
+    return hostname == "Kasama"
+  end,
   init = function(use)
     use {
       "yetone/avante.nvim",
@@ -80,7 +86,11 @@ You are an excellent programming expert.
               default = "<leader>lt",
               debug = "<leader>ld",
               hint = "<leader>lh",
+              suggestion = "<leader>ls",
+              repomap = "<leader>lR",
             },
+            files = "<leader>lc",
+            focus = "<leader>lf",
           },
           hints = { enabled = false },
           windows = {
@@ -171,6 +181,30 @@ You are an excellent programming expert.
           })
         end)
       end,
+    }
+    use {
+      "zbirenbaum/copilot.lua",
+      config = function()
+        local copilot = require("copilot")
+        local suggestion = require("copilot.suggestion")
+        copilot.setup {
+          panel = { enabled = false },
+          suggestion = { enabled = false },
+          filetypes = {
+            sh = function()
+              if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
+                -- disable for .env files
+                return false
+              end
+              return true
+            end,
+          },
+        }
+        local utils = require("kasama.lib.utils")
+        utils.keybind({ 'i', '<C-x><C-x>', function()
+          suggestion.next()
+        end })
+      end
     }
   end
 }

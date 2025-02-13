@@ -50,9 +50,13 @@ return {
           schemas = {
             ["kubernetes"] = "*.kube.yaml",
             ["http://json.schemastore.org/ansible-stable-2.5"] = "*playbook.yml",
-            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci.y*l",
+            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] =
+            ".gitlab-ci.y*l",
             ["/home/roberto/documents/work/gitlab-system-hooks/renderer_template.json"] = "*.tpl.*",
-            ["/home/roberto/documents/work/ring-infrastructure-plugin-backend/src/bundle/spec/schemas/bundle_list_schema.json"] = "*.bundle.y*l",
+            ["/home/roberto/documents/work/ring-infrastructure-plugin-backend/src/bundle/spec/schemas/bundle_list_schema.json"] =
+            "*.bundle.y*l",
+            ["https://raw.githubusercontent.com/esphome/esphome-vscode/refs/heads/dev/yaml-language/yaml.tmLanguage.json"] =
+            "*.esphome.y*ml"
           },
           schemaStore = {
             enable = true,

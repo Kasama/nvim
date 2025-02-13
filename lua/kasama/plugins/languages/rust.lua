@@ -12,55 +12,54 @@ return {
     -- debugger for rust
     mason_install('codelldb')
 
+    -- use {
+    --   'simrat39/rust-tools.nvim',
+    --   ft = 'rust',
+    --   config = function()
+    --     local keybind = require('utils').keybind
+
+    --     local rust_group = vim.api.nvim_create_augroup("RustConfigs", { clear = true })
+    --     vim.api.nvim_create_autocmd(
+    --       "FileType",
+    --       {
+    --         group = rust_group,
+    --         pattern = {
+    --           "rust",
+    --         },
+    --         callback = function()
+    --           keybind({ 'n', '<F5>', function()
+    --             local dap = require('dap')
+    --             local rust = require('rust-tools')
+
+    --             local status = dap.status()
+    --             if status == "" then
+    --               rust.debuggables.debuggables()
+    --             else
+    --               dap.continue()
+    --             end
+    --           end, { buffer = true } })
+    --         end,
+    --       }
+    --     )
+    --   end,
+    -- }
     use {
-      'simrat39/rust-tools.nvim',
-      ft = 'rust',
-      config = function()
-        local keybind = require('utils').keybind
-
-        local rust_group = vim.api.nvim_create_augroup("RustConfigs", { clear = true })
-        vim.api.nvim_create_autocmd(
-          "FileType",
-          {
-            group = rust_group,
-            pattern = {
-              "rust",
-            },
-            callback = function()
-              keybind({ 'n', '<F5>', function()
-                local dap = require('dap')
-                local rust = require('rust-tools')
-
-                local status = dap.status()
-                if status == "" then
-                  rust.debuggables.debuggables()
-                else
-                  dap.continue()
-                end
-              end, { buffer = true } })
-            end,
-          }
-        )
-      end,
+      'mrcjkb/rustaceanvim',
+      version = "^5",
+      lazy = false,
     }
 
     use {
       'Saecki/crates.nvim',
       event = { "BufRead Cargo.toml" },
-      version = 'v0.2.1',
+      tag = "stable",
       dependencies = { 'nvim-lua/plenary.nvim' },
       config = function()
-        require('crates').setup({
-          -- null_ls = {
-          --   enabled = true,
-          --   name = "crates.nvim"
-          -- }
-        })
+        require('crates').setup({})
       end,
     }
   end,
   lsp = function(setup_lsp)
-    local rust_tools = require('rust-tools')
     local mason = require('mason-registry')
     local dap_cfg = {}
 
@@ -71,7 +70,7 @@ return {
       local liblldb_path = codelldb_install_path .. '/lldb/lib/liblldb.so'
 
       dap_cfg = {
-        adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
+        adapter = require('rustaceanvim.config').get_codelldb_adapter(codelldb_path, liblldb_path)
       }
     end
 
@@ -105,25 +104,19 @@ return {
       },
     }, local_lsp_config)
 
-    setup_lsp(rust_tools, function(inject_config)
-      return {
-        tools = {
-          inlay_hints = {
-            other_hints_prefix = "‣",
-            highlight = "Conceal",
-            auto = false,
-          },
-          hover_actions = {
-            border = false
-          }
+    -- All possible configs are in https://github.com/mrcjkb/rustaceanvim/blob/master/lua/rustaceanvim/config/internal.lua#L86
+    vim.g.rustaceanvim = {
+      tools = {
+        hover_actions = {
+          replace_builtin_hover = false,
+        }
+      },
+      server = {
+        default_settings = {
+          ["rust-analyzer"] = rust_analyzer_configs
         },
-        server = inject_config({
-          settings = {
-            ["rust-analyzer"] = rust_analyzer_configs
-          }
-        }),
         dap = dap_cfg,
       }
-    end)
+    }
   end,
 }
