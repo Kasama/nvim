@@ -373,54 +373,54 @@ return {
       end,
     }
 
-    use { -- null-ls
-      'jose-elias-alvarez/null-ls.nvim',
-      event = "VeryLazy",
-      dependencies = {
-        'williamboman/mason.nvim',
-      },
-      config = function()
-        local null_ls = require('null-ls')
-        local null_helpers = require('null-ls.helpers')
-        local null_methods = require('null-ls.methods')
+    -- use { -- null-ls
+    --   'jose-elias-alvarez/null-ls.nvim',
+    --   event = "VeryLazy",
+    --   dependencies = {
+    --     'williamboman/mason.nvim',
+    --   },
+    --   config = function()
+    --     local null_ls = require('null-ls')
+    --     local null_helpers = require('null-ls.helpers')
+    --     local null_methods = require('null-ls.methods')
 
-        local golint = null_helpers.make_builtin({
-          name = "golint",
-          method = null_methods.internal.DIAGNOSTICS_ON_SAVE,
-          filetypes = { "go" },
-          generator_opts = {
-            command = "go",
-            args = function()
-              return {
-                "run",
-                "golang.org/x/lint/golint",
-                "$FILENAME"
-              }
-            end,
-            to_stdin = false,
-            from_stderr = false,
-            format = "line",
-            on_output = null_helpers.diagnostics.from_patterns({
-              {
-                pattern = [[.+:(%d+):(%d+): (.+)]],
-                groups = { "row", "col", "message" }
-              }
-            })
-          },
-          factory = null_helpers.generator_factory
-        })
+    --     local golint = null_helpers.make_builtin({
+    --       name = "golint",
+    --       method = null_methods.internal.DIAGNOSTICS_ON_SAVE,
+    --       filetypes = { "go" },
+    --       generator_opts = {
+    --         command = "go",
+    --         args = function()
+    --           return {
+    --             "run",
+    --             "golang.org/x/lint/golint",
+    --             "$FILENAME"
+    --           }
+    --         end,
+    --         to_stdin = false,
+    --         from_stderr = false,
+    --         format = "line",
+    --         on_output = null_helpers.diagnostics.from_patterns({
+    --           {
+    --             pattern = [[.+:(%d+):(%d+): (.+)]],
+    --             groups = { "row", "col", "message" }
+    --           }
+    --         })
+    --       },
+    --       factory = null_helpers.generator_factory
+    --     })
 
-        null_ls.setup {
-          sources = {
-            null_ls.builtins.diagnostics.golangci_lint,
-            golint,
-            null_ls.builtins.code_actions.shellcheck,
-            null_ls.builtins.diagnostics.shellcheck,
-            null_ls.builtins.formatting.xmllint,
-          }
-        }
-      end,
-    }
+    --     null_ls.setup {
+    --       sources = {
+    --         null_ls.builtins.diagnostics.golangci_lint,
+    --         golint,
+    --         null_ls.builtins.code_actions.shellcheck,
+    --         null_ls.builtins.diagnostics.shellcheck,
+    --         null_ls.builtins.formatting.xmllint,
+    --       }
+    --     }
+    --   end,
+    -- }
 
     use { -- highlight unused variables
       'Kasama/nvim-custom-diagnostic-highlight',

@@ -7,12 +7,42 @@ return {
   end,
   init = function(use)
     use {
+      "ravitemer/mcphub.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
+      },
+      event = "VeryLazy",
+      -- cmd = "MCPHub", -- lazily start the hub when `MCPHub` is called
+      build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+      config = function()
+        require("mcphub").setup({
+          -- Required options
+          port = 2837,                                 -- Port for MCP Hub server
+          config = vim.fn.expand("~/mcpservers.json"), -- Absolute path to config file
+
+          -- Optional options
+          on_ready = function(hub)
+            -- Called when hub is ready
+          end,
+          on_error = function(err)
+            -- Called on errors
+          end,
+          log = {
+            level = vim.log.levels.WARN,
+            to_file = false,
+            file_path = nil,
+            prefix = "MCPHub"
+          },
+        })
+      end
+    }
+    use {
       "yetone/avante.nvim",
       event = "VeryLazy",
       lazy = false,
       -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
       -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
-      build = ":AvanteBuild source=false",
+      build = "make",
       dependencies = {
         "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",
@@ -21,6 +51,7 @@ return {
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua",      -- for providers='copilot'
         'MeanderingProgrammer/render-markdown.nvim',
+        "ravitemer/mcphub.nvim",
         {
           -- support for image pasting
           "HakonHarnes/img-clip.nvim",
@@ -44,9 +75,45 @@ return {
 
         avante.setup {
           provider = 'copilot',
-          system_prompt = [[
-You are an excellent programming expert.
-]],
+          opts = {
+            provider = 'gemini',
+            gemini = {
+              api_key_name = 'GEMINI_API_KEY',
+              model = 'gemini-2.5-pro-exp-03-25',
+            },
+          },
+          vendors = {
+            ['openrouter-gemini'] = {
+              __inherited_from = 'openai',
+              endpoint = 'https://openrouter.ai/api/v1',
+              api_key_name = 'OPENROUTER_API_KEY',
+              model = 'google/gemini-2.5-pro-exp-03-25:free',
+              -- model = 'deepseek/deepseek-r1-zero:free',
+              -- model = 'google/gemini-2.0-pro-exp-02-05:free',
+              -- model = 'mistralai/mistral-small-3.1-24b-instruct:free',
+            },
+            ['openrouter-mistral'] = {
+              __inherited_from = 'openai',
+              endpoint = 'https://openrouter.ai/api/v1',
+              api_key_name = 'OPENROUTER_API_KEY',
+              -- model = 'google/gemini-2.5-pro-exp-03-25:free',
+              -- model = 'deepseek/deepseek-r1-zero:free',
+              -- model = 'google/gemini-2.0-pro-exp-02-05:free',
+              model = 'mistralai/mistral-small-3.1-24b-instruct:free',
+            }
+          },
+          -- system_prompt = [[
+          -- You are an excellent programming expert.
+          -- ]],
+          system_prompt = function()
+            local hub = require('mcphub').get_hub_instance()
+            return hub:get_active_servers_prompt()
+          end,
+          custom_tools = function()
+            return {
+              require('mcphub.extensions.avante').mcp_tool()
+            }
+          end,
           behaviour = {
             auto_suggestions = false, -- Experimental stage
             auto_set_highlight_group = true,
@@ -82,6 +149,8 @@ You are an excellent programming expert.
             ask = "<leader>la",
             edit = "<leader>le",
             refresh = "<leader>lr",
+            focus = "<leader>lf",
+            stop = "<leader>lS",
             toggle = {
               default = "<leader>lt",
               debug = "<leader>ld",
@@ -89,8 +158,12 @@ You are an excellent programming expert.
               suggestion = "<leader>ls",
               repomap = "<leader>lR",
             },
-            files = "<leader>lc",
-            focus = "<leader>lf",
+            files = {
+              add_current = "<leader>lc",
+              add_all_buffers = "<leader>lB",
+            },
+            select_model = "<leader>l?",
+            select_history = "<leader>lH",
           },
           hints = { enabled = false },
           windows = {
@@ -118,6 +191,7 @@ You are an excellent programming expert.
           },
         }
 
+        vim.keymap.set("n", "<leader>lcc", "<CMD>AvanteClear<CR>")
         vim.keymap.set("i", "<C-X><C-L>", function()
           local api = vim.api
           local avante_utils = require("avante.utils")

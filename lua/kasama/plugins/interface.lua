@@ -86,11 +86,11 @@ return {
       end,
     }
 
-    use { -- Stabilize window on split/popup/etc
-      "luukvbaal/stabilize.nvim",
-      event = 'VeryLazy',
-      config = function() require("stabilize").setup() end
-    }
+    -- use { -- Stabilize window on split/popup/etc
+    --   "luukvbaal/stabilize.nvim",
+    --   event = 'VeryLazy',
+    --   config = function() require("stabilize").setup() end
+    -- }
 
     use { -- dressing (vim.ui.input)
       'stevearc/dressing.nvim',
