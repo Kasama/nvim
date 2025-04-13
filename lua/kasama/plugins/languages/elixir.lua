@@ -1,4 +1,7 @@
 return {
+  only_if = function()
+    return (vim.fn.executable('iex') == 1)
+  end,
   init = function(use)
     use {
       "elixir-tools/elixir-tools.nvim",

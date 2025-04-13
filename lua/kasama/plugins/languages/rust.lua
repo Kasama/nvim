@@ -10,7 +10,9 @@ return {
       command = "setlocal shiftwidth=4"
     })
     -- debugger for rust
-    mason_install('codelldb')
+    if (vim.fn.executable('unzip') == 1) then
+      mason_install('codelldb')
+    end
 
     -- use {
     --   'simrat39/rust-tools.nvim',

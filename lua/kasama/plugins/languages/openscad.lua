@@ -1,4 +1,7 @@
 return {
+  only_if = function()
+    return (vim.fn.executable('cargo') == 1)
+  end,
   init = function(use, mason_install)
     mason_install('openscad-lsp')
   end,

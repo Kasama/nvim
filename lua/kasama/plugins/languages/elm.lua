@@ -1,4 +1,7 @@
 return {
+  only_if = function()
+    return (vim.fn.executable('npm') == 1)
+  end,
   init = function(use)
     use { 'andys8/vim-elm-syntax', ft = 'elm' }
 

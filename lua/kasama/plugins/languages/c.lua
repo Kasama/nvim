@@ -1,6 +1,6 @@
 return {
   only_if = function()
-    return not (vim.fn.executable('gcc') == 0)
+    return (vim.fn.executable('gcc') == 1) and (vim.fn.executable('unzip') == 1)
   end,
   init = function(use, mason_install)
   end,
