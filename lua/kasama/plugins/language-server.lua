@@ -19,7 +19,7 @@ return {
         -- cmp needs a snippet engine
         'saadparwaiz1/cmp_luasnip',
         -- 'jcdickinson/codeium.nvim',
-        { 'tris203/copilot-cmp', branch = '0.11_compat' },
+        { 'zbirenbaum/copilot-cmp' },
         'zbirenbaum/copilot.lua',
         'L3MON4D3/LuaSnip',
       },
@@ -495,7 +495,7 @@ return {
         -- enable codelens
         local codelens_capable = false
         for _, client in ipairs(vim.lsp.get_clients({ buffer = bufnr })) do
-          if client.supports_method("textDocument/codeLens") then
+          if client:supports_method("textDocument/codeLens") then
             codelens_capable = true
             break
           end
@@ -537,7 +537,7 @@ return {
         -- auto format on save
         local formatting_capable = false
         for _, client in ipairs(vim.lsp.get_clients({ buffer = bufnr })) do
-          if client.supports_method("textDocument/formatting") then
+          if client:supports_method("textDocument/formatting") then
             formatting_capable = true
             break
           end
