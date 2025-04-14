@@ -74,10 +74,22 @@ return {
       config = function()
         local avante = require('avante')
 
-        local has_copilot, copilot = pcall(require, 'copilot')
         local provider = 'gemini'
+
+        local has_copilot, _copilot = pcall(require, 'copilot')
         if has_copilot then
-          provider = 'copilot'
+          local config = vim.fn.expand("~/.config")
+          local Path = require('plenary.path')
+          local paths = vim.iter({ "hosts.json", "apps.json" }):fold({}, function(acc, path)
+            local copilot_config_path = Path:new(config):joinpath("github-copilot", path)
+            if copilot_config_path:exists() then table.insert(acc, copilot_config_path) end
+            return acc
+          end)
+          local is_copilot_setup = #paths > 0
+
+          if is_copilot_setup then
+            provider = 'copilot'
+          end
         end
 
         avante.setup {
