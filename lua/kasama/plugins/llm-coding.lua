@@ -6,7 +6,7 @@ return {
     return hostname == "Kasama"
   end,
   init = function(use)
-    if (vim.fn.executable('npm') == 1) then
+    if (vim.fn.executable('npm') == 1 and vim.fn.executable('mcp-hub') == 1) then
       use {
         "ravitemer/mcphub.nvim",
         dependencies = {
@@ -53,7 +53,6 @@ return {
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua",      -- for providers='copilot'
         'MeanderingProgrammer/render-markdown.nvim',
-        "ravitemer/mcphub.nvim",
         {
           -- support for image pasting
           "HakonHarnes/img-clip.nvim",
@@ -75,8 +74,14 @@ return {
       config = function()
         local avante = require('avante')
 
+        local has_copilot, copilot = pcall(require, 'copilot')
+        local provider = 'gemini'
+        if has_copilot then
+          provider = 'copilot'
+        end
+
         avante.setup {
-          provider = 'copilot',
+          provider = provider,
           opts = {
             provider = 'gemini',
             gemini = {
@@ -104,17 +109,24 @@ return {
               model = 'mistralai/mistral-small-3.1-24b-instruct:free',
             }
           },
-          -- system_prompt = [[
-          -- You are an excellent programming expert.
-          -- ]],
           system_prompt = function()
-            local hub = require('mcphub').get_hub_instance()
-            return hub:get_active_servers_prompt()
+            local hub_exists, mcphub = pcall(require, 'mcphub')
+            if hub_exists then
+              local hub = mcphub.get_hub_instance()
+              return hub:get_active_servers_prompt()
+            else
+              return "You are an excellent programming expert."
+            end
           end,
           custom_tools = function()
-            return {
-              require('mcphub.extensions.avante').mcp_tool()
-            }
+            local hub_exists, avante_extension = pcall(require, 'mcphub.extensions.avante')
+            if hub_exists then
+              return {
+                avante_extension.mcp_tool()
+              }
+            else
+              return {}
+            end
           end,
           behaviour = {
             auto_suggestions = false, -- Experimental stage
