@@ -5,7 +5,10 @@ return {
       lazy = false,  -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
       version = "*", -- Pin Neorg to the latest stable release
       dependencies = {
-        "folke/zen-mode.nvim"
+        "folke/zen-mode.nvim",
+        'nvim-neorg/lua-utils.nvim',
+        'pysan3/pathlib.nvim',
+        'nvim-neotest/nvim-nio',
       },
       config = function()
         require('neorg').setup {
