@@ -11,8 +11,8 @@ return {
       build = ':TSUpdate',
       dependencies = { -- plugins
         'nvim-treesitter/playground',
-        -- 'nvim-treesitter/nvim-treesitter-context',
-        -- 'haringsrob/nvim_context_vt', -- Show virtual text with current context
+        'nvim-treesitter/nvim-treesitter-context',
+        -- 'andersevenrud/nvim_context_vt', -- Show virtual text with current context
       },
       lazy = false,
       config = function()
@@ -48,8 +48,11 @@ return {
           },
         }
 
-        -- require('treesitter-context').setup({
-        --   max_lines = 3,
+        require('treesitter-context').setup({
+          max_lines = 3,
+        })
+        -- require('nvim_context_vt').setup({
+        --   prefix = '',
         -- })
 
         -- FIX for rust SQL highlight injection
