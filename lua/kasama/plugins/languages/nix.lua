@@ -1,6 +1,6 @@
 return {
   only_if = function()
-    return (vim.fn.executable('nix') == 1)
+    return (vim.fn.executable('nix') == 1 and vim.fn.executable('cargo') == 1)
   end,
   init = function(use, mason_install)
   end,

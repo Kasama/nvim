@@ -40,6 +40,7 @@ return {
     end
     use {
       "yetone/avante.nvim",
+      cond = function() return vim.fn.executable('node') == 1 end,
       event = "VeryLazy",
       lazy = false,
       -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
@@ -284,6 +285,7 @@ return {
     }
     use {
       "zbirenbaum/copilot.lua",
+      cond = function() return vim.fn.executable('node') == 1 end,
       config = function()
         local copilot = require("copilot")
         local suggestion = require("copilot.suggestion")

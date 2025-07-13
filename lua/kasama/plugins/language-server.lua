@@ -450,7 +450,7 @@ return {
     }
 
     use { --  indicator for code actions
-      'gh-liu/nvim-lightbulb',
+      'kosayoda/nvim-lightbulb',
       event = 'VeryLazy',
       config = function()
         require('nvim-lightbulb').setup {
