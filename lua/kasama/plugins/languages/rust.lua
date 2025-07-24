@@ -67,7 +67,7 @@ return {
 
     local ok, corelldb = pcall(mason.get_package, 'codelldb')
     if ok then
-      local codelldb_install_path = corelldb:get_install_path() .. '/extension'
+      local codelldb_install_path = vim.env.MASON or vim.fn.stdpath('data') .. '/extension'
       local codelldb_path = codelldb_install_path .. '/adapter/codelldb'
       local liblldb_path = codelldb_install_path .. '/lldb/lib/liblldb.so'
 

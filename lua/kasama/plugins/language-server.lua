@@ -156,7 +156,10 @@ return {
         local masonlspconfig = require('mason-lspconfig')
 
         -- install all declared language servers automatically
-        masonlspconfig.setup { automatic_installation = { exclude = { "ocamllsp" } } }
+        masonlspconfig.setup {
+          automatic_installation = { exclude = { "ocamllsp" } },
+          automatic_enable = false,
+        }
 
         local lsp_cmp = require('cmp_nvim_lsp')
         local lspconfig = require('lspconfig')
