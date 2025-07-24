@@ -102,7 +102,7 @@ return {
               model = 'gemini-2.5-pro-exp-03-25',
             },
           },
-          vendors = {
+          providers = {
             ['openrouter-gemini'] = {
               __inherited_from = 'openai',
               endpoint = 'https://openrouter.ai/api/v1',
